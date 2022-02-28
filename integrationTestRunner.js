@@ -1,27 +1,25 @@
 import { TelegramClient } from "telegram";
-import { StringSession } from "telegram/sessions";
+// import { StringSession } from "telegram/sessions";
 import input from "input";
 import 'dotenv/config'
 
 
 
 
-const apiId = parseInt(process.env.API_ID);
-const apiHash = process.env.API_HASH;
-const stringSession = new StringSession(process.env.STRING_SESSION); 
+
 
 
 const timeoutsecs = 3;
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms!=0?ms*1000:timeoutsecs*1000));
 
 
-async function runIntegrationTest(testText,intakeMessage,messageExpected,especificDelay = 0){
+async function runIntegrationTest(params){
     let resultMessage=[];
     let answerMessages = [];
     let newMessages = false;
     let initialMessagesLength=0;
     console.log("Loading integration test...");
-    const client = new TelegramClient(stringSession, apiId, apiHash, {
+    const client = new TelegramClient(params.stringSession, params.apiId, params.apiHash, {
       connectionRetries: 5,
     });
     await client.start({
@@ -38,21 +36,21 @@ async function runIntegrationTest(testText,intakeMessage,messageExpected,especif
   
   
     
-    await client.sendMessage(process.env.NAME_OF_BOT_CHANNEL, { message: intakeMessage });
+    await client.sendMessage(process.env.NAME_OF_BOT_CHANNEL, { message: params.intakeMessage });
     initialMessagesLength = (await client.getMessages(process.env.NAME_OF_BOT_CHANNEL,{})).length;  
-    await delay(especificDelay);
+    await delay(params.especificDelay);
     answerMessages = await client.getMessages(process.env.NAME_OF_BOT_CHANNEL,{});  
     newMessages = (initialMessagesLength != answerMessages.length);
   
     if(!newMessages)
     {
-      resultMessage.push(`\x1b[33mel bot no ha respondido en el tiempo especificado ${especificDelay?especificDelay:timeoutsecs} segundos\x1b[37m`);
-    }else if( answerMessages[0].message==messageExpected)
+      resultMessage.push(`\x1b[33mel bot no ha respondido en el tiempo especificado ${params.especificDelay?params.especificDelay:timeoutsecs} segundos\x1b[37m`);
+    }else if( answerMessages[0].message==params.messageExpected)
     {
-       resultMessage.push(`\x1b[32m${testText} : el test ha sido correcto\x1b[37m`);
+       resultMessage.push(`\x1b[32m${params.testText} : el test ha sido correcto\x1b[37m`);
     }
     else{
-      resultMessage.push(`el bot ha respondido <\x1b[31m${answerMessages[0].message}\x1b[37m> y se esperaba <\x1b[32m${messageExpected}\x1b[37m> `);
+      resultMessage.push(`el bot ha respondido <\x1b[31m${answerMessages[0].message}\x1b[37m> y se esperaba <\x1b[32m${params.messageExpected}\x1b[37m> `);
     }
   
   
