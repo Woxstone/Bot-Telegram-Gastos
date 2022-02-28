@@ -1,5 +1,9 @@
 import { MyBot } from '../src/mybot.js';
 import { Telegraf } from 'telegraf';
+import { Actions } from '../src/actions.js';
+jest.mock('../src/actions.js')
+
+
 
 describe('it works ',() => {
     xit('its a telegraf bot',() => {
