@@ -99,7 +99,7 @@ describe("i want to ask for resolveExpenses  and return an array of transactions
             expectedTransaction4];
 
 
-        const result = Calculator.distributeExpeneses(inputExpenses);
+        const result = Calculator.distributeExpenses(inputExpenses);
 
         expect(result).toEqual(expectedResult);
     })

@@ -73,7 +73,7 @@ class Actions {
     static showBill(chat_id, user_ctx = '', message = '') {
 
         const expensesOfChat = Expenses.showExpensesArray(chat_id);
-        const receipt = Calculator.distributeExpeneses(expensesOfChat);
+        const receipt = Calculator.distributeExpenses(expensesOfChat);
         const billKeys = Users.describeReceipt(receipt);
         const bill = Messages.parse(billKeys);
         
