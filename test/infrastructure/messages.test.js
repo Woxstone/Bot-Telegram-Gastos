@@ -21,4 +21,20 @@ describe('Test of the methods', () => {
 
         expect(result).toBe(expected);
     });
+
+    it('2 pares take a string in this string we have info and keys must traduce this keys in real test', () => {
+        const intake = `message.article 28/2/2022, message.quantity: 87, "cosas"
+message.article 28/2/2022, message.quantity: 35, "manzanas"
+message.article 28/2/2022, message.quantity: 76, "peras"
+message.article 28/2/2022, message.quantity: 8, "manzanas"`;
+
+        const expected = `El 28/2/2022, cantidad: 87, "cosas"
+El 28/2/2022, cantidad: 35, "manzanas"
+El 28/2/2022, cantidad: 76, "peras"
+El 28/2/2022, cantidad: 8, "manzanas"`;
+
+        const result = Messages.parse(intake);
+
+        expect(result).toBe(expected);
+    });
 });

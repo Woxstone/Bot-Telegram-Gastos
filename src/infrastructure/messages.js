@@ -29,7 +29,8 @@ Si tienes algun problema /help para saber los formatos de nuevo`,
     }
 
     static parse(stringmessage) {
-        let result = stringmessage.split(' ').map(
+        const midMessage = stringmessage.replace(/\n/g, '\n ');
+        let result = midMessage.split(' ').map(
             (word) => {
                 const exist = (Messages.retrieve(word) != undefined);
                 let partialResult = word;
@@ -39,7 +40,7 @@ Si tienes algun problema /help para saber los formatos de nuevo`,
                 return partialResult;
             });
 
-        return result.join(' ');
+        return result.join(' ').replace(/\n /g, '\n');
     }
 }
 

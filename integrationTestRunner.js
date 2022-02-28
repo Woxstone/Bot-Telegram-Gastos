@@ -29,8 +29,8 @@ async function runIntegrationTest(params){
         await input.text("Please enter the code you received: "),
       onError: (err) => console.log(err),
     });
-    console.log("You should now be connected.");
-    console.log(client.session.save()); // Save this string to avoid logging in again
+    // console.log("You should now be connected.");
+    // console.log(client.session.save()); // Save this string to avoid logging in again
     
   
   

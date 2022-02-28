@@ -48,7 +48,7 @@ import { StringSession } from "telegram/sessions";
      apiHash: process.env.API_HASH_usertwo,
      testText : 'addgasto command test user 2',
      intakeMessage : '/addgasto 35 manzanas',
-     messageExpected: `gasto registrado: El ${fechaDeHoy}, cantidad: 35 "manzanas`,
+     messageExpected: `gasto registrado: El ${fechaDeHoy}, cantidad: 35, "manzanas"`,
      especificDelay: 0
     }));
 
@@ -58,7 +58,7 @@ import { StringSession } from "telegram/sessions";
       apiHash: process.env.API_HASH_userone,
       testText : 'addgasto command test user one',
       intakeMessage : '/addgasto 76 peras',
-      messageExpected: `gasto registrado: El ${fechaDeHoy}, cantidad: 76 "peras`,
+      messageExpected: `gasto registrado: El ${fechaDeHoy}, cantidad: 76, "peras"`,
       especificDelay: 0
      }));
 
@@ -68,7 +68,7 @@ import { StringSession } from "telegram/sessions";
       apiHash: process.env.API_HASH_userone,
       testText : 'addgasto command test user one concept user 2',
       intakeMessage : '/addgasto 8 manzanas',
-      messageExpected: `gasto registrado: El ${fechaDeHoy}, cantidad: 8 "manzanas"`,
+      messageExpected: `gasto registrado: El ${fechaDeHoy}, cantidad: 8, "manzanas"`,
       especificDelay: 0
      }));
 
