@@ -65,7 +65,8 @@ class Actions {
     }
 
     static showExpenses(chat_id, user_ctx = '', message = '') {
-        const result = Expenses.show(chat_id);
+        const expensesWithKeys = Expenses.show(chat_id);
+        const result = Messages.parse(expensesWithKeys);
 
         return result;
     }

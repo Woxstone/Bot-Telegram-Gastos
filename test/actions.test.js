@@ -130,8 +130,10 @@ describe('Actions', () => {
     });
 
     it('should print all the expenses of the chat', () => {
-        Expenses.show.mockReturnValueOnce(`El 2/14/2022, cantidad: 23 "sardinas"
-El 01/10/2021, cantidad: 42 "naves espaciales"`);
+        Expenses.show.mockReturnValueOnce(`message.article 2/14/2022, message.quantity: 23, "sardinas"
+message.article 01/10/2021, message.quantity: 42, "naves espaciales"`);
+        Messages.parse.mockReturnValueOnce(`El 2/14/2022, cantidad: 23, "sardinas"
+El 01/10/2021, cantidad: 42, "naves espaciales"`);
 
         const mockActionsnewUser = jest.fn()
             .mockReturnValueOnce(`usuario registrado: Hola Fernando tu usuario ha sido creado.`);
@@ -149,8 +151,8 @@ El 01/10/2021, cantidad: 42 "naves espaciales"`);
         };
         const default_chat_id = -24;
 
-        const expectedResult = `El 2/14/2022, cantidad: 23 "sardinas"
-El 01/10/2021, cantidad: 42 "naves espaciales"`;
+        const expectedResult = `El 2/14/2022, cantidad: 23, "sardinas"
+El 01/10/2021, cantidad: 42, "naves espaciales"`;
 
         Actions.newUser(default_chat_id, default_user);
         Actions.addExpense(default_chat_id, default_user, '23 sardinas 2/14/2022');

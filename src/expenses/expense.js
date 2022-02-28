@@ -17,7 +17,7 @@ class Expense{
     }
 
     description(){
-        return `message.article ${this.date}, message.quantity: ${this.money} "${this.concept}"`;
+        return `message.article ${this.date}, message.quantity: ${this.money}, "${this.concept}"`;
     }
 }
 
