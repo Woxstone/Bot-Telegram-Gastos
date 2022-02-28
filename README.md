@@ -48,18 +48,27 @@ Crea una app desde aqui [https://my.telegram.org/auth](https://my.telegram.org/a
 Tu eres en userone necesitas otra cuenta de telegram para poder hacer el test con dos usuarios hablando en el mismo chat.
 
 BOT_TOKEN = ""
+
 DATA_FILE_EXPENSES = "./data/ledger.json"
+
 DATA_FILE_USERS = "./data/roster.json"
+
 DATA_FILE_LOGGER = "./data/logger.json"
 
 integration test env
 
 API_ID_userone = ""
+
 API_HASH_userone = ""
+
 STRING_SESSION_userone = ""
+
 API_ID_usertwo = ""
+
 API_HASH_usertwo = ""
+
 STRING_SESSION_usertwo = ""
+
 NAME_OF_BOT_CHANNEL = ""
 
 Crea un scritp si no esta ya creado     "integrationTest": "npx babel-node ./test/all_integration.test.js",
