@@ -25,7 +25,9 @@ escribe esto dentro:
 Hay que modificar el pack-json para que tire babel cuando escribimos en la terminal npm run start:
 
 "scripts": {
+
 "test": "echo "Error: no test specified" && exit 1""jest,
+
 "start": "npx babel-node app.js"
 },
 
