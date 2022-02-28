@@ -74,8 +74,9 @@ class Actions {
 
         const expensesOfChat = Expenses.showExpensesArray(chat_id);
         const receipt = Calculator.distributeExpeneses(expensesOfChat);
-        const bill = Users.describeReceipt(receipt);
-
+        const billKeys = Users.describeReceipt(receipt);
+        const bill = Messages.parse(billKeys);
+        
         const answer = Messages.retrieve('bill');
         const result = `${answer}: ${bill}`;
 

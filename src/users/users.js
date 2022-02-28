@@ -27,7 +27,7 @@ class Users {
             const payer = Roster.search(debt.payer).first_name;     
             const receiver = Roster.search(debt.receiver).first_name;
     
-            result += `${payer} le debe a ${receiver} ${debt.money}E\n`;
+            result += `${payer} user.debt ${receiver} ${debt.money}E\n`;
         });
 
         result = result.replace(/\n$/g, '.');
