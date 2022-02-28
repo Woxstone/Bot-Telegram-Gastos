@@ -42,7 +42,7 @@ Si tienes algun problema /help para saber los formatos de nuevo`);
     it('identifies itself', () => {
         expect(Actions.getIntroduction()).toBe('Soy un bot de gastos compartido');
     });
-
+// hacer un test con la devoluccion de error de AddExpense
     it('add Expenese for a user', () => {
         const default_user = {
             id: 34_512_345,

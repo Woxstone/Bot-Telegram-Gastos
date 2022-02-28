@@ -6,7 +6,7 @@ class Expenses{
     static add(chat_id, user_id, expense) {
         const theExpense = new Expense(expense, user_id);           
         if(!Ledger.addAndSave(chat_id, theExpense)) {
-            return 'error al grabar, hay un problema llama .';
+            return 'expenses.error_save';
         };
         return Expenses.description([theExpense]);
     }
