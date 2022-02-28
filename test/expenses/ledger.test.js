@@ -1,6 +1,7 @@
 import { Ledger } from '../../src/expenses/ledger.js';
 import  fs  from 'fs';
 jest.mock('fs');
+jest.mock('../../src/helpers/logger.js');
 
 
 beforeEach(() => {

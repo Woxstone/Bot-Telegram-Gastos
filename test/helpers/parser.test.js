@@ -52,7 +52,7 @@ describe('Parser method testting', () => {
     };
 
     it('should extrac the id of the user', () => {
-        const expectedResult = 3605;
+        const expectedResult = 305;
 
         const result = Parser.extractId(default_from);
 
@@ -68,7 +68,7 @@ describe('Parser method testting', () => {
     });
 
     it('should extrac de name of the user', () => {
-        const expectedResult = 'gfsegsd';
+        const expectedResult = 'dfadfa';
 
         const result = Parser.extractName(default_from);
 

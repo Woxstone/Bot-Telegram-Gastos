@@ -68,7 +68,7 @@ describe('Test about the methods', () => {
             };
         });
 
-        const expected = 'error al grabar, hay un problema llama a los monos.';
+        const expected = 'error al grabar, hay un problema llama .';
         let theExpense = defaultExp;
         theExpense.id = default_user_id;
 

@@ -40,7 +40,7 @@ Si tienes algun problema /help para saber los formatos de nuevo`);
     });
 
     it('identifies itself', () => {
-        expect(Actions.getIntroduction()).toBe('');
+        expect(Actions.getIntroduction()).toBe('Soy un bot de gastos compartido');
     });
 
     it('add Expenese for a user', () => {

@@ -15,5 +15,5 @@ const fechaDeHoy = new Intl.DateTimeFormat('en-US', {
 
 
 
-require('./pruebas_integration.test');
-//  require('./client_integration.test');
+// require('./pruebas_integration.test');
+ require('./client_integration.test');
