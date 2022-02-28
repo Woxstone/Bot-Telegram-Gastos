@@ -1,4 +1,4 @@
-import { runIntegrationTest, showTestResults } from '../integrationTestRunner.js'
+
 // clase a testear
 import { MyBot } from '../src/myBot.js';
 
@@ -7,11 +7,7 @@ import { MyBot } from '../src/myBot.js';
 const aBot = new MyBot();
 aBot.start();
 
-const fechaDeHoy = new Intl.DateTimeFormat('en-US', {
-  year: 'numeric',
-  month: 'numeric',
-  day: 'numeric'
-}).format(Date.now());
+
 
 
 
