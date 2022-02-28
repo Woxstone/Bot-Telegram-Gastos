@@ -1,0 +1,45 @@
+{
+  "name": "xavistyle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "integrationTest": "npx babel-node ./test/all_integration.test.js",
+    "start": "npx babel-node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/motercode/xavistyle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/motercode/xavistyle/issues"
+  },
+  "homepage": "https://github.com/motercode/xavistyle#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.17.0",
+    "@babel/core": "^7.17.2",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "input": "^1.0.1",
+    "jest": "^28.0.0-alpha.4",
+    "telegram": "^2.5.0",
+    "vosk": "^0.3.32"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "telegraf": "^4.7.0",
+    "winston": "^3.6.0"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "_integration",
+      "<rootDir>/testdata/"
+    ],
+    "watchPathIgnorePatterns": [
+      "<rootDir>/testdata/"
+    ]
+  }
+}

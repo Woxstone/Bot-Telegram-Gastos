@@ -1,0 +1,88 @@
+import { Messages } from './infrastructure/messages.js';
+import { Parser } from './helpers/parser.js';
+import { Calculator } from './helpers/calculator.js';
+import { Expenses } from './expenses/expenses.js';
+import { Users } from './users/users.js';
+
+
+class Actions {
+
+    static getHelp() {
+        return Messages.retrieve('help');
+    }
+
+    static getIntroduction() {
+        return Messages.retrieve('intro');
+    }
+
+    static load() {
+        Users.load();
+        Expenses.load();
+    }
+
+    static addExpense(chat_id, user_ctx, message) {
+
+        const theExpense = {
+            money: Parser.extractMoney(message),
+            concept: Parser.extractConcept(message),
+            date: Parser.extractDate(message)
+        };
+
+        Users.ensure(user_ctx);
+        const expenseKeys = Expenses.add(chat_id, user_ctx.id, theExpense);
+        const expense = Messages.parse(expenseKeys);
+        // if (expense === false) { return Messages.retrieve('err.ledger') };
+        const answer = Messages.retrieve('expense.added');
+        const result = `${answer}: ${expense}`;
+
+        return result;
+    }
+// incluir un gatos  ficticio (0 0 ) para que la añanda en las cunetas entonces parse.extracConcepto poner sin concepto y que gasto filtre los gasto con money = 0
+    static newUser(chat_id = '', user_ctx, message = '') {
+        let result = '';
+        let answer = '';
+        let userMessage = '';
+        const theUser = {
+            id: Parser.extractId(user_ctx),
+            first_name: Parser.extractFirstName(user_ctx),
+            username: Parser.extractName(user_ctx)
+        };
+
+        if (Users.ensure(theUser)) {
+            const keysMessages = Users.describe(theUser, true);
+            userMessage = Messages.parse(keysMessages);
+            answer = Messages.retrieve('user.exits');
+
+        } else {
+            const keysMessages = Users.describe(theUser);
+            userMessage = Messages.parse(keysMessages);
+            answer = Messages.retrieve('user.new_user');
+        }
+
+        result = `${answer}: ${userMessage}`;
+
+        return result;
+    }
+
+    static showExpenses(chat_id, user_ctx = '', message = '') {
+        const result = Expenses.show(chat_id);
+
+        return result;
+    }
+
+    static showBill(chat_id, user_ctx = '', message = '') {
+
+        const expensesOfChat = Expenses.showExpensesArray(chat_id);
+        const receipt = Calculator.distributeExpeneses(expensesOfChat);
+        const bill = Users.describeReceipt(receipt);
+
+        const answer = Messages.retrieve('bill');
+        const result = `${answer}: ${bill}`;
+
+        return result;
+    }
+
+}
+
+
+export { Actions };
