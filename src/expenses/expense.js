@@ -7,7 +7,7 @@ class Expense{
         this.id = user_id 
     }
 
-    today(){
+    today() {
         const today = new Intl.DateTimeFormat('es-ES', {
             year: 'numeric',
             month: 'numeric',
@@ -16,8 +16,9 @@ class Expense{
         return today;
     }
 
-    description(){
-        return `message.article ${this.date}, message.quantity: ${this.money}, "${this.concept}"`;
+    description() {
+        const concept = (this.concept == '')? 'expense.description_noConcept': this.concept;
+        return `message.article ${this.date}, message.quantity: ${this.money}, "${concept}"`;
     }
 }
 

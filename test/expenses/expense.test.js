@@ -51,6 +51,20 @@ describe('test about the methods', () => {
 
         expect(defaultExp.description()).toEqual(expected);
     });
+
+    it('description methods should return the description of the expense without concept too', () => {
+        const exp = {
+            money: 0,
+            concept: '',
+            date: 2
+        };
+        const default_userid = 56_345;
+
+        const expected = `message.article ${exp.date}, message.quantity: ${exp.money}, "expense.description_noConcept"`;
+        const defaultExp = new Expense(exp, default_userid);
+
+        expect(defaultExp.description()).toEqual(expected);
+    });
     
     it('today must be in european way ', () => {
         const defaultExp = {
