@@ -65,7 +65,8 @@ class Actions {
     }
 
     static showExpenses(chat_id, user_ctx = '', message = '') {
-        const result = Expenses.show(chat_id);
+        const expensesWithKeys = Expenses.show(chat_id);
+        const result = Messages.parse(expensesWithKeys);
 
         return result;
     }
@@ -73,9 +74,10 @@ class Actions {
     static showBill(chat_id, user_ctx = '', message = '') {
 
         const expensesOfChat = Expenses.showExpensesArray(chat_id);
-        const receipt = Calculator.distributeExpeneses(expensesOfChat);
-        const bill = Users.describeReceipt(receipt);
-
+        const receipt = Calculator.distributeExpenses(expensesOfChat);
+        const billKeys = Users.describeReceipt(receipt);
+        const bill = Messages.parse(billKeys);
+        
         const answer = Messages.retrieve('bill');
         const result = `${answer}: ${bill}`;
 

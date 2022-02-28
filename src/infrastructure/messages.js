@@ -8,13 +8,16 @@ class Messages {
 Si tienes algun problema /help para saber los formatos de nuevo`,
         'intro': 'Soy un bot de gastos compartido',
         'expense.added': 'gasto registrado',
+        'expenses.error_save': 'error al grabar tu gasto (problemas en Ledger.addAndSave).',
+        'expense.description_noConcept': 'Sin concepto',
         'err.ledger': 'Ha habido un problema al registrar el gasto.',
-        'user.new_user': 'usuario registrado',
         'bill': 'la cuenta',
         'user.hello': 'Hola',
+        'user.new_user': 'usuario registrado',
         'user.create_ok': 'tu usuario ha sido creado.',
         'user.exits_end': 'tu usuario ya estaba creado en este chat.',
         'user.exits': 'usuario ya registrado',
+        'user.debt': 'le debe a',
         'error.users': 'Error al cargar los usuarios del Roster.',
         'error.expenses': 'Error al cargar los gastos del Ledger.',
         'message.quantity:': 'cantidad:',
@@ -26,7 +29,8 @@ Si tienes algun problema /help para saber los formatos de nuevo`,
     }
 
     static parse(stringmessage) {
-        let result = stringmessage.split(' ').map(
+        const midMessage = stringmessage.replace(/\n/g, '\n ');
+        let result = midMessage.split(' ').map(
             (word) => {
                 const exist = (Messages.retrieve(word) != undefined);
                 let partialResult = word;
@@ -36,7 +40,7 @@ Si tienes algun problema /help para saber los formatos de nuevo`,
                 return partialResult;
             });
 
-        return result.join(' ');
+        return result.join(' ').replace(/\n /g, '\n');
     }
 }
 

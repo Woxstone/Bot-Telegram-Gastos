@@ -7,7 +7,7 @@ class Transaction {
     }
 }
 class Calculator {
-    static distributeExpeneses(expensesOfChat) {
+    static distributeExpenses(expensesOfChat) {
         let TheCalculation = new Calculator();
         let result = TheCalculation.makeTotalsByUserId(expensesOfChat);
         const userKeys = result;

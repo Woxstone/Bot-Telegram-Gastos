@@ -26,14 +26,3 @@ class Parser{
 }
 
 export {Parser};
-
-// {
-//     message_id: 1492,
-//     from: {
-//       id: 368521905,
-//       is_bot: false,
-//       first_name: 'Nacho',
-//       last_name: 'mi apellido',
-//       username: 'Woxstone',
-//       language_code: 'en'
-//     },
