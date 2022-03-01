@@ -1,14 +1,21 @@
 class Parser{
 
     static extractMoney(message){
-        const result = parseFloat(message.split(' ')[0]); 
+        let result = parseFloat(message.split(' ').find(function(word) {
+            if(!isNaN(parseInt(word))) {
+                return word;
+            }}));
         return result;
-    
     }
     
     static extractConcept(message){
-        let result = message.split(' ').slice(1).join(' '); 
-        result = result.replace(/ \d+\/\d+\/\d+/gm,'');
+        let result = message.split(' ').filter(function(word){
+            if(isNaN(parseInt(word))){
+                return word;
+            }
+        });
+
+        result = result.join(' '); 
         return result;
     }
 
