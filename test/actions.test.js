@@ -36,7 +36,7 @@ describe('Actions', () => {
     });
 // hacer un test con la devoluccion de error de AddExpense
 
-    it('When aadExpense is call must call Expenses.add and return a answer for the user', () => {
+    xit('When aadExpense is call must call Expenses.add and return a answer for the user', () => {
         Messages.retrieve.mockImplementationOnce((key)=>{return key});
         Messages.parse.mockReturnValueOnce(`El ${today}, Fernado metio un gasto de cantidad: 25 \"euros en copas\"`);
         Parser.extractMoney.mockReturnValueOnce(25);
@@ -57,7 +57,7 @@ describe('Actions', () => {
         expect(Expenses.add).toHaveBeenCalledWith(default_chat_id, default_user.id, { money: 25, concept: 'euros en copas', date: today });
     });
 
-    it('shoud had an option for create a new user and handle when exist', () => {
+    xit('shoud had an option for create a new user and handle when exist', () => {
         const default_user = {
             id: 43241,
             first_name: 'user first name example',
@@ -110,7 +110,7 @@ describe('Actions', () => {
         expect(Actions.newUser(default_chat_id, default_user, message)).toBe(expectedResult);
     });
    
-    it('should return a message when newuser allready exist ', () => {
+    xit('should return a message when newuser allready exist ', () => {
         Users.ensure.mockReturnValueOnce(true);
         Users.describe.mockReturnValueOnce(`user.hello Fernado user.exits_end`);
         Messages.retrieve.mockReturnValueOnce('usuario ya registrado');
@@ -129,8 +129,8 @@ describe('Actions', () => {
         expect(Actions.newUser(default_chat_id, default_user, message)).toBe(expectedResult);
     });
 
-    it('should print all the expenses of the chat', () => {
-        Expenses.show.mockReturnValueOnce(`message.article 2/14/2022, 3_422_345 message.person message.quantity: 23, "sardinas"
+    xit('should print all the expenses of the chat', () => {
+        Expenses.show.mockReturnValueOnce(`message.article 2/14/2022, message.quantity: 23, "sardinas"
 message.article 01/10/2021, message.quantity: 42, "naves espaciales"`);
         Messages.parse.mockReturnValueOnce(`El 2/14/2022, Fernado metio un gasto de cantidad: 23, "sardinas"
 El 01/10/2021, Fernado metio un gasto de cantidad: 42, "naves espaciales"`);
@@ -162,7 +162,7 @@ El 01/10/2021, Fernado metio un gasto de cantidad: 42, "naves espaciales"`;
         expect(result).toBe(expectedResult);
     });
 
-    it('when command cuenta is called should return the bill of the chat', () => {
+    xit('when command cuenta is called should return the bill of the chat', () => {
         const mockActionsnewUser = jest.fn()
             .mockReturnValueOnce(`usuario registrado: Hola Fernando tu usuario ha sido creado.`)
             .mockReturnValueOnce(`usuario registrado: Hola Mixa tu usuario ha sido creado.`)

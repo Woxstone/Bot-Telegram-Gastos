@@ -53,6 +53,21 @@ class Users {
     static load() {
         return Roster.load();
     }
+    
+    static parseId(expensesWithKeys){
+        const IDMARK='/ID:'   
+        let result= expensesWithKeys.split(' ')
+       result = result.map((word) =>{;
+            if (word.includes(IDMARK)) {
+                let id= word.replace(IDMARK,'').replace(/.$/gm,'');
+                const username = Roster.search(Number.parseInt(id)).first_name;
+                return username;
+            }
+            return word;
+        })
+        result= result.join(' ');
+        return result;
+    }
 }
 
 export {Users}
