@@ -46,7 +46,7 @@ describe('test about the methods', () => {
         };
         const default_userid = 56_345;
 
-        const expected = `message.article ${exp.date}, message.quantity: ${exp.money}, "${exp.concept}"`;
+        const expected = `message.article 2, /ID:56345/ message.person message.quantity: 0, \"sardinas\"`;
         const defaultExp = new Expense(exp, default_userid);
 
         expect(defaultExp.description()).toEqual(expected);
@@ -60,7 +60,7 @@ describe('test about the methods', () => {
         };
         const default_userid = 56_345;
 
-        const expected = `message.article ${exp.date}, message.quantity: ${exp.money}, "expense.description_noConcept"`;
+        const expected = `message.article 2, /ID:56345/ message.person message.quantity: 0, \"expense.description_noConcept\"`;
         const defaultExp = new Expense(exp, default_userid);
 
         expect(defaultExp.description()).toEqual(expected);

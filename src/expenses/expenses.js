@@ -27,8 +27,8 @@ class Expenses{
         let result = '';
         let theExpense = undefined;
         expensesArray.forEach(expense => {
-            theExpense = new Expense(expense);           
-            result += `${theExpense.description()}\n`;
+            // theExpense = new Expense(expense);           
+            result += `${expense.description()}\n`;
         });
 
         result = result.replace(/\n$/g, '');

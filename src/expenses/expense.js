@@ -18,7 +18,7 @@ class Expense{
 
     description() {
         const concept = (this.concept == '')? 'expense.description_noConcept': this.concept;
-        return `message.article ${this.date}, message.quantity: ${this.money}, "${concept}"`;
+        return `message.article ${this.date}, /ID:${this.id}/ message.person message.quantity: ${this.money}, "${concept}"`;
     }
 }
 
