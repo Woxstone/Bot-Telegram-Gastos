@@ -8,7 +8,7 @@ const today = new Intl.DateTimeFormat('es-ES', {
 
 
 describe('Actions', () => {
-    it('retrieves help', () => {
+    xit('retrieves help', () => {
 
         expect(Actions.getHelp()).toBe(`Hola, estos son los comandos que puedes utilizar:
 /nuevo_usuario para crearte un usuario en este chat,
@@ -18,7 +18,7 @@ describe('Actions', () => {
 Si tienes algun problema /help para saber los formatos de nuevo`);
     });
 
-    it('identifies itself', () => {
+    xit('identifies itself', () => {
 
         expect(Actions.getIntroduction()).toBe(`Soy un bot de gastos compartido`);
     });
@@ -39,7 +39,7 @@ Si tienes algun problema /help para saber los formatos de nuevo`);
         expect(result).toBe(`gasto registrado: El ${today}, ${default_user.first_name} metio un gasto de cantidad: 25, \"euros en copas\"`);
     });
 
-    it('shoud had an option for create a new user and handle when exist', () => {
+    xit('shoud had an option for create a new user and handle when exist', () => {
         const default_user = {
             id: 43241,
             first_name: 'user first name example',
@@ -56,7 +56,7 @@ Si tienes algun problema /help para saber los formatos de nuevo`);
     });
 
 
-    it('shoud had an option for create a new user and handle when not exist', () => {
+    xit('shoud had an option for create a new user and handle when not exist', () => {
         const default_user = {
             id: 43241,
             first_name: 'user first name example',
@@ -71,7 +71,7 @@ Si tienes algun problema /help para saber los formatos de nuevo`);
         expect(Actions.newUser(default_chat_id, default_user, message)).toBe(expectedResult);
     });
    
-    it('should return a message when newuser allready exist ', () => {
+    xit('should return a message when newuser allready exist ', () => {
         const default_user = {
             id: 34_512_345,
             first_name: 'Fernado',
