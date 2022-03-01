@@ -94,4 +94,24 @@ hector user.debt fer 4E.`;
 
         expect(result).toBeFalsy();
     });
+
+    it('Get search in the string the id a change for the user frist_name', () => {
+        const intake = `message.article 14/02/2021, 2757 message.person message.quantity: 87, "perras"`;
+        const expected = `message.article 14/02/2021, Fernando message.person message.quantity: 87, "perras"`
+        
+        Roster.search.mockReturnValueOnce({id: 2757, frist_name: 'Fernando', username: 'Yo'});
+        
+        const result = Users.get(intake);
+
+        expect(result).toBe(expected);
+    });
+
+    it('getId must return id in the message', () => {
+        const intake =`message.article 14/02/2021, 87 message.person message.quantity: 87, "perras"`;
+        const expected = 87;
+
+        const result = Users.getId(intake);
+
+        expect(result).toBe(expected);
+    });
 });

@@ -21,7 +21,8 @@ Si tienes algun problema /help para saber los formatos de nuevo`,
         'error.users': 'Error al cargar los usuarios del Roster.',
         'error.expenses': 'Error al cargar los gastos del Ledger.',
         'message.quantity:': 'cantidad:',
-        'message.article': 'El'
+        'message.article': 'El',
+        'message.person': 'metio un gasto de'
     };
 
     static retrieve(key) {

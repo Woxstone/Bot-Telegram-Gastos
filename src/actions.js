@@ -29,7 +29,8 @@ class Actions {
         };
 
         Users.ensure(user_ctx);
-        const expenseKeys = Expenses.add(chat_id, user_ctx.id, theExpense);
+        let expenseKeys = Expenses.add(chat_id, user_ctx.id, theExpense);
+        expenseKeys = Users.get(expenseKeys);
         const expense = Messages.parse(expenseKeys);
         // if (expense === false) { return Messages.retrieve('err.ledger') };
         const answer = Messages.retrieve('expense.added');
@@ -65,7 +66,8 @@ class Actions {
     }
 
     static showExpenses(chat_id, user_ctx = '', message = '') {
-        const expensesWithKeys = Expenses.show(chat_id);
+        let expensesWithKeys = Expenses.show(chat_id);
+        expensesWithKeys = Users.get(expensesWithKeys);
         const result = Messages.parse(expensesWithKeys);
 
         return result;
