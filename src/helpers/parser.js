@@ -1,7 +1,7 @@
 class Parser{
 
     static extractMoney(message){
-        let result = parseFloat(message.split(' ').find(function(word) {
+        let result = parseFloat(message.replace(',','.').replace("'",'.').split(' ').find(function(word) {
             if(!isNaN(parseInt(word))) {
                 return word;
             }}));
