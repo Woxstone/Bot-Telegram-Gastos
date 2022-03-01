@@ -9,6 +9,7 @@ Si tienes algun problema /help para saber los formatos de nuevo`,
         'intro': 'Soy un bot de gastos compartido',
         'expense.added': 'gasto registrado',
         'expenses.error_save': 'error al grabar tu gasto (problemas en Ledger.addAndSave).',
+        'expense.description_noConcept': 'Sin concepto',
         'err.ledger': 'Ha habido un problema al registrar el gasto.',
         'bill': 'la cuenta',
         'user.hello': 'Hola',
@@ -28,7 +29,8 @@ Si tienes algun problema /help para saber los formatos de nuevo`,
     }
 
     static parse(stringmessage) {
-        let result = stringmessage.split(' ').map(
+        const midMessage = stringmessage.replace(/\n/g, '\n ');
+        let result = midMessage.split(' ').map(
             (word) => {
                 const exist = (Messages.retrieve(word) != undefined);
                 let partialResult = word;
@@ -38,7 +40,7 @@ Si tienes algun problema /help para saber los formatos de nuevo`,
                 return partialResult;
             });
 
-        return result.join(' ');
+        return result.join(' ').replace(/\n /g, '\n');
     }
 }
 

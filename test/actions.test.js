@@ -8,7 +8,6 @@ import { Calculator } from '../src/helpers/calculator.js';
 jest.mock('../src/helpers/calculator.js')
 import { Expenses } from '../src/expenses/expenses.js';
 jest.mock('../src/expenses/expenses.js')
-
 import { Users } from '../src/users/users.js';
 jest.mock('../src/users/users.js')
 
@@ -18,26 +17,6 @@ const today = new Intl.DateTimeFormat('es-ES', {
     month: 'numeric',
     day: 'numeric'
 }).format(Date.now());
-
-
-//spyOn y luego en el expected pongo haveBeenCall
-// const mockUsersEnsure = jest.fn().mockReturnValueOnce(true);
-// Users.ensure = mockUsersEnsure;
-// const mockUsersDescribe = jest.fn().mockReturnValueOnce(`user.hello Fernado user.create_ok`);
-// Users.describe = mockUsersDescribe;
-// const mockUsersdescribeReceipt = jest.fn().mockReturnValueOnce(`Pablo le debe a Mixa 112.66666666666667E
-// Fernado le debe a Mixa 108.66666666666664E.`);
-// Users.describeReceipt = mockUsersdescribeReceipt;
-
-// const mockExpensesAdd = jest.fn().mockReturnValueOnce(`message.article ${today}, message.quantity: 25 "euros en copas"`);
-// Expenses.add = mockExpensesAdd;
-// const mockExpenesesshow = jest.fn().mockReturnValueOnce(`El 2/14/2022, cantidad: 23 "sardinas"
-// El 01/10/2021, cantidad: 42 "naves espaciales"`);
-// Expenses.show = mockExpenesesshow;
-// const mockExpenesesshowExpensesArray = jest.fn().mockReturnValueOnce([{"money":12,"concept":"","date":today,"id":1},
-// {"money":342,"concept":"","date":today,"id":2},
-// {"money":8,"concept":"","date":today,"id":3}]);
-// Expenses.showExpensesArray = mockExpenesesshowExpensesArray;
 
 
 describe('Actions', () => {
@@ -55,6 +34,7 @@ describe('Actions', () => {
         expect(Messages.retrieve).toHaveBeenCalledWith('intro');
 
     });
+// hacer un test con la devoluccion de error de AddExpense
 
     it('When aadExpense is call must call Expenses.add and return a answer for the user', () => {
         Messages.retrieve.mockImplementationOnce((key)=>{return key});
@@ -130,14 +110,16 @@ describe('Actions', () => {
         expect(Actions.newUser(default_chat_id, default_user, message)).toBe(expectedResult);
     });
    
-    xit('should return a message when newuser allready exist ', () => {
-        mockUsersEnsure.mockReturnValueOnce(true);
-        mockUsersDescribe.mockReturnValueOnce(`user.hello Fernado user.exits_end`);
+    it('should return a message when newuser allready exist ', () => {
+        Users.ensure.mockReturnValueOnce(true);
+        Users.describe.mockReturnValueOnce(`user.hello Fernado user.exits_end`);
+        Messages.retrieve.mockReturnValueOnce('usuario ya registrado');
+        Messages.parse.mockReturnValueOnce('Hola Fernado tu usuario ya estaba creado en este chat.')
 
         const default_user = {
             id: 34_512_345,
             first_name: 'Fernado',
-            name: 'melacoge con la mano'
+            name: 'Sr'
         };
         const default_chat_id = -13_853;
 
@@ -147,8 +129,12 @@ describe('Actions', () => {
         expect(Actions.newUser(default_chat_id, default_user, message)).toBe(expectedResult);
     });
 
-    xit('should print all the expenses of the chat', () => {
-        //mock Expenses.show
+    it('should print all the expenses of the chat', () => {
+        Expenses.show.mockReturnValueOnce(`message.article 2/14/2022, message.quantity: 23, "sardinas"
+message.article 01/10/2021, message.quantity: 42, "naves espaciales"`);
+        Messages.parse.mockReturnValueOnce(`El 2/14/2022, cantidad: 23, "sardinas"
+El 01/10/2021, cantidad: 42, "naves espaciales"`);
+
         const mockActionsnewUser = jest.fn()
             .mockReturnValueOnce(`usuario registrado: Hola Fernando tu usuario ha sido creado.`);
         Actions.newUser = mockActionsnewUser;
@@ -165,8 +151,8 @@ describe('Actions', () => {
         };
         const default_chat_id = -24;
 
-        const expectedResult = `El 2/14/2022, cantidad: 23 "sardinas"
-El 01/10/2021, cantidad: 42 "naves espaciales"`;
+        const expectedResult = `El 2/14/2022, cantidad: 23, "sardinas"
+El 01/10/2021, cantidad: 42, "naves espaciales"`;
 
         Actions.newUser(default_chat_id, default_user);
         Actions.addExpense(default_chat_id, default_user, '23 sardinas 2/14/2022');
@@ -176,7 +162,7 @@ El 01/10/2021, cantidad: 42 "naves espaciales"`;
         expect(result).toBe(expectedResult);
     });
 
-    xit('when command cuenta is called should return the bill of the chat', () => {
+    it('when command cuenta is called should return the bill of the chat', () => {
         const mockActionsnewUser = jest.fn()
             .mockReturnValueOnce(`usuario registrado: Hola Fernando tu usuario ha sido creado.`)
             .mockReturnValueOnce(`usuario registrado: Hola Mixa tu usuario ha sido creado.`)
@@ -223,6 +209,12 @@ Fernado le debe a Mixa 108.66666666666664E.`;
         Actions.addExpense(default_chat_id, default_user1, '342');
         Actions.addExpense(default_chat_id, default_user2, '8');
 
+        Calculator.distributeExpenses.mockReturnValueOnce([{}]);
+        Users.describeReceipt.mockReturnValueOnce(`escrito con keys`);
+        Messages.parse.mockReturnValueOnce(`Pablo le debe a Mixa 112.66666666666667E
+Fernado le debe a Mixa 108.66666666666664E.`);
+        Messages.retrieve.mockReturnValueOnce('la cuenta');
+
         const result = Actions.showBill(default_chat_id, default_user);
 
         expect(result).toBe(expectedResult);
@@ -230,7 +222,7 @@ Fernado le debe a Mixa 108.66666666666664E.`;
 
 
     xit('should load in the collections the json and log onto channel error if somethig goes wrong', () => {
-        const expected = false;
+        const expected = true;
 
         const result = Actions.load();
 

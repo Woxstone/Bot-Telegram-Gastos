@@ -35,7 +35,6 @@ describe('roster work like roster', () => {
             return true;
         });
         
-
         const default_user = {
             id: 42376,
             first_name: 'Machoa',
