@@ -36,7 +36,7 @@ describe('Actions', () => {
     });
 // hacer un test con la devoluccion de error de AddExpense
 
-    xit('When aadExpense is call must call Expenses.add and return a answer for the user', () => {
+    it('When aadExpense is call must call Expenses.add and return a answer for the user', () => {
         Messages.retrieve.mockImplementationOnce((key)=>{return key});
         Messages.parse.mockReturnValueOnce(`El ${today}, cantidad: 25 \"euros en copas\"`);
         Parser.extractMoney.mockReturnValueOnce(25);
@@ -57,7 +57,7 @@ describe('Actions', () => {
         expect(Expenses.add).toHaveBeenCalledWith(default_chat_id, default_user.id, { money: 25, concept: 'euros en copas', date: today });
     });
 
-    xit('shoud had an option for create a new user and handle when exist', () => {
+    it('shoud had an option for create a new user and handle when exist', () => {
         const default_user = {
             id: 43241,
             first_name: 'user first name example',
@@ -110,7 +110,7 @@ describe('Actions', () => {
         expect(Actions.newUser(default_chat_id, default_user, message)).toBe(expectedResult);
     });
    
-    xit('should return a message when newuser allready exist ', () => {
+    it('should return a message when newuser allready exist ', () => {
         Users.ensure.mockReturnValueOnce(true);
         Users.describe.mockReturnValueOnce(`user.hello Fernado user.exits_end`);
         Messages.retrieve.mockReturnValueOnce('usuario ya registrado');
@@ -129,7 +129,7 @@ describe('Actions', () => {
         expect(Actions.newUser(default_chat_id, default_user, message)).toBe(expectedResult);
     });
 
-    xit('should print all the expenses of the chat', () => {
+    it('should print all the expenses of the chat', () => {
         Expenses.show.mockReturnValueOnce(`message.article 2/14/2022, message.quantity: 23, "sardinas"
 message.article 01/10/2021, message.quantity: 42, "naves espaciales"`);
         Messages.parse.mockReturnValueOnce(`El 2/14/2022, cantidad: 23, "sardinas"
@@ -162,7 +162,7 @@ El 01/10/2021, cantidad: 42, "naves espaciales"`;
         expect(result).toBe(expectedResult);
     });
 
-    xit('when command cuenta is called should return the bill of the chat', () => {
+    it('when command cuenta is called should return the bill of the chat', () => {
         const mockActionsnewUser = jest.fn()
             .mockReturnValueOnce(`usuario registrado: Hola Fernando tu usuario ha sido creado.`)
             .mockReturnValueOnce(`usuario registrado: Hola Mixa tu usuario ha sido creado.`)
@@ -221,12 +221,14 @@ Fernado le debe a Mixa 108.66666666666664E.`);
     });
 
 
-    xit('should load in the collections the json and log onto channel error if somethig goes wrong', () => {
+    it('should load in the collections the json and log onto channel error if somethig goes wrong', () => {
         const expected = true;
 
         const result = Actions.load();
 
-        expect(result).toBe(expected);
+        expect(Users.load).toHaveBeenCalled();
+        expect(Expenses.load).toHaveBeenCalled();
+        
 
     });
 });
