@@ -3,8 +3,8 @@ import { User } from './user';
 
 class Users {
 
-    static ensure(user){
-        const theUser = new User (user.id, user.first_name, user.username);
+    static ensure(user) {
+        const theUser = new User(user.id, user.first_name, user.username);
         if (!Roster.exists(theUser.id)) {
             Roster.createAndSave(theUser)
             return false
@@ -13,35 +13,20 @@ class Users {
         return true;
     }
 
-    static describe(theUser, exits = false) { 
-        if(exits) {
+    static describe(theUser, exits = false) {
+        if (exits) {
             return `user.hello ${theUser.first_name} user.exits_end`;
         };
 
         return `user.hello ${theUser.first_name} user.create_ok`;
     }
 
-    static get(message) {
-        const id = Users.getId(message);
-        const user = Roster.search(id);
-        const result = message.replace(id, user.first_name);
-
-        return result;
-    }
-
-    static getId(message) {
-        let result = message.match(/ \d+ /gm);
-        result = parseFloat(result[0]);
-
-        return result;
-    }
-
     static describeReceipt(receipt) {
         let result = '';
-        receipt.forEach(debt => {           
-            const payer = Roster.search(debt.payer).first_name;     
+        receipt.forEach(debt => {
+            const payer = Roster.search(debt.payer).first_name;
             const receiver = Roster.search(debt.receiver).first_name;
-    
+
             result += `${payer} user.debt ${receiver} ${debt.money}E\n`;
         });
 
@@ -53,21 +38,22 @@ class Users {
     static load() {
         return Roster.load();
     }
-    
-    static parseId(expensesWithKeys){
-        const IDMARK='/ID:'   
-        let result= expensesWithKeys.split(' ')
-       result = result.map((word) =>{;
+
+    static parseId(expensesWithKeys) {
+        const IDMARK = '/ID:'
+        let result = expensesWithKeys.split(' ')
+        result = result.map((word) => {
+            ;
             if (word.includes(IDMARK)) {
-                let id= word.replace(IDMARK,'').replace(/.$/gm,'');
+                let id = word.replace(IDMARK, '').replace(/.$/gm, '');
                 const username = Roster.search(Number.parseInt(id)).first_name;
                 return username;
             }
             return word;
         })
-        result= result.join(' ');
+        result = result.join(' ');
         return result;
     }
 }
 
-export {Users}
+export { Users }

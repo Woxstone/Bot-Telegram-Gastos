@@ -48,7 +48,7 @@ import { StringSession } from "telegram/sessions";
      apiHash: process.env.API_HASH_usertwo,
      testText : 'addgasto command test user 2',
      intakeMessage : '/addgasto 35 manzanas',
-     messageExpected: `gasto registrado: El ${fechaDeHoy}, cantidad: 35, "manzanas"`,
+     messageExpected: `gasto registrado: El ${fechaDeHoy}, Motercode metio un gasto de cantidad: 35, "manzanas"`,
      especificDelay: 0
     }));
 

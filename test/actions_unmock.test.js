@@ -1,4 +1,7 @@
 import { Actions } from '../src/actions.js';
+import fs from 'fs';
+jest.mock('../src/helpers/logger.js');
+jest.mock('fs');
 
 const today = new Intl.DateTimeFormat('es-ES', {
     year: 'numeric',
@@ -8,22 +11,7 @@ const today = new Intl.DateTimeFormat('es-ES', {
 
 
 describe('Actions', () => {
-    xit('retrieves help', () => {
-
-        expect(Actions.getHelp()).toBe(`Hola, estos son los comandos que puedes utilizar:
-/nuevo_usuario para crearte un usuario en este chat,
-/addgasto "cantidad" "concepto" "DD/MM/YYYY" introducira un gasto en la bolsa del chat linkeado a ti,
-/gastos te devolvere los gastos de este chat,
-/cuenta usa este comando para dividir los gastos del chat con aquellos que hayan participado.
-Si tienes algun problema /help para saber los formatos de nuevo`);
-    });
-
-    xit('identifies itself', () => {
-
-        expect(Actions.getIntroduction()).toBe(`Soy un bot de gastos compartido`);
-    });
-// hacer un test con la devoluccion de error de AddExpense
-
+  
     it('When aadExpense is call must call Expenses.add and return a answer for the user', () => {
         
         const default_user = {
@@ -39,53 +27,7 @@ Si tienes algun problema /help para saber los formatos de nuevo`);
         expect(result).toBe(`gasto registrado: El ${today}, ${default_user.first_name} metio un gasto de cantidad: 25, \"euros en copas\"`);
     });
 
-    xit('shoud had an option for create a new user and handle when exist', () => {
-        const default_user = {
-            id: 43241,
-            first_name: 'user first name example',
-            name: 'user name example'
-        };
-        
-      
-        const default_chat_id = -13_853;
-
-        const message = '';
-        const expectedResult = `usuario ya registrado: Hola ${default_user.first_name} tu usuario ya estaba creado en este chat.`;
-
-        expect(Actions.newUser(default_chat_id, default_user, message)).toBe(expectedResult);
-    });
-
-
-    xit('shoud had an option for create a new user and handle when not exist', () => {
-        const default_user = {
-            id: 43241,
-            first_name: 'user first name example',
-            name: 'user name example'
-        };
-      
-        const default_chat_id = -13_853;
-
-        const message = '';
-        const expectedResult = `usuario registrado: Hola ${default_user.first_name} tu usuario ha sido creado.`;
-
-        expect(Actions.newUser(default_chat_id, default_user, message)).toBe(expectedResult);
-    });
-   
-    xit('should return a message when newuser allready exist ', () => {
-        const default_user = {
-            id: 34_512_345,
-            first_name: 'Fernado',
-            name: 'Sr'
-        };
-        const default_chat_id = -13_853;
-
-        const message = '';
-        const expectedResult = `usuario ya registrado: Hola ${default_user.first_name} tu usuario ya estaba creado en este chat.`;
-
-        expect(Actions.newUser(default_chat_id, default_user, message)).toBe(expectedResult);
-    });
-
-    it.only('should print all the expenses of the chat', () => {
+    it('should print all the expenses of the chat', () => {
         const default_user = {
             id: 3_422_345,
             first_name: 'Fernado',
@@ -143,13 +85,4 @@ Fernado le debe a Mixa 108.66666666666664E.`;
         expect(result).toBe(expectedResult);
     });
 
-
-    xit('should load in the collections the json and log onto channel error if somethig goes wrong', () => {
-        const expected = true;
-
-        const result = Actions.load();
-
-        expect(result).toBe(expected);
-
-    });
 });
