@@ -5,6 +5,8 @@ class Parser{
             if(!isNaN(parseInt(word))) {
                 return word;
             }}));
+        if(result == 'NaN') { return result = 'Sin cantidad'}
+
         return result;
     }
     
@@ -14,8 +16,9 @@ class Parser{
                 return word;
             }
         });
-
         result = result.join(' '); 
+        if(result == '') { return 'Sin concepto'}
+
         return result;
     }
 

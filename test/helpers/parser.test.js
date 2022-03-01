@@ -12,73 +12,73 @@ describe('Parser method itting of ctx.from', () => {
     };
 
     it('should extrac the id of the user', () => {
-        const expectedResult = 305;
+        const expectedintake = 305;
 
-        const result = Parser.extractId(default_from);
+        const intake = Parser.extractId(default_from);
 
-        expect(result).toEqual(expectedResult);
+        expect(intake).toEqual(expectedintake);
     });
 
     it('should extrac the first_name of the user', () => {
-        const expectedResult = 'Nacho';
+        const expectedintake = 'Nacho';
 
-        const result = Parser.extractFirstName(default_from);
+        const intake = Parser.extractFirstName(default_from);
 
-        expect(result).toEqual(expectedResult);
+        expect(intake).toEqual(expectedintake);
     });
 
     it('should extrac de name of the user', () => {
-        const expectedResult = 'dfadfa';
+        const expectedintake = 'dfadfa';
 
-        const result = Parser.extractName(default_from);
+        const intake = Parser.extractName(default_from);
 
-        expect(result).toEqual(expectedResult);
+        expect(intake).toEqual(expectedintake);
     });
 });
 
 describe('extractMoney', () => {
     it('should parse money from a formated string NN concept', () => {
-        const expectedResult = 42;
+        const expectedintake = 42;
         const intakeString = '42 manzanas';
 
-        const result = Parser.extractMoney(intakeString);
-        expect(result).toEqual(expectedResult);
+        const intake = Parser.extractMoney(intakeString);
+        expect(intake).toEqual(expectedintake);
     });
 });
 
 describe('extractConcept', () => {
     it('should parse concept from a formated string NN concept', () => {
-        const expectedResult = 'manzanas verdes';
+        const expectedintake = 'manzanas verdes';
         const intakeString = '42 manzanas verdes 10/02/2022';
 
-        const result = Parser.extractConcept(intakeString);
-        expect(result).toEqual(expectedResult);
+        const intake = Parser.extractConcept(intakeString);
+        expect(intake).toEqual(expectedintake);
     });
 
     it('should parse concept from a formated string NN concept', () => {
-        const expectedResult = 'manzanas verdes';
+        const expectedintake = 'manzanas verdes';
         const intakeString = '42 manzanas verdes';
 
-        const result = Parser.extractConcept(intakeString);
-        expect(result).toEqual(expectedResult);
+        const intake = Parser.extractConcept(intakeString);
+        expect(intake).toEqual(expectedintake);
     });
 });
 
 describe('extractDate', () => {
     it('should parse date from a formated string NN concept', () => {
-        const expectedResult = undefined;
+        const expectedintake = undefined;
         const intakeString = '42 manzanas verdes  ';
 
-        const result = Parser.extractDate(intakeString);
-        expect(result).toEqual(expectedResult);
+        const intake = Parser.extractDate(intakeString);
+        expect(intake).toEqual(expectedintake);
     });
 
     it('should parse date from a formated string NN concept', () => {
-        const expectedResult = '10/02/2022';
+        const expectedintake = '10/02/2022';
         const intakeString = '42 manzanas verdes 10/02/2022';
 
-        const result = Parser.extractDate(intakeString);
-        expect(result).toEqual(expectedResult);
+        const intake = Parser.extractDate(intakeString);
+        expect(intake).toEqual(expectedintake);
     });
 });
 
@@ -114,24 +114,24 @@ describe('Combinaciones', () => {
     it('123€ = { cantidad: 123, concepto: "", date: undefined}', () => {
         const intake = '123€';
         expect(Parser.extractMoney(intake)).toBe(123);
-        expect(Parser.extractConcept(intake)).toBe("");
+        expect(Parser.extractConcept(intake)).toBe("Sin concepto");
         expect(Parser.extractDate(intake)).toBe(undefined);
     });
 
 });
 // describe("casos que puede tener add gasto", () => {
 //     it('addgasto patatas 123 = { cantidad: 123, concepto: "patatas 123", error: false }', () => {
-//       const resultado = gasto.creaGasto('addgasto patatas 123');
-//       expect(resultado.cantidad).toBe(123);
-//       // expect(resultado.concepto).toBe("patatas 123");
-//       expect(resultado.concepto).toBe("patatas");
-//       expect(resultado.error).toBe(false);
+//       const intakeado = gasto.creaGasto('addgasto patatas 123');
+//       expect(intakeado.cantidad).toBe(123);
+//       // expect(intakeado.concepto).toBe("patatas 123");
+//       expect(intakeado.concepto).toBe("patatas");
+//       expect(intakeado.error).toBe(false);
 //     });
 //     it('addgasto 128 = { cantidad: 128, concepto: "Sin concepto", error: false }', () => {
-//       const resultado = gasto.creaGasto('addgasto 128');
-//       expect(resultado.cantidad).toBe(128);
-//       expect(resultado.concepto).toBe("Sin concepto");
-//       expect(resultado.error).toBe(false);
+//       const intakeado = gasto.creaGasto('addgasto 128');
+//       expect(intakeado.cantidad).toBe(128);
+//       expect(intakeado.concepto).toBe("Sin concepto");
+//       expect(intakeado.error).toBe(false);
 //     });
 //   }
 //   )
@@ -270,14 +270,14 @@ describe('comprueba que el elemento gasto no da problemas', () => {
 
 //   describe(`test sobre comando bien escrito`, () =>{
 //   it('"addgasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("addgasto 23 sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
+//     const intake = gasto.creaGasto("addgasto 23 sardina");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina");
 //   })
 //   it('"adDGasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("adDGasto 23 sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
+//     const intake = gasto.creaGasto("adDGasto 23 sardina");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina");
 //   })
 //   it('"adgasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
 //     let errata = ""
@@ -302,19 +302,19 @@ describe('comprueba que el elemento gasto no da problemas', () => {
 //   })
   
 //   it('"addgasto: 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("addgasto: 23 sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe('sardina'); 
+//     const intake = gasto.creaGasto("addgasto: 23 sardina");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe('sardina'); 
 //   })
 //   it('"/addgasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("/addgasto 23 sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
+//     const intake = gasto.creaGasto("/addgasto 23 sardina");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina");
 //   })
 //   it('"/adDGasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("/adDGasto 23 sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
+//     const intake = gasto.creaGasto("/adDGasto 23 sardina");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina");
 //   })
 //   it('"/adgasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
 //     let errata = ""
@@ -332,126 +332,114 @@ describe('comprueba que el elemento gasto no da problemas', () => {
 //     expect(errata).toBe("El formato es incorrecto. use: /addgasto <cantidad> <concepto>"); 
 //   })
 //   it('"/addgasto: 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("addgasto: 23 sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
+//     const intake = gasto.creaGasto("addgasto: 23 sardina");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina");
 //   })  
 // })
 
 
 
-// describe(`it sobre posicion comando,cantidad y concepto`, () =>{
-//   it('"addgasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("addgasto 23 sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
-//   })
-//   it('"23 addgasto sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("23 addgasto sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
-//  })
-//   it('"23 sardina addgasto" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("23 sardina addgasto");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
-//  })
-//   it('"sardina 23 addgasto" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("sardina 23 addgasto");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina"); 
-//   })
-//   it('"sardina addgasto 23" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("sardina addgasto 23");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina"); 
-//   })
+describe(`it sobre posicion cantidad y concepto`, () =>{
+  it('"23 sardina" cantidad=23 concepto=sardina', () =>{ 
+    const intake ="23 sardina";
+    expect(Parser.extractMoney(intake)).toBe(23);
+    expect(Parser.extractConcept(intake)).toBe("sardina");
+  });
+  it('"23 sardina" cantidad=23 concepto=sardina', () =>{ 
+    const intake = "23 sardina";
+    expect(Parser.extractMoney(intake)).toBe(23);
+    expect(Parser.extractConcept(intake)).toBe("sardina");
+ });
+  it('"23 sardina" cantidad=23 concepto=sardina', () =>{ 
+    const intake = ("23 sardina");
+    expect(Parser.extractMoney(intake)).toBe(23);
+    expect(Parser.extractConcept(intake)).toBe("sardina");
+ });
+  it('"sardina 23" cantidad=23 concepto=sardina', () =>{ 
+    const intake = ("sardina 23");
+    expect(Parser.extractMoney(intake)).toBe(23);
+    expect(Parser.extractConcept(intake)).toBe("sardina"); 
+  });
+  it('"sardina 23" cantidad=23 concepto=sardina', () =>{ 
+    const intake = ("sardina 23");
+    expect(Parser.extractMoney(intake)).toBe(23);
+    expect(Parser.extractConcept(intake)).toBe("sardina"); 
+  });
 //   it('"addgastosardina23" cantidad=23 concepto=sardina', () =>{ 
 //     let errata = ""
 //     try {gasto.creaGasto("addgastosardina23");      
 //     } catch (error) {errata=error
 //     }
-//     expect(errata).toBe("El formato es incorrecto. use: /addgasto <cantidad> <concepto>");  
-//   })
+//     expect(errata).toBe("El formato es incorrecto. use:  <cantidad> <concepto>");  
+//   });
 //   it('"addgasto23sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("sardina addgasto 23");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina"); 
-//   })
+//     const intake = gasto.creaGasto("sardina 23");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina"); 
+//   });
 //   it('"23addgastosardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("23addgastosardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina"); 
-//   })
+//     const intake = gasto.creaGasto("23addgastosardina");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina"); 
+//   });
 //   it('"23sardinaaddgasto" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("23sardinaaddgasto");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina"); 
-//   })
+//     const intake = gasto.creaGasto("23sardinaaddgasto");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina"); 
+//   });
 //   it('"addgastosardina23" cantidad=23 concepto=sardina', () =>{ 
 //     let errata = ""
 //     try {gasto.creaGasto("addgastosardina23");      
 //     } catch (error) {errata=error
 //     }
-//     expect(errata).toBe("El formato es incorrecto. use: /addgasto <cantidad> <concepto>");  
-//   })
-//   it('"/addgasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("/addgasto 23 sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
-//   })
-//   it('"23 /addgasto sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("23 /addgasto sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
-//   })
+//     expect(errata).toBe("El formato es incorrecto. use:  <cantidad> <concepto>");  
+//   });
+  it('"23 sardina" cantidad=23 concepto=sardina', () =>{ 
+    const intake = ("23 sardina");
+    expect(Parser.extractMoney(intake)).toBe(23);
+    expect(Parser.extractConcept(intake)).toBe("sardina");
+  });
 
-//   it('"23 sardina /addgasto" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("23 sardina /addgasto");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
-//   })
-//   it('"sardina 23 /addgasto" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("sardina 23 /addgasto");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
-//   })
-//   it('"sardina /addgasto 23" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("sardina /addgasto 23");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
-//   })
+  it('"sardina 23 " cantidad=23 concepto=sardina', () =>{ 
+    const intake = ("sardina 23 ");
+    expect(Parser.extractMoney(intake)).toBe(23);
+    expect(Parser.extractConcept(intake)).toBe("sardina");
+  });
+  it('"sardina  23" cantidad=23 concepto=sardina', () =>{ 
+    const intake = ("sardina  23");
+    expect(Parser.extractMoney(intake)).toBe(23);
+    expect(Parser.extractConcept(intake)).toBe("sardina");
+  });
+});
+
+
+describe(`it sobre caracteres posibles`, () =>{
+  it('"23 sardiná perü ?¿?+`-0=!!dfaªº,%&4fs" cantidad=23 concepto=sardiná perü ?¿?+`-0=!!dfaªº,%&4fs', () =>{ 
+    const intake = ("23 sardiná perü ?¿?+`-0=!!dfaªº,%&4fs");
+    expect(Parser.extractMoney(intake)).toBe(23);
+    expect(Parser.extractConcept(intake)).toBe("sardiná perü ?¿?+`-0=!!dfaªº,%&4fs");
+  });
+});
+
+describe(`it sobre ausencia de concepto`, () =>{
+  it('"23" cantidad=23 concepto=Sin concepto', () =>{ 
+    const intake = ("23");
+    expect(Parser.extractMoney(intake)).toBe(23);
+    expect(Parser.extractConcept(intake)).toBe("Sin concepto");
+  })
+//   it('"" cantidad=undefined concepto="Sin concepto"', () =>{ 
+//     let intake = ""
+//     expect(Parser.extractMoney(intake)).toBe("Sin cantidad");
+//     expect(Parser.extractConcept(intake)).toBe("Sin concepto");
 // })
-
-
-// describe(`it sobre caracteres posibles`, () =>{
-//   it('"addgasto 23 sardiná perü ?¿?+`-0=!!dfaªº,%&4fs" cantidad=23 concepto=sardiná perü ?¿?+`-0=!!dfaªº,%&4fs', () =>{ 
-//     const result = gasto.creaGasto("addgasto 23 sardiná perü ?¿?+`-0=!!dfaªº,%&4fs");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardiná perü ?¿?+`-0=!!dfaªº,%&4fs");
-//   })
-// })
-
-// describe(`it sobre ausencia de concepto`, () =>{
-//   it('"addgasto 23" cantidad=23 concepto=Sin concepto', () =>{ 
-//     const result = gasto.creaGasto("addgasto 23");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("Sin concepto");
-//   })
-//   it('"addgasto" cantidad=undefined concepto="Sin concepto"', () =>{ 
-//     let errata = ""
-//     try {gasto.creaGasto("addgasto");      
-//     } catch (error) {errata=error
-//     }
-//     expect(errata).toBe("El formato es incorrecto. use: /addgasto <cantidad> <concepto>");  
-//   })
-// })
+})
 
 // describe(`it sobre  concepto entremezclado`, () =>{
 //   it('"addgasto patatas 23 pagadas en metalico" cantidad=23 concepto= ', () =>{ 
-//     const result = gasto.creaGasto("addgasto patatas 23 pagadas en metalico");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("patatas pagadas en metalico");
+//     const intake = gasto.creaGasto("addgasto patatas 23 pagadas en metalico");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("patatas pagadas en metalico");
 //   })
 // })
 
@@ -476,14 +464,14 @@ describe('comprueba que el elemento gasto no da problemas', () => {
 
 // describe(`it sobre comando bien escrito`, () =>{
 //   it('"addgasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("addgasto 23 sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
+//     const intake = gasto.creaGasto("addgasto 23 sardina");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina");
 //   })
 //   it('"adDGasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("adDGasto 23 sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
+//     const intake = gasto.creaGasto("adDGasto 23 sardina");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina");
 //   })
 //   it('"adgasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
 //     let error = '';
@@ -504,19 +492,19 @@ describe('comprueba que el elemento gasto no da problemas', () => {
 //     expect(error).toBe('El formato es incorrecto. use: /addgasto <cantidad> <concepto>');
 //   })
 //   it('"addgasto: 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("addgasto: 23 sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe('sardina');
+//     const intake = gasto.creaGasto("addgasto: 23 sardina");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe('sardina');
 //   })
 //   it('"/addgasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("/addgasto 23 sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
+//     const intake = gasto.creaGasto("/addgasto 23 sardina");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina");
 //   })
 //   it('"/adDGasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("/adDGasto 23 sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
+//     const intake = gasto.creaGasto("/adDGasto 23 sardina");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina");
 //   })
 //   it('"/adgasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
 //     let error = '';
@@ -537,9 +525,9 @@ describe('comprueba que el elemento gasto no da problemas', () => {
 //     expect(error).toBe('El formato es incorrecto. use: /addgasto <cantidad> <concepto>');
 //   })
 //   it('"/addgasto: 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("addgasto: 23 sardina");
-//     expect(result.cantidad).toBe(23); 
-//     expect(result.concepto).toBe("sardina"); 
+//     const intake = gasto.creaGasto("addgasto: 23 sardina");
+//     expect(Parser.extractMoney(intake)).toBe(23); 
+//     expect(Parser.extractConcept(intake)).toBe("sardina"); 
 //   })  
 // })
 
@@ -547,39 +535,39 @@ describe('comprueba que el elemento gasto no da problemas', () => {
 
 // describe(`it sobre posicion comando,cantidad y concepto`, () =>{
 //   it('"addgasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("addgasto 23 sardina");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
+//     const intake = gasto.creaGasto("addgasto 23 sardina");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina");
 //   })
 //   it('"23 addgasto sardina" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("23 addgasto sardina");
-//     expect(result.cantidad).toBe(23); 
-//     expect(result.concepto).toBe("sardina"); 
+//     const intake = gasto.creaGasto("23 addgasto sardina");
+//     expect(Parser.extractMoney(intake)).toBe(23); 
+//     expect(Parser.extractConcept(intake)).toBe("sardina"); 
 //   })
 //   it('"23 sardina addgasto" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("23 sardina addgasto");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina");
+//     const intake = gasto.creaGasto("23 sardina addgasto");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina");
 //   })
 //   it('"sardina 23 addgasto" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("sardina 23 addgasto");
-//     expect(result.cantidad).toBe(23); 
-//     expect(result.concepto).toBe("sardina"); 
+//     const intake = gasto.creaGasto("sardina 23 addgasto");
+//     expect(Parser.extractMoney(intake)).toBe(23); 
+//     expect(Parser.extractConcept(intake)).toBe("sardina"); 
 //   })
 //   it('"sardina addgasto 23" cantidad=23 concepto=sardina', () =>{ 
-//     const result = gasto.creaGasto("sardina addgasto 23");
-//     expect(result.cantidad).toBe(23);
-//     expect(result.concepto).toBe("sardina"); 
+//     const intake = gasto.creaGasto("sardina addgasto 23");
+//     expect(Parser.extractMoney(intake)).toBe(23);
+//     expect(Parser.extractConcept(intake)).toBe("sardina"); 
 //   })
 //   it('"addgastosardina23" cantidad=23 concepto=sardina', () =>{ 
 //     let error = '';
-//     let result = '';
+//     let intake = '';
 //     try {
-//         result= gasto.creaGasto("addgastosardina23");
+//         intake= gasto.creaGasto("addgastosardina23");
 //     } catch (err) {
 //         error = err;
 //     }
-//     expect(result.concepto).toBe(33);
+//     expect(Parser.extractConcept(intake)).toBe(33);
 //     expect(error).toBe('El formato es incorrecto. use: /addgasto <cantidad> <concepto>');
 //   })
 //   // it('"addgasto23sardina" cantidad=23 concepto=sardina', () =>{ 
@@ -592,73 +580,73 @@ describe('comprueba que el elemento gasto no da problemas', () => {
 //   //   expect(error).toBe('El formato es incorrecto. use: /addgasto <cantidad> <concepto>');
 //   // })
 //   // it('"23addgastosardina" cantidad=23 concepto=sardina', () =>{ 
-//   //   const result = gasto.creaGasto("23addgastosardina");
-//   //   expect(result.cantidad).toBe(23); 
-//   //   expect(result.concepto).toBe("sardina");
+//   //   const intake = gasto.creaGasto("23addgastosardina");
+//   //   expect(Parser.extractMoney(intake)).toBe(23); 
+//   //   expect(Parser.extractConcept(intake)).toBe("sardina");
 //   // })
 //   // it('"23sardinaaddgasto" cantidad=23 concepto=sardina', () =>{ 
-//   //   const result = gasto.creaGasto("23sardinaaddgasto");
-//   //   expect(result.cantidad).toBe(23); //must be 23
-//   //   expect(result.concepto).toBe("sardina"); //must be sardina
+//   //   const intake = gasto.creaGasto("23sardinaaddgasto");
+//   //   expect(Parser.extractMoney(intake)).toBe(23); //must be 23
+//   //   expect(Parser.extractConcept(intake)).toBe("sardina"); //must be sardina
 //   // })
 //   // it('"addgastosardina23" cantidad=23 concepto=sardina', () =>{ 
-//   //   const result = gasto.creaGasto("addgastosardina23");
-//   //   expect(result.cantidad).toBe(0); //must be 23
-//   //   expect(result.concepto).toBe(""); //must be sardina
+//   //   const intake = gasto.creaGasto("addgastosardina23");
+//   //   expect(Parser.extractMoney(intake)).toBe(0); //must be 23
+//   //   expect(Parser.extractConcept(intake)).toBe(""); //must be sardina
 //   // })
 // //   it('"/addgasto 23 sardina" cantidad=23 concepto=sardina', () =>{ 
-// //     const result = gasto.creaGasto("/addgasto 23 sardina");
-// //     expect(result.cantidad).toBe(23);
-// //     expect(result.concepto).toBe("sardina");
+// //     const intake = gasto.creaGasto("/addgasto 23 sardina");
+// //     expect(Parser.extractMoney(intake)).toBe(23);
+// //     expect(Parser.extractConcept(intake)).toBe("sardina");
 // //   })
 // //   it('"23 /addgasto sardina" cantidad=23 concepto=sardina', () =>{ 
-// //     const result = gasto.creaGasto("23 /addgasto sardina");
-// //     expect(result.cantidad).toBe(0); //must be 23
-// //     expect(result.concepto).toBe(""); //must be sardina
+// //     const intake = gasto.creaGasto("23 /addgasto sardina");
+// //     expect(Parser.extractMoney(intake)).toBe(0); //must be 23
+// //     expect(Parser.extractConcept(intake)).toBe(""); //must be sardina
 // //   })
 // //   it('"23 sardina /addgasto" cantidad=23 concepto=sardina', () =>{ 
-// //     const result = gasto.creaGasto("23 sardina /addgasto");
-// //     expect(result.cantidad).toBe(0);//must be 23
-// //     expect(result.concepto).toBe("");//must be sardina
+// //     const intake = gasto.creaGasto("23 sardina /addgasto");
+// //     expect(Parser.extractMoney(intake)).toBe(0);//must be 23
+// //     expect(Parser.extractConcept(intake)).toBe("");//must be sardina
 // //   })
 // //   it('"sardina 23 /addgasto" cantidad=23 concepto=sardina', () =>{ 
-// //     const result = gasto.creaGasto("sardina 23 /addgasto");
-// //     expect(result.cantidad).toBe(0); // must be 23
-// //     expect(result.concepto).toBe(""); //must be sardina
+// //     const intake = gasto.creaGasto("sardina 23 /addgasto");
+// //     expect(Parser.extractMoney(intake)).toBe(0); // must be 23
+// //     expect(Parser.extractConcept(intake)).toBe(""); //must be sardina
 // //   })
 // //   it('"sardina /addgasto 23" cantidad=23 concepto=sardina', () =>{ 
-// //     const result = gasto.creaGasto("sardina /addgasto 23");
-// //     expect(result.cantidad).toBe(0); //must be 23
-// //     expect(result.concepto).toBe(""); //must be sardina
+// //     const intake = gasto.creaGasto("sardina /addgasto 23");
+// //     expect(Parser.extractMoney(intake)).toBe(0); //must be 23
+// //     expect(Parser.extractConcept(intake)).toBe(""); //must be sardina
 // //   })
 // })
 
 
 // // describe(`it sobre caracteres posibles`, () =>{
 // //   it('"addgasto 23 sardiná perü ?¿?+`-0=!!dfaªº,%&4fs" cantidad=23 concepto=sardiná perü ?¿?+`-0=!!dfaªº,%&4fs', () =>{ 
-// //     const result = gasto.creaGasto("addgasto 23 sardiná perü ?¿?+`-0=!!dfaªº,%&4fs");
-// //     expect(result.cantidad).toBe(23);
-// //     expect(result.concepto).toBe("sardiná perü ?¿?+`-0=!!dfaªº,%&4fs");
+// //     const intake = gasto.creaGasto("addgasto 23 sardiná perü ?¿?+`-0=!!dfaªº,%&4fs");
+// //     expect(Parser.extractMoney(intake)).toBe(23);
+// //     expect(Parser.extractConcept(intake)).toBe("sardiná perü ?¿?+`-0=!!dfaªº,%&4fs");
 // //   })
 // // })
 
 // // describe(`it sobre ausencia de concepto`, () =>{
 // //   it('"addgasto 23" cantidad=23 concepto=Sin concepto', () =>{ 
-// //     const result = gasto.creaGasto("addgasto 23");
-// //     expect(result.cantidad).toBe(23);
-// //     expect(result.concepto).toBe("Sin concepto");
+// //     const intake = gasto.creaGasto("addgasto 23");
+// //     expect(Parser.extractMoney(intake)).toBe(23);
+// //     expect(Parser.extractConcept(intake)).toBe("Sin concepto");
 // //   })
 // //   it('"addgasto" cantidad=undefined concepto="Sin concepto"', () =>{ 
-// //     const result = gasto.creaGasto("addgasto");
-// //     expect(result.cantidad).toBe(undefined);// must be an error
-// //     expect(result.concepto).toBe("Sin concepto");
+// //     const intake = gasto.creaGasto("addgasto");
+// //     expect(Parser.extractMoney(intake)).toBe(undefined);// must be an error
+// //     expect(Parser.extractConcept(intake)).toBe("Sin concepto");
 // //   })
 // // })
 
 // // describe(`it sobre  concepto entremezclado`, () =>{
 // //   it('"addgasto patatas 23 pagadas en metalico" cantidad=23 concepto= ', () =>{ 
-// //     const result = gasto.creaGasto("addgasto patatas 23 pagadas en metalico");
-// //     expect(result.cantidad).toBe(23);
-// //     expect(result.concepto).toBe("patatas 23 pagadas en metalico");
+// //     const intake = gasto.creaGasto("addgasto patatas 23 pagadas en metalico");
+// //     expect(Parser.extractMoney(intake)).toBe(23);
+// //     expect(Parser.extractConcept(intake)).toBe("patatas 23 pagadas en metalico");
 // //   })
 // // })
