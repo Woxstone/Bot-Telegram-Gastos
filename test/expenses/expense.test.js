@@ -50,7 +50,7 @@ describe('test about the methods', () => {
        
       
 
-        const expected = `message.article ${exp.date}, /ID:${exp.user_id}/ message.person message.quantity: ${exp.money}, \"${exp.concept}\"`;
+        const expected = `message.article ${exp.date}, /ID:${exp.user_id} message.person message.quantity: ${exp.money}, \"${exp.concept}\"`;
         const defaultExp = new Expense(exp);
 
         expect(defaultExp.description()).toEqual(expected);
@@ -60,7 +60,7 @@ describe('test about the methods', () => {
       
 
         exp.concept ='';
-        const expected = `message.article ${exp.date}, /ID:${exp.user_id}/ message.person message.quantity: ${exp.money}, \"expense.description_noConcept\"`;
+        const expected = `message.article ${exp.date}, /ID:${exp.user_id} message.person message.quantity: ${exp.money}, \"expense.description_noConcept\"`;
         const defaultExp = new Expense(exp);
 
         expect(defaultExp.description()).toEqual(expected);

@@ -19,8 +19,8 @@ class Users {
         return result;
     }
 
-    static describe(theUser, exits = false) {
-        if (exits) {
+    static describe(theUser) {
+        if (Roster.exists(theUser.id)) {
             return `user.hello ${theUser.first_name} user.exits_end`;
         };
 
@@ -28,33 +28,35 @@ class Users {
     }
 
     static describeReceipt(receipt) {
-        let result = '';
+        let stringOfTransactions = '';
+
         receipt.forEach(debt => {
             const payer = Roster.search(debt.payer).first_name;
             const receiver = Roster.search(debt.receiver).first_name;
 
-            result += `${payer} user.debt ${receiver} ${debt.money}E\n`;
+            stringOfTransactions += `${payer} user.debt ${receiver} ${debt.money}E\n`;
         });
 
-        result = result.replace(/\n$/g, '.');
+        const billWithKeys = stringOfTransactions.replace(/\n$/g, '.');
 
-        return result;
+        return billWithKeys;
     }
 
-    static parseId(expensesWithKeys) {
+    static parseId(descriptionOfExpeneses) {
         const IDMARK = '/ID:'
-        let result = expensesWithKeys.split(' ')
-        result = result.map((word) => {
-            ;
+        const expensesWithIDMARK = descriptionOfExpeneses.split(' ');
+        const expensesOutIDMARK = expensesWithIDMARK.map((word) => {
             if (word.includes(IDMARK)) {
-                let id = word.replace(IDMARK, '').replace(/.$/gm, '');
-                const username = Roster.search(Number.parseInt(id)).first_name;
+                const user_id = word.replace(IDMARK, '');
+                const user = Roster.search(Number.parseInt(user_id));
+                const username = user.first_name;
                 return username;
             }
             return word;
-        })
-        result = result.join(' ');
-        return result;
+        });
+
+        const expensesClean = expensesOutIDMARK.join(' ');
+        return expensesClean;
     }
 }
 

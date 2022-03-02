@@ -19,9 +19,11 @@ describe('Testing the methods of users', () => {
         expect(result).toEqual(expected);
     });
 
-    it('if exits is true (exits in roster)', () => {
+    it('if users exist', () => {
+        Roster.exists.mockReturnValueOnce(true);
+        
         const expected = `user.hello ${default_user.first_name} user.exits_end`;
-        const result = Users.describe(default_user, true);
+        const result = Users.describe(default_user);
 
         expect(result).toEqual(expected);
     });

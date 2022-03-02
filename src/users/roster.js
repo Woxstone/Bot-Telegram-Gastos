@@ -8,7 +8,6 @@ class Roster {
     static collection = [];
 
     static load() {
-
         try {
             this.collection = JSON.parse(fs.readFileSync(process.env.DATA_FILE_USERS));
         } catch (err) {
