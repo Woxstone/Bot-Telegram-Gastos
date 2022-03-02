@@ -20,6 +20,35 @@ class Actions {
         Expenses.load();
     }
 
+    static newUser(chat_id = '', user_ctx, message = '') {
+        let answer = '';
+        let userMessage = '';
+
+        const theUser = {
+            id: Parser.extractId(user_ctx),
+            first_name: Parser.extractFirstName(user_ctx),
+            username: Parser.extractName(user_ctx)
+        };
+
+        if (Users.ensure(theUser)) {
+            const keysUserMessage = Users.describe(theUser);
+            userMessage = Messages.parse(keysUserMessage);
+            answer = Messages.retrieve('user.exits');
+
+        } else {
+            const keysUserMessage = Users.describe(theUser);
+            userMessage = Messages.parse(keysUserMessage);
+            answer = Messages.retrieve('user.new_user');
+
+            const ghostExpense = '0';
+            Actions.addExpense(chat_id, user_ctx, ghostExpense);
+        }
+
+        const result = `${answer}: ${userMessage}`;
+
+        return result;
+    }
+
     static addExpense(chat_id, user_ctx, message) {
 
         const theExpense = {
@@ -30,63 +59,28 @@ class Actions {
 
         Users.ensure(user_ctx);
         const expenseKeys = Expenses.add(chat_id, user_ctx.id, theExpense);
-        let expense= Users.parseId(expenseKeys);
+        const expense = parseId(expenseKeys);
 
-        expense = Messages.parse(expense);
-
-        // if (expense === false) { return Messages.retrieve('err.ledger') };
         const answer = Messages.retrieve('expense.added');
         const result = `${answer}: ${expense}`;
-
-        return result;
-    }
-// incluir un gatos  ficticio (0 0 ) para que la añanda en las cunetas entonces parse.extracConcepto poner sin concepto y que gasto filtre los gasto con money = 0
-    static newUser(chat_id = '', user_ctx, message = '') {
-        let result = '';
-        let answer = '';
-        let userMessage = '';
-        const theUser = {
-            id: Parser.extractId(user_ctx),
-            first_name: Parser.extractFirstName(user_ctx),
-            username: Parser.extractName(user_ctx)
-        };
-
-        if (Users.ensure(theUser)) {
-            const keysMessages = Users.describe(theUser, true);
-            userMessage = Messages.parse(keysMessages);
-            answer = Messages.retrieve('user.exits');
-
-        } else {
-            const keysMessages = Users.describe(theUser);
-            userMessage = Messages.parse(keysMessages);
-            answer = Messages.retrieve('user.new_user');
-            const ghostExpense = '0';
-            Actions.addExpense(chat_id, user_ctx, ghostExpense);
-        }
-
-        result = `${answer}: ${userMessage}`;
 
         return result;
     }
 
     static showExpenses(chat_id, user_ctx = '', message = '') {
         const expensesWithKeys = Expenses.show(chat_id);
+        const expenses = parseId(expensesWithKeys);
 
-        let result= Users.parseId(expensesWithKeys);
-
-        result = Messages.parse(result);
-
-
-        return result;
+        return expenses;
     }
 
     static showBill(chat_id, user_ctx = '', message = '') {
 
         const expensesOfChat = Expenses.getExpensesByChatId(chat_id);
-        const receipt = Calculator.calculateBill(expensesOfChat);     
+        const receipt = Calculator.calculateBill(expensesOfChat);
         const billKeys = Users.describeReceipt(receipt);
         const bill = Messages.parse(billKeys);
-        
+
         const answer = Messages.retrieve('bill');
         const result = `${answer}: ${bill}`;
 
@@ -95,5 +89,12 @@ class Actions {
 
 }
 
+function parseId(expensesWithKeys) {
+    const messageWithId = expensesWithKeys;
+    const messageWithNameAndKeys = Users.parseId(messageWithId);
+    const message = Messages.parse(messageWithNameAndKeys);
+
+    return message;
+}
 
 export { Actions };
