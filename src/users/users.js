@@ -6,7 +6,7 @@ class Users {
     static ensure(user){
         const theUser = new User (user.id, user.first_name, user.username);
         if (!Roster.exists(theUser.id)) {
-            Roster.createAndSave(theUser)
+            Roster.addAndSave(theUser)
             return false
         };
 

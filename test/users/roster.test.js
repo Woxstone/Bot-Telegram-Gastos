@@ -3,6 +3,14 @@ import fs from 'fs';
 jest.mock('../../src/helpers/logger.js');
 jest.mock('fs');
 
+beforeEach(() => {
+    flushRoster();
+});
+
+function flushRoster() {
+    Roster.collection = [];
+};
+
 describe('roster work like roster', () => {
     it('exits must search in the colletion for a user and return true id exits', () => {
        
@@ -11,7 +19,7 @@ describe('roster work like roster', () => {
             first_name: 'Macho',
             username: 'Hijo de mano'
         };
-        Roster.create(default_user);
+        Roster.add(default_user);
 
         const result = Roster.exists(default_user.id);
 
@@ -25,7 +33,7 @@ describe('roster work like roster', () => {
             username: 'Hijo de mano'
         };
 
-        Roster.create(usertoCreate);
+        Roster.add(usertoCreate);
 
         expect(Roster.collection[0]).toStrictEqual(usertoCreate);
     });
@@ -45,7 +53,7 @@ describe('roster work like roster', () => {
         });
 
         const expected = default_user;
-        Roster.createAndSave(default_user);
+        Roster.addAndSave(default_user);
         Roster.load();
         const result = Roster.search(default_user.id);
 
@@ -77,13 +85,13 @@ describe('roster work like roster', () => {
             first_name: 'Macho',
             username: 'Hijo de mano'
         };
-        Roster.create(default_user)
+        Roster.add(default_user)
         const default_user2 = {
             id: 2548,
             first_name: 'hector',
             username: 'lolailo'
         };
-        Roster.create(default_user2)
+        Roster.add(default_user2)
 
         const result= Roster.search(default_user.id);
 

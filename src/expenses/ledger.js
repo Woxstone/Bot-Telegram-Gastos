@@ -20,8 +20,7 @@ class Ledger {
         try {
             fs.writeFileSync(process.env.DATA_FILE_EXPENSES, JSON.stringify(this.collection));
             return true;
-        }
-        catch (err) {  
+        } catch (err) {  
             logger.error('error.ledger.save');
             return false;
         }
