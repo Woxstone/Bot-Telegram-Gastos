@@ -66,7 +66,7 @@ describe('test about the methods', () => {
         expect(defaultExp.description()).toEqual(expected);
     });
     
-    it('today must be in european way ', () => {
+    it('today must be in european way if local is es-ES', () => {
         const defaultExp = {
             money: 22,
             concept: 'ocas',
@@ -76,6 +76,23 @@ describe('test about the methods', () => {
        
         const expense = new Expense(defaultExp, default_userid);
         const expected = new Intl.DateTimeFormat('es-ES', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+          }).format(Date.now());
+
+          expect(expense.date).toEqual(expected);
+    });
+    it('today must be in english way if local is en-UK', () => {
+        const defaultExp = {
+            money: 22,
+            concept: 'ocas',
+            date: undefined
+        };
+        const default_userid = 16_518;
+        process.env.LOCALE_DATE_FORMAT = 'en-UK'
+        const expense = new Expense(defaultExp, default_userid);
+        const expected = new Intl.DateTimeFormat('en-UK', {
             year: 'numeric',
             month: 'numeric',
             day: 'numeric'

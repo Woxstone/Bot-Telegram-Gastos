@@ -1,3 +1,4 @@
+import 'dotenv/config';
 
 class Expense{
     constructor(theExpense){
@@ -8,7 +9,7 @@ class Expense{
     }
 
     today() {
-        const today = new Intl.DateTimeFormat('es-ES', {
+        const today = new Intl.DateTimeFormat(process.env.LOCALE_DATE_FORMAT, {
             year: 'numeric',
             month: 'numeric',
             day: 'numeric'
