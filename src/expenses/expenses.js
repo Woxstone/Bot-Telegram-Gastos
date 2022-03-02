@@ -18,14 +18,15 @@ class Expenses {
 
     static show(chat_id) {
         const theExpenses = this.getExpensesByChatId(chat_id);
-        const result = Expenses.description(theExpenses);
+        const filterExpenses = theExpenses.filter(expense => expense.money > 0);
+        const result = Expenses.description(filterExpenses);
 
         return result;
     }
    
     static getExpensesByChatId(chat_id) {
-        const result = Ledger.getByChatId(chat_id);
-        return result;
+        const expenses = Ledger.getByChatId(chat_id);
+        return expenses;
     }
 
 

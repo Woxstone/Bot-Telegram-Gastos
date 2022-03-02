@@ -27,12 +27,6 @@ describe('Actions', () => {
         expect(result).toBe(`Gasto registrado: El ${today}, ${default_user.first_name} metio un gasto de cantidad: 25, \"euros en copas\"`);
     });
 
-   
-
-
-  
- 
-
     it('should print all the expenses of the chat', () => {
         const default_user = {
             id: 3_422_345,
@@ -74,8 +68,9 @@ El 01/10/2021, Fernado metio un gasto de cantidad: 42, "naves espaciales"`;
             name: ''
         };
         const default_chat_id = 89;
-        const expectedResult = `La cuenta: Pablo le debe a Mixa 112.66666666666667E
-Fernado le debe a Mixa 108.66666666666664E.`;
+        const expectedResult = `La cuenta: Nacho le debe a Mixa 90.5E
+Pablo le debe a Mixa 82.5E
+Fernado le debe a Mixa 78.5E.`;
 
         Actions.newUser(default_chat_id, default_user);
         Actions.newUser(default_chat_id, default_user1);

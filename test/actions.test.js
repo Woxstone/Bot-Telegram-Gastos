@@ -19,25 +19,26 @@ const today = new Intl.DateTimeFormat('es-ES', {
 }).format(Date.now());
 
 
+
 describe('Actions', () => {
     it('retrieves help', () => {
-        Messages.retrieve.mockImplementationOnce((key)=>{return key});
+        Messages.retrieve.mockImplementationOnce((key) => { return key });
 
         expect(Actions.getHelp()).toBe(`help`);
         expect(Messages.retrieve).toHaveBeenCalledWith('help');
     });
 
     it('identifies itself', () => {
-        Messages.retrieve.mockImplementationOnce((key)=>{return key});
+        Messages.retrieve.mockImplementationOnce((key) => { return key });
 
         expect(Actions.getIntroduction()).toBe(`intro`);
         expect(Messages.retrieve).toHaveBeenCalledWith('intro');
 
     });
-// hacer un test con la devoluccion de error de AddExpense
+    // hacer un test con la devoluccion de error de AddExpense
 
     it('When aadExpense is call must call Expenses.add and return a answer for the user', () => {
-        Messages.retrieve.mockImplementationOnce((key)=>{return key});
+        Messages.retrieve.mockImplementationOnce((key) => { return key });
         Messages.parse.mockReturnValueOnce(`El ${today}, cantidad: 25 \"euros en copas\"`);
         Parser.extractMoney.mockReturnValueOnce(25);
         Parser.extractConcept.mockReturnValueOnce('euros en copas');
@@ -57,24 +58,42 @@ describe('Actions', () => {
         expect(Expenses.add).toHaveBeenCalledWith(default_chat_id, default_user.id, { money: 25, concept: 'euros en copas', date: today });
     });
 
+    it('When the user create a user automatically is create a gasto withou concept and 0 money', () => {
+        
+        const default_user = {
+            id: 1234,
+            first_name: 'William',
+            name: 'Sr'
+        };
+
+        const ghostExpense= '0';
+        const default_chat_id = 47785;
+        
+        const spyAddExpense = jest.spyOn(Actions, 'addExpense');
+
+        Actions.newUser(default_chat_id, default_user);
+        
+        expect(spyAddExpense).toHaveBeenCalledWith(default_chat_id, default_user, ghostExpense);
+    });
+
     it('shoud had an option for create a new user and handle when exist', () => {
         const default_user = {
             id: 43241,
             first_name: 'user first name example',
             name: 'user name example'
         };
-        
-        
+
+
         Parser.extractId.mockReturnValueOnce(default_user.id);
         Parser.extractFirstName.mockReturnValueOnce(default_user.first_name);
         Parser.extractName.mockReturnValueOnce(default_user.name);
-      
+
         Users.ensure.mockReturnValueOnce(true);
-       
-        Messages.retrieve.mockImplementationOnce((key)=>{return key});
+
+        Messages.retrieve.mockImplementationOnce((key) => { return key });
         Messages.parse.mockReturnValueOnce(`Hola ${default_user.first_name} tu usuario ya estaba creado en este chat.`);
 
-      
+
         const default_chat_id = -13_853;
 
         const message = '';
@@ -90,26 +109,28 @@ describe('Actions', () => {
             first_name: 'user first name example',
             name: 'user name example'
         };
-        
-        
+
+
         Parser.extractId.mockReturnValueOnce(default_user.id);
         Parser.extractFirstName.mockReturnValueOnce(default_user.first_name);
         Parser.extractName.mockReturnValueOnce(default_user.name);
-      
-        Users.ensure.mockReturnValueOnce(false);
-       
-        Messages.retrieve.mockImplementationOnce((key)=>{return key});
-        Messages.parse.mockReturnValueOnce(`Hola ${default_user.first_name} tu usuario ya estaba creado en este chat.`);
 
-      
+        Users.ensure.mockReturnValueOnce(false);
+        Users.describe.mockReturnValueOnce(`user.hello ${default_user.first_name} user.create_ok`);
+
+        Messages.retrieve.mockReturnValueOnce('user.new_user');
+        Messages.parse.mockReturnValueOnce(`user.hello ${default_user.first_name} user.create_ok`);
+
+
         const default_chat_id = -13_853;
 
         const message = '';
-        const expectedResult = `user.new_user: Hola ${default_user.first_name} tu usuario ya estaba creado en este chat.`;
+        //cambiar a escrito
+        const expectedResult = `user.new_user: user.hello ${default_user.first_name} user.create_ok`;
 
         expect(Actions.newUser(default_chat_id, default_user, message)).toBe(expectedResult);
     });
-   
+
     it('should return a message when newuser allready exist ', () => {
         Users.ensure.mockReturnValueOnce(true);
         Users.describe.mockReturnValueOnce(`user.hello Fernado user.exits_end`);
@@ -222,13 +243,9 @@ Fernado le debe a Mixa 108.66666666666664E.`);
 
 
     it('should load in the collections the json and log onto channel error if somethig goes wrong', () => {
-        const expected = true;
-
-        const result = Actions.load();
+        Actions.load();
 
         expect(Users.load).toHaveBeenCalled();
         expect(Expenses.load).toHaveBeenCalled();
-        
-
     });
 });

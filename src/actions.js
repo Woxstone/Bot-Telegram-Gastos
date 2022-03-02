@@ -60,6 +60,8 @@ class Actions {
             const keysMessages = Users.describe(theUser);
             userMessage = Messages.parse(keysMessages);
             answer = Messages.retrieve('user.new_user');
+            const ghostExpense = '0';
+            Actions.addExpense(chat_id, user_ctx, ghostExpense);
         }
 
         result = `${answer}: ${userMessage}`;
