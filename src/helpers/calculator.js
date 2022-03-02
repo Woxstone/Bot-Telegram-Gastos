@@ -82,8 +82,8 @@ class Calculator {
             provisionalAmount = debt + ordenateArrayFromMinToMax[indexOfReciver];
             
             if (provisionalAmount >= 0) {
-                valueOfThePayment = debt; // se paga todo lo que ya debia y ya no debe mas
-                payer = indexOfIds[indexOfPayer];  // el id del pagador en el array inicial
+                valueOfThePayment = debt;
+                payer = indexOfIds[indexOfPayer];
                 reciver = indexOfIds[indexOfReciver];
                 payment.push(new Transaction(payer, Math.abs(valueOfThePayment), reciver));
                 ordenateArrayFromMinToMax[indexOfPayer] = 0;
@@ -91,8 +91,8 @@ class Calculator {
                 indexOfPayer++;
             }
             else {
-                valueOfThePayment = ordenateArrayFromMinToMax[indexOfReciver]; // se paga todo lo que ya debia y ya no debe mas
-                payer = indexOfIds[indexOfPayer];  // el id del pagador en el array inicial
+                valueOfThePayment = ordenateArrayFromMinToMax[indexOfReciver];
+                payer = indexOfIds[indexOfPayer];
                 reciver = indexOfIds[indexOfReciver];
                 payment.push(new Transaction(payer, Math.abs(valueOfThePayment), reciver));
                 ordenateArrayFromMinToMax[indexOfPayer] = ordenateArrayFromMinToMax[indexOfPayer] + valueOfThePayment;
