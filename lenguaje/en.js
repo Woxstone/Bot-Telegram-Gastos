@@ -1,12 +1,5 @@
-import { en } from '../../lenguaje/en.js';
-import { es } from '../../lenguaje/es.js';
-
-class Messages {
-    static LITERALS = {
-        'es': es,
-        'en': en,
-        'undefined': {
-            'help': `Hola, estos son los comandos que puedes utilizar:
+export const en = {
+    'help': `Hola, estos son los comandos que puedes utilizar:
 /nuevo_usuario para crearte un usuario en este chat,
 /addgasto "cantidad" "concepto" "DD/MM/YYYY" introducira un gasto en la bolsa del chat linkeado a ti,
 /gastos te devolvere los gastos de este chat,
@@ -29,28 +22,4 @@ Si tienes algun problema /help para saber los formatos de nuevo`,
             'message.quantity:': 'cantidad:',
             'message.article': 'El',
             'message.person': 'metio un gasto de'
-        }
-    };
-
-    static retrieve(leg, key) {
-        return this.LITERALS[leg][key];
-    }
-
-    static parse(leg, messageWithKeys) {
-        const midMessage = messageWithKeys.replace(/\n/g, '\n ');
-        const messageWithOutKeys = midMessage.split(' ').map(
-            (word) => {
-                const exist = (Messages.retrieve(leg, word) != undefined);
-                let partialResult = word;
-                if (exist) {
-                    partialResult = Messages.retrieve(leg, word);
-                }
-                return partialResult;
-            });
-
-        const message = messageWithOutKeys.join(' ').replace(/\n /g, '\n')
-        return message;
-    }
-}
-
-export { Messages };
+};
