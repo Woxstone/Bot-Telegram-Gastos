@@ -17,7 +17,8 @@ describe('Actions', () => {
         const default_user = {
             id: 34_512_345,
             first_name: 'Fernado',
-            name: 'melacoge con la mano'
+            name: 'melacoge con la mano',
+            language_code: 'es'
         };
         const default_chat_id = -13_853;
         const message = '25 euros en copas'
@@ -31,7 +32,8 @@ describe('Actions', () => {
         const default_user = {
             id: 3_422_345,
             first_name: 'Fernado',
-            name: 'melacoge con la mano'
+            name: 'melacoge con la mano',
+            language_code: 'es'
         };
         const default_chat_id = -24;
 
@@ -41,7 +43,7 @@ El 01/10/2021, Fernado metio un gasto de cantidad: 42, "naves espaciales"`;
         Actions.newUser(default_chat_id, default_user);
         Actions.addExpense(default_chat_id, default_user, '23 sardinas 2/14/2022');
         Actions.addExpense(default_chat_id, default_user, '42 naves espaciales 01/10/2021');
-        const result = Actions.showExpenses(default_chat_id, '');
+        const result = Actions.showExpenses(default_chat_id, default_user);
 
         expect(result).toBe(expectedResult);
     });
@@ -50,22 +52,26 @@ El 01/10/2021, Fernado metio un gasto de cantidad: 42, "naves espaciales"`;
         const default_user = {
             id: 1,
             first_name: 'Fernado',
-            name: ''
+            name: '',
+            language_code: 'es'
         };
         const default_user1 = {
             id: 2,
             first_name: 'Mixa',
-            name: ''
+            name: '',
+            language_code: 'es'
         };
         const default_user2 = {
             id: 3,
             first_name: 'Pablo',
-            name: ''
+            name: '',
+            language_code: 'es'
         };
         const default_user3 = {
             id: 4,
             first_name: 'Nacho',
-            name: ''
+            name: '',
+            language_code: 'es'
         };
         const default_chat_id = 89;
         const expectedResult = `La cuenta: Nacho le debe a Mixa 90.5E

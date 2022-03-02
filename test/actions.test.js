@@ -38,7 +38,7 @@ describe('Actions', () => {
     // hacer un test con la devoluccion de error de AddExpense
 
     it('When aadExpense is call must call Expenses.add and return a answer for the user', () => {
-        Messages.retrieve.mockImplementationOnce((key) => { return key });
+        Messages.retrieve.mockReturnValueOnce('Gasto registrado');
         Messages.parse.mockReturnValueOnce(`El ${today}, cantidad: 25 \"euros en copas\"`);
         Parser.extractMoney.mockReturnValueOnce(25);
         Parser.extractConcept.mockReturnValueOnce('euros en copas');
@@ -47,14 +47,15 @@ describe('Actions', () => {
         const default_user = {
             id: 34_512_345,
             first_name: 'Fernado',
-            name: 'melacoge con la mano'
+            name: 'melacoge con la mano',
+            language_code: 'ES'
         };
         const default_chat_id = -13_853;
         const message = '25 euros en copas'
 
         const result = Actions.addExpense(default_chat_id, default_user, message)
 
-        expect(result).toBe(`expense.added: El ${today}, cantidad: 25 \"euros en copas\"`);
+        expect(result).toBe(`Gasto registrado: El ${today}, cantidad: 25 \"euros en copas\"`);
         expect(Expenses.add).toHaveBeenCalledWith(default_chat_id, default_user.id, { money: 25, concept: 'euros en copas', date: today });
     });
 
@@ -80,7 +81,8 @@ describe('Actions', () => {
         const default_user = {
             id: 43241,
             first_name: 'user first name example',
-            name: 'user name example'
+            name: 'user name example',
+            language_code: 'ES'
         };
 
 
@@ -90,7 +92,7 @@ describe('Actions', () => {
 
         Users.ensure.mockReturnValueOnce(true);
 
-        Messages.retrieve.mockImplementationOnce((key) => { return key });
+        Messages.retrieve.mockReturnValueOnce('user.exits');
         Messages.parse.mockReturnValueOnce(`Hola ${default_user.first_name} tu usuario ya estaba creado en este chat.`);
 
 

@@ -32,13 +32,13 @@ class Actions {
 
         if (Users.ensure(theUser)) {
             const keysUserMessage = Users.describe(theUser);
-            userMessage = Messages.parse(keysUserMessage);
-            answer = Messages.retrieve('user.exits');
+            userMessage = Messages.parse(user_ctx.language_code, keysUserMessage);
+            answer = Messages.retrieve(user_ctx.language_code, 'user.exits');
 
         } else {
             const keysUserMessage = Users.describe(theUser);
-            userMessage = Messages.parse(keysUserMessage);
-            answer = Messages.retrieve('user.new_user');
+            userMessage = Messages.parse(user_ctx.language_code, keysUserMessage);
+            answer = Messages.retrieve(user_ctx.language_code, 'user.new_user');
 
             const ghostExpense = '0';
             Actions.addExpense(chat_id, user_ctx, ghostExpense);
@@ -59,9 +59,9 @@ class Actions {
 
         Users.ensure(user_ctx);
         const expenseKeys = Expenses.add(chat_id, user_ctx.id, theExpense);
-        const expense = parseId(expenseKeys);
+        const expense = parseId(user_ctx.language_code, expenseKeys);
 
-        const answer = Messages.retrieve('expense.added');
+        const answer = Messages.retrieve(user_ctx.language_code, 'expense.added');
         const result = `${answer}: ${expense}`;
 
         return result;
@@ -69,7 +69,7 @@ class Actions {
 
     static showExpenses(chat_id, user_ctx = '', message = '') {
         const expensesWithKeys = Expenses.show(chat_id);
-        const expenses = parseId(expensesWithKeys);
+        const expenses = parseId(user_ctx.language_code, expensesWithKeys);
 
         return expenses;
     }
@@ -79,9 +79,9 @@ class Actions {
         const expensesOfChat = Expenses.getExpensesByChatId(chat_id);
         const receipt = Calculator.calculateBill(expensesOfChat);
         const billKeys = Users.describeReceipt(receipt);
-        const bill = Messages.parse(billKeys);
+        const bill = Messages.parse(user_ctx.language_code, billKeys);
 
-        const answer = Messages.retrieve('bill');
+        const answer = Messages.retrieve(user_ctx.language_code, 'bill');
         const result = `${answer}: ${bill}`;
 
         return result;
@@ -89,10 +89,10 @@ class Actions {
 
 }
 
-function parseId(expensesWithKeys) {
+function parseId(user_language_code, expensesWithKeys) {
     const messageWithId = expensesWithKeys;
     const messageWithNameAndKeys = Users.parseId(messageWithId);
-    const message = Messages.parse(messageWithNameAndKeys);
+    const message = Messages.parse(user_language_code, messageWithNameAndKeys);
 
     return message;
 }
