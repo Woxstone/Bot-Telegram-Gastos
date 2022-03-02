@@ -7,9 +7,9 @@ jest.mock('../../src/expenses/ledger.js');
 
 beforeEach(() => {
     Ledger.collection.mockClear();
-    Ledger.add.mockClear();
+    Ledger.ensure.mockClear();
     Ledger.save.mockClear();
-    Ledger.addAndSave.mockClear();
+    Ledger.ensureAndSave.mockClear();
     Ledger.load.mockClear();
     Ledger.getByChatId.mockClear();
     expenseDescriptionMock.mockClear();
@@ -18,7 +18,7 @@ beforeEach(() => {
 
 describe('Test about the methods', () => {
     it('should add expenses with chatid userid and expense to the ledger addding userid to the expense object', () => {
-        Ledger.addAndSave.mockReturnValueOnce(true);
+        Ledger.ensureAndSave.mockReturnValueOnce(true);
         expenseDescriptionMock.mockReturnValueOnce(`message.article 25/03/2022, message.quantity: 0 "sardinas"`);
 
         const default_chat_id = 222;
@@ -45,14 +45,14 @@ describe('Test about the methods', () => {
        
 
         let result = Expenses.add(default_chat_id, defaultExp.user_id, defaultExp);
-        expect(Ledger.addAndSave).toHaveBeenCalledWith(default_chat_id, theExpense);
+        expect(Ledger.ensureAndSave).toHaveBeenCalledWith(default_chat_id, theExpense);
         expect(theExpenseConstructor).toHaveBeenCalled();
         expect(expenseDescriptionMock).toHaveBeenCalled();
         expect(result).toBe(expected);
     });
 
     it('should return a error if thers some problem in Ledger.addAndSave', () => {
-        Ledger.addAndSave.mockReturnValueOnce(false);
+        Ledger.ensureAndSave.mockReturnValueOnce(false);
 
         const default_chat_id = 222;
         
@@ -79,7 +79,7 @@ describe('Test about the methods', () => {
        
 
         let result = Expenses.add(default_chat_id, defaultExp.user_id, defaultExp);
-        expect(Ledger.addAndSave).toHaveBeenCalledWith(default_chat_id, theExpense);
+        expect(Ledger.ensureAndSave).toHaveBeenCalledWith(default_chat_id, theExpense);
         expect(theExpenseConstructor).toHaveBeenCalled();
         expect(expenseDescriptionMock).not.toHaveBeenCalled();
         expect(result).toBe(expected);

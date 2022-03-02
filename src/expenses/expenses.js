@@ -10,7 +10,7 @@ class Expenses {
     static add(chat_id, user_id, expense) {
         expense.user_id = user_id;
         const theExpense = new Expense(expense);
-        if (!Ledger.addAndSave(chat_id, theExpense)) {
+        if (!Ledger.ensureAndSave(chat_id, theExpense)) {
             return 'expenses.error_save';
         };
         return Expenses.description([theExpense]);
