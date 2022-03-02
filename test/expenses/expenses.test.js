@@ -17,7 +17,7 @@ beforeEach(() => {
 });
 
 describe('Test about the methods', () => {
-    xit('should add expenses with chatid userid and expense to the ledger addding userid to the expense object', () => {
+    it('should add expenses with chatid userid and expense to the ledger addding userid to the expense object', () => {
         Ledger.addAndSave.mockReturnValueOnce(true);
         expenseDescriptionMock.mockReturnValueOnce(`message.article 25/03/2022, 11 message.person message.quantity: 0 "sardinas"`);
 
@@ -26,7 +26,8 @@ describe('Test about the methods', () => {
         const defaultExp = {
             money: 0,
             concept: 'sardinas',
-            date: '25/03/2022'
+            date: '25/03/2022',
+            description: expenseDescriptionMock
         };
 
         theExpenseConstructor.mockImplementationOnce(() => {
@@ -34,7 +35,8 @@ describe('Test about the methods', () => {
                 money: defaultExp.money,
                 concept: defaultExp.concept,
                 date: defaultExp.date,
-                id: default_user_id
+                id: default_user_id,
+                description: expenseDescriptionMock
             }
         })
         const expected = `message.article 25/03/2022, 11 message.person message.quantity: 0 "sardinas"`
@@ -79,23 +81,23 @@ describe('Test about the methods', () => {
         expect(result).toBe(expected);
     });
 
-    xit('should to know how to express an expense', () => {
+    it('should to know how to express an expense', () => {
         expenseDescriptionMock.mockReturnValueOnce(`message.article 25/03/2022, message.quantity: 0 "sardinas"`);
 
         const defaultExp = {
             money: 0,
             concept: 'sardinas',
             date: '25/03/2022',
-            id: 11
+            id: 11 
+            description: expenseDescriptionMock
         };
+           
         const theExpense = defaultExp;
 
         const expected = `message.article ${defaultExp.date}, 11 message.person message.quantity: ${defaultExp.money} "${defaultExp.concept}"`;
         const result = Expenses.description([theExpense]);
 
         expect(result).toEqual(expected);
-        expect(theExpenseConstructor).toHaveBeenCalled();
-        expect(theExpenseConstructor).toHaveBeenCalledWith(theExpense);
         expect(expenseDescriptionMock).toHaveBeenCalled();
     });
 

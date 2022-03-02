@@ -220,12 +220,14 @@ Fernado le debe a Mixa 108.66666666666664E.`);
     });
 
 
-    xit('should load in the collections the json and log onto channel error if somethig goes wrong', () => {
+    it('should load in the collections the json and log onto channel error if somethig goes wrong', () => {
         const expected = true;
 
         const result = Actions.load();
 
-        expect(result).toBe(expected);
+        expect(Users.load).toHaveBeenCalled();
+        expect(Expenses.load).toHaveBeenCalled();
+        
 
     });
 });

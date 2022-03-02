@@ -27,8 +27,11 @@ class Expenses {
         let result = '';
         let theExpense = undefined;
         expensesArray.forEach(expense => {
+             theExpense = new Expense({money:0,concept:''});
+             theExpense= Object.assign(theExpense ,expense);
+            //              
             // theExpense = new Expense(expense);           
-            result += `${expense.description()}\n`;
+            result += `${theExpense.description()}\n`;
         });
 
         result = result.replace(/\n$/g, '');

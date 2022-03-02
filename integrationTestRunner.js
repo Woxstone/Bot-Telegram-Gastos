@@ -4,7 +4,9 @@ import input from "input";
 import 'dotenv/config'
 
 
-
+process.env.DATA_FILE_EXPENSES = "./data/ledgerIntegration.json"
+process.env.DATA_FILE_USERS = "./data/rosterIntegration.json"
+process.env.DATA_FILE_LOGGER = "./data/loggerIntegration.json" 
 
 
 

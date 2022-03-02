@@ -5,7 +5,7 @@ import { StringSession } from "telegram/sessions";
 
 (async () => {
   let resultMessage = [];
-  const fechaDeHoy = new Intl.DateTimeFormat('en-US', {
+  const fechaDeHoy = new Intl.DateTimeFormat('es-ES', {
     year: 'numeric',
     month: 'numeric',
     day: 'numeric'
@@ -39,7 +39,7 @@ import { StringSession } from "telegram/sessions";
     testText : 'user allready exist test',
     intakeMessage : '/nuevo_usuario',
     messageExpected: `usuario ya registrado: Hola Motercode tu usuario ya estaba creado en este chat.`,
-    especificDelay: 0
+    especificDelay: 7
    }));
 
   resultMessage.push(await runIntegrationTest({
@@ -49,7 +49,7 @@ import { StringSession } from "telegram/sessions";
      testText : 'addgasto command test user 2',
      intakeMessage : '/addgasto 35 manzanas',
      messageExpected: `gasto registrado: El ${fechaDeHoy}, Motercode metio un gasto de cantidad: 35, "manzanas"`,
-     especificDelay: 0
+     especificDelay: 6
     }));
 
     resultMessage.push(await runIntegrationTest({
@@ -58,8 +58,8 @@ import { StringSession } from "telegram/sessions";
       apiHash: process.env.API_HASH_userone,
       testText : 'addgasto command test user one',
       intakeMessage : '/addgasto 76 peras',
-      messageExpected: `gasto registrado: El ${fechaDeHoy}, cantidad: 76, "peras"`,
-      especificDelay: 0
+      messageExpected: `gasto registrado: El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 76, "peras"`,
+      especificDelay: 6
      }));
 
      resultMessage.push(await runIntegrationTest({
@@ -68,7 +68,7 @@ import { StringSession } from "telegram/sessions";
       apiHash: process.env.API_HASH_userone,
       testText : 'addgasto command test user one concept user 2',
       intakeMessage : '/addgasto 8 manzanas',
-      messageExpected: `gasto registrado: El ${fechaDeHoy}, cantidad: 8, "manzanas"`,
+      messageExpected: `gasto registrado: El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 8, "manzanas"`,
       especificDelay: 0
      }));
 
@@ -78,7 +78,9 @@ import { StringSession } from "telegram/sessions";
       apiHash: process.env.API_HASH_userone,
       testText : 'gastos command test ',
       intakeMessage : '/gastos',
-      messageExpected: `gasto dos manzanas, gasto uno manzanas, gasto uno peras"`,
+      messageExpected: `El ${fechaDeHoy}, Motercode metio un gasto de cantidad: 35, "manzanas"
+El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 76, "peras"
+El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 8, "manzanas"`,
       especificDelay: 0
      }));
 
