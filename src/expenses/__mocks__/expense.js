@@ -7,7 +7,7 @@ const defaultExp = {
   money: 44,
   concept: 'sardinas',
   date: '25/03/2022',
-  id: 32,
+  user_id: 32,
   description: expenseDescriptionMock
 };
 

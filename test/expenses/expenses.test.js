@@ -7,9 +7,9 @@ jest.mock('../../src/expenses/ledger.js');
 
 beforeEach(() => {
     Ledger.collection.mockClear();
-    Ledger.add.mockClear();
+    Ledger.ensure.mockClear();
     Ledger.save.mockClear();
-    Ledger.addAndSave.mockClear();
+    Ledger.ensureAndSave.mockClear();
     Ledger.load.mockClear();
     Ledger.getByChatId.mockClear();
     expenseDescriptionMock.mockClear();
@@ -18,15 +18,16 @@ beforeEach(() => {
 
 describe('Test about the methods', () => {
     it('should add expenses with chatid userid and expense to the ledger addding userid to the expense object', () => {
-        Ledger.addAndSave.mockReturnValueOnce(true);
+        Ledger.ensureAndSave.mockReturnValueOnce(true);
         expenseDescriptionMock.mockReturnValueOnce(`message.article 25/03/2022, message.quantity: 0 "sardinas"`);
 
         const default_chat_id = 222;
-        const default_user_id = 11;
+        
         const defaultExp = {
             money: 0,
             concept: 'sardinas',
             date: '25/03/2022',
+            user_id : 545,
             description: expenseDescriptionMock
         };
 
@@ -35,30 +36,32 @@ describe('Test about the methods', () => {
                 money: defaultExp.money,
                 concept: defaultExp.concept,
                 date: defaultExp.date,
-                id: default_user_id,
+                user_id: defaultExp.user_id,
                 description: expenseDescriptionMock
             }
         })
         const expected = `message.article 25/03/2022, message.quantity: 0 "sardinas"`
         let theExpense = defaultExp;
-        theExpense.id = default_user_id;
+       
 
-        let result = Expenses.add(default_chat_id, default_user_id, defaultExp);
-        expect(Ledger.addAndSave).toHaveBeenCalledWith(default_chat_id, theExpense);
+        let result = Expenses.add(default_chat_id, defaultExp.user_id, defaultExp);
+        expect(Ledger.ensureAndSave).toHaveBeenCalledWith(default_chat_id, theExpense);
         expect(theExpenseConstructor).toHaveBeenCalled();
         expect(expenseDescriptionMock).toHaveBeenCalled();
         expect(result).toBe(expected);
     });
 
     it('should return a error if thers some problem in Ledger.addAndSave', () => {
-        Ledger.addAndSave.mockReturnValueOnce(false);
+        Ledger.ensureAndSave.mockReturnValueOnce(false);
 
         const default_chat_id = 222;
-        const default_user_id = 11;
+        
         const defaultExp = {
             money: 0,
             concept: 'sardinas',
-            date: '25/03/2022'
+            date: '25/03/2022',
+            user_id : 545,
+            description: expenseDescriptionMock
         };
 
         theExpenseConstructor.mockImplementationOnce(() => {
@@ -66,16 +69,17 @@ describe('Test about the methods', () => {
                 money: defaultExp.money,
                 concept: defaultExp.concept,
                 date: defaultExp.date,
-                id: default_user_id
-            };
-        });
+                user_id: defaultExp.user_id,
+                description: expenseDescriptionMock
+            }
+        })
 
         const expected = 'expenses.error_save';
         let theExpense = defaultExp;
-        theExpense.id = default_user_id;
+       
 
-        let result = Expenses.add(default_chat_id, default_user_id, defaultExp);
-        expect(Ledger.addAndSave).toHaveBeenCalledWith(default_chat_id, theExpense);
+        let result = Expenses.add(default_chat_id, defaultExp.user_id, defaultExp);
+        expect(Ledger.ensureAndSave).toHaveBeenCalledWith(default_chat_id, theExpense);
         expect(theExpenseConstructor).toHaveBeenCalled();
         expect(expenseDescriptionMock).not.toHaveBeenCalled();
         expect(result).toBe(expected);
@@ -129,14 +133,14 @@ message.article 28/10/1998, message.quantity: 32 "manzanas"`
         const expectedResult = `message.article 07/04/1997, message.quantity: 23 "naves"
 message.article 28/10/1998, message.quantity: 32 "manzanas"`;
 
-        const spyshowExpensesArray = jest.spyOn(Expenses, 'showExpensesArray');
+        const spygetExpensesByChatId = jest.spyOn(Expenses, 'getExpensesByChatId');
         const spydescription = jest.spyOn(Expenses, 'description');
 
         const result = Expenses.show(default_chat_id);
 
         expect(result).toEqual(expectedResult);
-        expect(spyshowExpensesArray).toHaveBeenCalled();
-        expect(Expenses.showExpensesArray).toHaveBeenCalledWith(default_chat_id);
+        expect(spygetExpensesByChatId).toHaveBeenCalled();
+        expect(Expenses.getExpensesByChatId).toHaveBeenCalledWith(default_chat_id);
         expect(spydescription).toHaveBeenCalled();
     });
 
@@ -152,7 +156,7 @@ message.article 28/10/1998, message.quantity: 32 "manzanas"`;
 
         Ledger.getByChatId.mockReturnValueOnce([exp1,exp2]);
 
-        const result = Expenses.showExpensesArray(default_chat_id);
+        const result = Expenses.getExpensesByChatId(default_chat_id);
 
         expect(result).toEqual(expected);
         expect(Ledger.getByChatId).toHaveBeenCalled();

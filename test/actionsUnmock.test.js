@@ -82,9 +82,9 @@ Fernado le debe a Mixa 108.66666666666664E.`;
         Actions.newUser(default_chat_id, default_user2);
         Actions.newUser(default_chat_id, default_user3);
 
-        Actions.addExpense(default_chat_id, default_user, '12');
+        Actions.addExpense(default_chat_id, default_user, '12 manzanas');
         Actions.addExpense(default_chat_id, default_user1, '342');
-        Actions.addExpense(default_chat_id, default_user2, '8');
+        Actions.addExpense(default_chat_id, default_user2, '8 peras');
         
         const result = Actions.showBill(default_chat_id, default_user);
 
