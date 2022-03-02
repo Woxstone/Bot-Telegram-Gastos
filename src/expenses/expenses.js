@@ -4,7 +4,8 @@ import {Ledger} from './ledger';
 class Expenses{
 
     static add(chat_id, user_id, expense) {
-        const theExpense = new Expense(expense, user_id);           
+        expense.user_id=user_id;
+        const theExpense = new Expense(expense);           
         if(!Ledger.addAndSave(chat_id, theExpense)) {
             return 'expenses.error_save';
         };

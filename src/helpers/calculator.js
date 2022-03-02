@@ -14,8 +14,8 @@ class Calculator {
         result = TheCalculation.prepareDiff(result);
         result = TheCalculation.resolveExpenses(result);
         result.forEach((transaction) => {
-            transaction.payer = userKeys[transaction.payer].id;
-            transaction.receiver = userKeys[transaction.receiver].id;
+            transaction.payer = userKeys[transaction.payer].user_id;
+            transaction.receiver = userKeys[transaction.receiver].user_id;
         })
         return result;
     }
@@ -64,15 +64,15 @@ class Calculator {
         let resultArray = [];
 
         theCollection.forEach((expense) => {
-            if (!resultArray[`_${expense.id}`]) {
-                resultArray[`_${expense.id}`] = 0 + Number.parseFloat(expense.money);
+            if (!resultArray[`_${expense.user_id}`]) {
+                resultArray[`_${expense.user_id}`] = 0 + Number.parseFloat(expense.money);
             } else {
 
-                resultArray[`_${expense.id}`] += Number.parseFloat(expense.money);
+                resultArray[`_${expense.user_id}`] += Number.parseFloat(expense.money);
             }
         });
         let result = [];
-        Object.entries(resultArray).forEach((totalUser) => { result.push({ id: Number.parseInt(totalUser[0].replace('_', '')), total: Number.parseFloat(totalUser[1]) }) });
+        Object.entries(resultArray).forEach((totalUser) => { result.push({ user_id: Number.parseInt(totalUser[0].replace('_', '')), total: Number.parseFloat(totalUser[1]) }) });
 
         return result;
     }

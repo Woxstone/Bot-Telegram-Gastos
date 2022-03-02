@@ -4,8 +4,10 @@ describe('test of the constructor of Expense', () => {
      const exp = {
             money: 0,
             concept: '',
-            date: 2
+            date: 2, 
+            user_id : 32
         };
+  
     it('should be 4 properties money, concept, date and user id', () => {      
         const default_userid = 56_345;
         const defaultExp = new Expense(exp, default_userid);
@@ -13,7 +15,7 @@ describe('test of the constructor of Expense', () => {
         expect(defaultExp.money).toBeDefined();
         expect(defaultExp.concept).toBeDefined();
         expect(defaultExp.date).toBeDefined();
-        expect(defaultExp.id).toBeDefined();
+        expect(defaultExp.user_id).toBeDefined();
     });
 
     it('if date is undefined must be "today"',() => {
@@ -38,30 +40,28 @@ describe('test of the constructor of Expense', () => {
 });
 
 describe('test about the methods', () => {
+    const exp = {
+        money: 3,
+        concept: 'sardinas',
+        date: 2,
+        user_id: 545
+    };
     it('description methods should return the description of the expense', () => {
-        const exp = {
-            money: 0,
-            concept: 'sardinas',
-            date: 2
-        };
-        const default_userid = 56_345;
+       
+      
 
-        const expected = `message.article 2, /ID:56345/ message.person message.quantity: 0, \"sardinas\"`;
-        const defaultExp = new Expense(exp, default_userid);
+        const expected = `message.article ${exp.date}, /ID:${exp.user_id}/ message.person message.quantity: ${exp.money}, \"${exp.concept}\"`;
+        const defaultExp = new Expense(exp);
 
         expect(defaultExp.description()).toEqual(expected);
     });
 
     it('description methods should return the description of the expense without concept too', () => {
-        const exp = {
-            money: 0,
-            concept: '',
-            date: 2
-        };
-        const default_userid = 56_345;
+      
 
-        const expected = `message.article 2, /ID:56345/ message.person message.quantity: 0, \"expense.description_noConcept\"`;
-        const defaultExp = new Expense(exp, default_userid);
+        exp.concept ='';
+        const expected = `message.article ${exp.date}, /ID:${exp.user_id}/ message.person message.quantity: ${exp.money}, \"expense.description_noConcept\"`;
+        const defaultExp = new Expense(exp);
 
         expect(defaultExp.description()).toEqual(expected);
     });

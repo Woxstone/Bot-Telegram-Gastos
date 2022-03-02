@@ -22,11 +22,12 @@ describe('Test about the methods', () => {
         expenseDescriptionMock.mockReturnValueOnce(`message.article 25/03/2022, message.quantity: 0 "sardinas"`);
 
         const default_chat_id = 222;
-        const default_user_id = 11;
+        
         const defaultExp = {
             money: 0,
             concept: 'sardinas',
             date: '25/03/2022',
+            user_id : 545,
             description: expenseDescriptionMock
         };
 
@@ -35,15 +36,15 @@ describe('Test about the methods', () => {
                 money: defaultExp.money,
                 concept: defaultExp.concept,
                 date: defaultExp.date,
-                id: default_user_id,
+                user_id: defaultExp.user_id,
                 description: expenseDescriptionMock
             }
         })
         const expected = `message.article 25/03/2022, message.quantity: 0 "sardinas"`
         let theExpense = defaultExp;
-        theExpense.id = default_user_id;
+       
 
-        let result = Expenses.add(default_chat_id, default_user_id, defaultExp);
+        let result = Expenses.add(default_chat_id, defaultExp.user_id, defaultExp);
         expect(Ledger.addAndSave).toHaveBeenCalledWith(default_chat_id, theExpense);
         expect(theExpenseConstructor).toHaveBeenCalled();
         expect(expenseDescriptionMock).toHaveBeenCalled();
@@ -54,11 +55,13 @@ describe('Test about the methods', () => {
         Ledger.addAndSave.mockReturnValueOnce(false);
 
         const default_chat_id = 222;
-        const default_user_id = 11;
+        
         const defaultExp = {
             money: 0,
             concept: 'sardinas',
-            date: '25/03/2022'
+            date: '25/03/2022',
+            user_id : 545,
+            description: expenseDescriptionMock
         };
 
         theExpenseConstructor.mockImplementationOnce(() => {
@@ -66,15 +69,16 @@ describe('Test about the methods', () => {
                 money: defaultExp.money,
                 concept: defaultExp.concept,
                 date: defaultExp.date,
-                id: default_user_id
-            };
-        });
+                user_id: defaultExp.user_id,
+                description: expenseDescriptionMock
+            }
+        })
 
         const expected = 'expenses.error_save';
         let theExpense = defaultExp;
-        theExpense.id = default_user_id;
+       
 
-        let result = Expenses.add(default_chat_id, default_user_id, defaultExp);
+        let result = Expenses.add(default_chat_id, defaultExp.user_id, defaultExp);
         expect(Ledger.addAndSave).toHaveBeenCalledWith(default_chat_id, theExpense);
         expect(theExpenseConstructor).toHaveBeenCalled();
         expect(expenseDescriptionMock).not.toHaveBeenCalled();

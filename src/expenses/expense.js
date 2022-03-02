@@ -1,10 +1,10 @@
+
 class Expense{
-    
-    constructor(theExpense, user_id = undefined){
+    constructor(theExpense){
         this.money = theExpense.money,
         this.concept = theExpense.concept,
         this.date = theExpense.date || this.today(),
-        this.id = user_id 
+        this.user_id = theExpense.user_id 
     }
 
     today() {
@@ -18,7 +18,7 @@ class Expense{
 
     description() {
         const concept = (this.concept == '')? 'expense.description_noConcept': this.concept;
-        return `message.article ${this.date}, /ID:${this.id}/ message.person message.quantity: ${this.money}, "${concept}"`;
+        return `message.article ${this.date}, /ID:${this.user_id}/ message.person message.quantity: ${this.money}, "${concept}"`;
     }
 }
 
