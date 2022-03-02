@@ -45,8 +45,7 @@ describe("i want to ask for resolveExpenses  and return an array of transactions
 
         const expectedResult = [expectedTransaction1, expectedTransaction2, expectedTransaction3];
 
-        const theCalculator= new Calculator();
-        const result = theCalculator.resolveExpenses(inputArray);
+        const result = Calculator.resolveExpenses(inputArray);
 
         expect(result).toEqual(expectedResult);
     })
@@ -63,8 +62,7 @@ describe("i want to ask for resolveExpenses  and return an array of transactions
             {user_id:88 , total: 76}
         ];
         
-        const theCalculator= new Calculator();
-        const result = theCalculator.makeTotalsByUserId(inputExpenses);
+        const result = Calculator.makeTotalsByUserId(inputExpenses);
 
         expect(result).toEqual(expectedResult);
     })
@@ -78,8 +76,7 @@ describe("i want to ask for resolveExpenses  and return an array of transactions
             {user_id:88 , total: 76}
         ];
         const expectedResult = [94.4,-17.599999999999994,-30.599999999999994,8.400000000000006,-54.599999999999994];
-        const theCalculator= new Calculator();
-        expect(theCalculator.prepareDiff(theUserTotalsObject)).toEqual(expectedResult);
+        expect(Calculator.prepareDiff(theUserTotalsObject)).toEqual(expectedResult);
 
     })
 
@@ -99,7 +96,7 @@ describe("i want to ask for resolveExpenses  and return an array of transactions
             expectedTransaction4];
 
 
-        const result = Calculator.distributeExpenses(inputExpenses);
+        const result = Calculator.calculateBill(inputExpenses);
 
         expect(result).toEqual(expectedResult);
     })

@@ -209,7 +209,7 @@ Fernado le debe a Mixa 108.66666666666664E.`;
         Actions.addExpense(default_chat_id, default_user1, '342');
         Actions.addExpense(default_chat_id, default_user2, '8');
 
-        Calculator.distributeExpenses.mockReturnValueOnce([{}]);
+        Calculator.calculateBill.mockReturnValueOnce([{}]);
         Users.describeReceipt.mockReturnValueOnce(`escrito con keys`);
         Messages.parse.mockReturnValueOnce(`Pablo le debe a Mixa 112.66666666666667E
 Fernado le debe a Mixa 108.66666666666664E.`);
