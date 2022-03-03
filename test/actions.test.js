@@ -22,17 +22,19 @@ const today = new Intl.DateTimeFormat('es-ES', {
 
 describe('Actions', () => {
     it('retrieves help', () => {
-        Messages.retrieve.mockImplementationOnce((key) => { return key });
+        Messages.retrieve.mockImplementationOnce((lenguaje, key) => { return key });
+        const user_ctx = {};
 
-        expect(Actions.getHelp()).toBe(`help`);
-        expect(Messages.retrieve).toHaveBeenCalledWith('help');
+        expect(Actions.getHelp(user_ctx)).toBe(`help`);
+        expect(Messages.retrieve).toHaveBeenCalledWith(undefined, 'help');
     });
 
     it('identifies itself', () => {
-        Messages.retrieve.mockImplementationOnce((key) => { return key });
+        Messages.retrieve.mockImplementationOnce((lenguaje, key) => { return key });
+        const user_ctx = {};
 
-        expect(Actions.getIntroduction()).toBe(`intro`);
-        expect(Messages.retrieve).toHaveBeenCalledWith('intro');
+        expect(Actions.getIntroduction(user_ctx)).toBe(`intro`);
+        expect(Messages.retrieve).toHaveBeenCalledWith(undefined, 'intro');
 
     });
     // hacer un test con la devoluccion de error de AddExpense

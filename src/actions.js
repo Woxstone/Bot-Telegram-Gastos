@@ -7,12 +7,12 @@ import { Users } from './users/users.js';
 
 class Actions {
 
-    static getHelp() {
-        return Messages.retrieve('help');
+    static getHelp(user_ctx) {
+        return Messages.retrieve(user_ctx.language_code, 'help');
     }
 
-    static getIntroduction() {
-        return Messages.retrieve('intro');
+    static getIntroduction(user_ctx) {
+        return Messages.retrieve(user_ctx.language_code, 'intro');
     }
 
     static load() {

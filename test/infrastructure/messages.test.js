@@ -47,10 +47,21 @@ El 28/2/2022, cantidad: 8, "manzanas"`;
         const leg = 'en';
         const key = 'intro';
 
-        const expected = 'Im a bot of shared expenses';
+        const expected = 'Im a bot of shared expenses with to much lucky';
 
         const result = Messages.retrieve(leg, key);
 
         expect(result).toBe(expected);
-    })
+    });
+
+    it('object with two keys one for Spanish another for Englesh', () => {
+        const leg = undefined;
+        const key = 'intro';
+
+        const expected = 'Soy un bot de gastos compartido';
+
+        const result = Messages.retrieve(leg, key);
+
+        expect(result).toBe(expected);
+    });
 });

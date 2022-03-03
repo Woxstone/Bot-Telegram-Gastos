@@ -11,5 +11,6 @@ aBot.start();
 
 
 
-require('./cuentas_integration.test');
+// require('./cuentas_integration.test');
 // require('./client_integration.test');
+require('./basic_actions_integration.test');

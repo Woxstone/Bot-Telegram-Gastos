@@ -22,14 +22,19 @@ class MyBot {
     }
 
     addCommands() {
-        this.bot.command('addgasto', (ctx) => this.runAction(ctx, Actions.addExpense));
+        this.bot.command('addgasto', (ctx) => {
+            this.runAction(ctx, Actions.addExpense);
+            // this.runAction(ctx, Actions.sendRelateImage);
+    });
         this.bot.command('nuevo_usuario', (ctx) => this.runAction(ctx, Actions.newUser));
         this.bot.command('gastos', (ctx) => this.runAction(ctx, Actions.showExpenses));
         this.bot.command('cuenta', (ctx) => this.runAction(ctx, Actions.showBill));
     }
 
     addHelp() {
-        this.bot.help((ctx) => this.runAction(ctx, Actions.getHelp));
+        this.bot.help((ctx) => {
+            this.runAction(ctx, Actions.getHelp);
+        });
     }
 
     addIntroduction() {
