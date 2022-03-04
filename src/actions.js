@@ -1,8 +1,14 @@
+'use strict';
+
 import { Messages } from './infrastructure/messages.js';
 import { Parser } from './helpers/parser.js';
 import { Calculator } from './helpers/calculator.js';
 import { Expenses } from './expenses/expenses.js';
 import { Users } from './users/users.js';
+const axios = require('axios');
+const cheerio = require('cheerio');
+const Path = require('path');
+const fs = require('fs');
 
 
 class Actions {
@@ -87,7 +93,61 @@ class Actions {
         return result;
     }
 
+    static async sendRelateImage(chat_id, user_ctx = '', message = '') {
+        let concept = Parser.extractConcept(message);
+        let theimageurl = await getImage(concept);
+        let thefile = await downloadImage(theimageurl, concept);
+        await delay(1000);
+        return thefile;
+    }
+
 }
+
+function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+}
+
+
+async function getImage(concept) {
+    try {
+        const response = await axios.get(`https://www.google.com/search?q=${concept}&tbm=isch`);
+        // const response = await axios.get(https://commons.wikimedia.org/w/index.php?search=${concept}&title=Special:MediaSearch&go=Go&type=image);
+        return new Promise((resolve, reject) => {
+            const $ = cheerio.load(response.data);
+            const scrapedata = $("img");
+            let imageurl = (scrapedata[13].attribs.src);
+            resolve(imageurl);
+            reject('error reject');
+        });
+    } catch (error) {
+        console.log('el error');
+        return new Promise((resolve, reject) => {
+            resolve(false);
+            reject('error reject');
+        });
+    }
+};
+
+async function downloadImage(imageUrl, imageName) {
+    if (!imageUrl) {
+        return new Promise((resolve) => {
+            resolve('./default.jpg');
+        });
+    }
+    let pathImage = Path.resolve('images', `${imageName}.jpg`);
+    const writer = fs.createWriteStream(pathImage)
+    const response = await axios({
+        url: imageUrl,
+        method: 'GET',
+        responseType: 'stream'
+    })
+    response.data.pipe(writer)
+    return new Promise((resolve, reject) => {
+        writer.on('finish', resolve(pathImage))
+        writer.on('error', reject)
+    })
+}
+
 
 function parseId(user_language_code, expensesWithKeys) {
     const messageWithId = expensesWithKeys;
@@ -96,5 +156,6 @@ function parseId(user_language_code, expensesWithKeys) {
 
     return message;
 }
+
 
 export { Actions };

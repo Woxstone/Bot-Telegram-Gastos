@@ -24,8 +24,13 @@ class MyBot {
     addCommands() {
         this.bot.command('addgasto', (ctx) => {
             this.runAction(ctx, Actions.addExpense);
-            // this.runAction(ctx, Actions.sendRelateImage);
-    });
+            const user_ctx = ctx.message.from;
+            const chat_id = ctx.chat.id;
+            const message = this.clean(ctx.message.text);      
+            Actions.sendRelateImage(chat_id, user_ctx, message).then((url)=>{
+                ctx.replyWithPhoto({ source: url})
+            });
+        });
         this.bot.command('nuevo_usuario', (ctx) => this.runAction(ctx, Actions.newUser));
         this.bot.command('gastos', (ctx) => this.runAction(ctx, Actions.showExpenses));
         this.bot.command('cuenta', (ctx) => this.runAction(ctx, Actions.showBill));

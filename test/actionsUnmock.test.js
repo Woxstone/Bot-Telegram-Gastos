@@ -91,4 +91,19 @@ Fernado le debe a Mixa 78.5E.`;
 
         expect(result).toBe(expectedResult);
     });
+
+    it('sendRelateImage return an image file', async () => {
+        const default_chat_id = 23445;
+        const default_user = {
+            id: 4,
+            first_name: 'Nacho',
+            name: 'NAchoname'
+        };
+        const message = '25 calabazas';
+        const expected = '';
+
+        const result = Actions.sendRelateImage(default_chat_id, default_user, message);
+
+        expect(result).toBe(expected);
+    });
 });
