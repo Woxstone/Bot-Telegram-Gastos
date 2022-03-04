@@ -1,23 +1,55 @@
+'use strict';
+
 import { Messages } from './infrastructure/messages.js';
 import { Parser } from './helpers/parser.js';
 import { Calculator } from './helpers/calculator.js';
 import { Expenses } from './expenses/expenses.js';
 import { Users } from './users/users.js';
+import { getImageRealteToConcept } from './helpers/getImageRealteToConcept.js';
 
 
 class Actions {
 
-    static getHelp() {
-        return Messages.retrieve('help');
+    static getHelp(user_ctx) {
+        return Messages.retrieve(user_ctx.language_code, 'help');
     }
 
-    static getIntroduction() {
-        return Messages.retrieve('intro');
+    static getIntroduction(user_ctx) {
+        return Messages.retrieve(user_ctx.language_code, 'intro');
     }
 
     static load() {
         Users.load();
         Expenses.load();
+    }
+
+    static newUser(chat_id = '', user_ctx, message = '') {
+        let answer = '';
+        let userMessage = '';
+
+        const theUser = {
+            id: Parser.extractId(user_ctx),
+            first_name: Parser.extractFirstName(user_ctx),
+            username: Parser.extractName(user_ctx)
+        };
+
+        if (Users.ensure(theUser)) {
+            const keysUserMessage = Users.describe(theUser);
+            userMessage = Messages.parse(user_ctx.language_code, keysUserMessage);
+            answer = Messages.retrieve(user_ctx.language_code, 'user.exits');
+
+        } else {
+            const keysUserMessage = Users.describe(theUser);
+            userMessage = Messages.parse(user_ctx.language_code, keysUserMessage);
+            answer = Messages.retrieve(user_ctx.language_code, 'user.new_user');
+
+            const ghostExpense = '0';
+            Actions.addExpense(chat_id, user_ctx, ghostExpense);
+        }
+
+        const result = `${answer}: ${userMessage}`;
+
+        return result;
     }
 
     static addExpense(chat_id, user_ctx, message) {
@@ -30,67 +62,54 @@ class Actions {
 
         Users.ensure(user_ctx);
         const expenseKeys = Expenses.add(chat_id, user_ctx.id, theExpense);
-        let expense= Users.parseId(expenseKeys);
+        const expense = parseId(user_ctx.language_code, expenseKeys);
 
-        expense = Messages.parse(expense);
-
-        // if (expense === false) { return Messages.retrieve('err.ledger') };
-        const answer = Messages.retrieve('expense.added');
+        const answer = Messages.retrieve(user_ctx.language_code, 'expense.added');
         const result = `${answer}: ${expense}`;
-
-        return result;
-    }
-// incluir un gatos  ficticio (0 0 ) para que la añanda en las cunetas entonces parse.extracConcepto poner sin concepto y que gasto filtre los gasto con money = 0
-    static newUser(chat_id = '', user_ctx, message = '') {
-        let result = '';
-        let answer = '';
-        let userMessage = '';
-        const theUser = {
-            id: Parser.extractId(user_ctx),
-            first_name: Parser.extractFirstName(user_ctx),
-            username: Parser.extractName(user_ctx)
-        };
-
-        if (Users.ensure(theUser)) {
-            const keysMessages = Users.describe(theUser, true);
-            userMessage = Messages.parse(keysMessages);
-            answer = Messages.retrieve('user.exits');
-
-        } else {
-            const keysMessages = Users.describe(theUser);
-            userMessage = Messages.parse(keysMessages);
-            answer = Messages.retrieve('user.new_user');
-        }
-
-        result = `${answer}: ${userMessage}`;
 
         return result;
     }
 
     static showExpenses(chat_id, user_ctx = '', message = '') {
         const expensesWithKeys = Expenses.show(chat_id);
+        const expenses = parseId(user_ctx.language_code, expensesWithKeys);
 
-        let result= Users.parseId(expensesWithKeys);
-
-        result = Messages.parse(result);
-
-
-        return result;
+        return expenses;
     }
 
     static showBill(chat_id, user_ctx = '', message = '') {
 
-        const expensesOfChat = Expenses.showExpensesArray(chat_id);
-        const receipt = Calculator.distributeExpenses(expensesOfChat);
+        const expensesOfChat = Expenses.getExpensesByChatId(chat_id);
+        const receipt = Calculator.calculateBill(expensesOfChat);
         const billKeys = Users.describeReceipt(receipt);
-        const bill = Messages.parse(billKeys);
-        
-        const answer = Messages.retrieve('bill');
+        const bill = Messages.parse(user_ctx.language_code, billKeys);
+
+        const answer = Messages.retrieve(user_ctx.language_code, 'bill');
         const result = `${answer}: ${bill}`;
 
         return result;
     }
 
+    static async sendRelateImage(chat_id, user_ctx = '', message = '') {
+        const concept = (Parser.extractConcept(message) === '')? 'meme' : Parser.extractConcept(message);
+        const thefile = await getImageRealteToConcept(concept);
+        await delay(1000);
+
+        return thefile;
+    }
+
+}
+
+function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+}
+
+function parseId(user_language_code, expensesWithKeys) {
+    const messageWithId = expensesWithKeys;
+    const messageWithNameAndKeys = Users.parseId(messageWithId);
+    const message = Messages.parse(user_language_code, messageWithNameAndKeys);
+
+    return message;
 }
 
 
