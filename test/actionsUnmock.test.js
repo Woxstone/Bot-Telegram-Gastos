@@ -14,6 +14,9 @@ it('dummy', () => {
     expect(true).toBe(true);
 })
 
+// si lo dejas descomentado al tener una funcion async dan problemas o test sincornos o la funcion async no todo a la vez
+
+
 describe('Actions', () => {
   
 //     it('When aadExpense is call must call Expenses.add and return a answer for the user', () => {

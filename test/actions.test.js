@@ -22,6 +22,7 @@ it('dummy', () => {
     expect(true).toBe(true);
 })
 
+// si lo dejas descomentado al tener una funcion async dan problemas o test sincornos o la funcion async no todo a la vez
 
 describe('Actions', () => {
 //     it('retrieves help', () => {
