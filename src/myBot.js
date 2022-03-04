@@ -24,12 +24,7 @@ class MyBot {
     addCommands() {
         this.bot.command('addgasto', (ctx) => {
             this.runAction(ctx, Actions.addExpense);
-            const user_ctx = ctx.message.from;
-            const chat_id = ctx.chat.id;
-            const message = this.clean(ctx.message.text);      
-            Actions.sendRelateImage(chat_id, user_ctx, message).then((url)=>{
-                ctx.replyWithPhoto({ source: url})
-            });
+            this.runAsyncAction(ctx, Actions.sendRelateImage);
         });
         this.bot.command('nuevo_usuario', (ctx) => this.runAction(ctx, Actions.newUser));
         this.bot.command('gastos', (ctx) => this.runAction(ctx, Actions.showExpenses));
@@ -51,6 +46,15 @@ class MyBot {
         const chat_id = ctx.chat.id;
         const message = this.clean(ctx.message.text);
         ctx.reply(action(chat_id, user_ctx, message));
+    }
+
+    runAsyncAction(ctx, action) {
+        const user_ctx = ctx.message.from;
+        const chat_id = ctx.chat.id;
+        const message = this.clean(ctx.message.text);
+        action(chat_id, user_ctx, message).then((url) => {
+            ctx.replyWithPhoto({ source: url })
+        });
     }
 
     clean(text) {
