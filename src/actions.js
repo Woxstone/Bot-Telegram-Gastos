@@ -92,7 +92,6 @@ class Actions {
 
     static async sendRelateImage(chat_id, user_ctx = '', message = '') {
         const concept = (Parser.extractConcept(message) === '')? 'meme' : Parser.extractConcept(message);
-console.log(concept);
         const thefile = await getImageRealteToConcept(concept);
         await delay(1000);
 

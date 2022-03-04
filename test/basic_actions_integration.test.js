@@ -42,7 +42,7 @@ import { StringSession } from "telegram/sessions";
     apiId : parseInt(process.env.API_ID_usertwo),
     apiHash: process.env.API_HASH_usertwo,
     testText : 'start test',
-    intakeMessage : '/addgasto 43 peras',
+    intakeMessage : '/addgasto 43',
     messageExpected: 'Im a bot of shared expenses with to much lucky',
     especificDelay: 0
    }));
