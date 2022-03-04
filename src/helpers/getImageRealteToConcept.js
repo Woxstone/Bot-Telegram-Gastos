@@ -37,7 +37,7 @@ async function getImage(concept) {
 async function downloadImage(imageUrl, imageName) {
     if (!imageUrl) {
         return new Promise((resolve) => {
-            resolve('./images/default.jpg');
+            resolve('./assets/oops.jpg');
         });
     }
     let pathImage = Path.resolve('images', `${imageName}.jpg`);
