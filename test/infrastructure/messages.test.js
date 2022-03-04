@@ -64,4 +64,26 @@ El 28/2/2022, cantidad: 8, "manzanas"`;
 
         expect(result).toBe(expected);
     });
+
+    it('expense.description_noConcept lo cambia por Sin concepto', () => {
+        const leg = undefined;
+        const key = "expense.description_noConcept";
+
+        const expected = "Sin concepto";
+
+        const result = Messages.retrieve(leg, key);
+
+        expect(result).toBe(expected);
+    });
+
+    it('expense.description_noConcept lo cambia por Sin concepto en una expense', () => {
+        const leg = undefined;
+        const key = `message.article 25/02/2022, Mercedes message.person message.quantity: 42, expense.description_noConcept`;
+
+        const expected = "El 25/02/2022, Mercedes metio un gasto de cantidad: 42, Sin concepto";
+
+        const result = Messages.parse(leg, key);
+
+        expect(result).toBe(expected);
+    });
 });
