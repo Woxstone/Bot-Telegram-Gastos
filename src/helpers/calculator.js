@@ -58,7 +58,8 @@ class Calculator {
         let totalExpeneOfUser = 0;
         usersIdsAndTotals.forEach((totalExpenseOftheUser) => {
             totalExpeneOfUser = totalExpenseOftheUser.total;
-            arrayOfdifferences.push(totalExpeneOfUser - total / numberOfUsers);
+            const totalExpeneOfUserRounding = Calculator.roundToTwo(totalExpeneOfUser - total / numberOfUsers)
+            arrayOfdifferences.push(totalExpeneOfUserRounding);
         });
 
         return arrayOfdifferences;
@@ -80,9 +81,9 @@ class Calculator {
         while (Calculator.stillPaymentsUnresolved(ordenateArrayFromMinToMax) && (indexOfPayer < indexOfReciver)) {
             debt = ordenateArrayFromMinToMax[indexOfPayer];
             provisionalAmount = debt + ordenateArrayFromMinToMax[indexOfReciver];
-            
+
             if (provisionalAmount >= 0) {
-                valueOfThePayment = debt;
+                valueOfThePayment = Calculator.roundToTwo(debt);
                 payer = indexOfIds[indexOfPayer];
                 reciver = indexOfIds[indexOfReciver];
                 payment.push(new Transaction(payer, Math.abs(valueOfThePayment), reciver));
@@ -91,7 +92,7 @@ class Calculator {
                 indexOfPayer++;
             }
             else {
-                valueOfThePayment = ordenateArrayFromMinToMax[indexOfReciver];
+                valueOfThePayment = Calculator.roundToTwo(ordenateArrayFromMinToMax[indexOfReciver]);
                 payer = indexOfIds[indexOfPayer];
                 reciver = indexOfIds[indexOfReciver];
                 payment.push(new Transaction(payer, Math.abs(valueOfThePayment), reciver));
@@ -107,6 +108,10 @@ class Calculator {
         return ordenateArrayFromMinToMax.some(value => value < 0);
     }
 
+    static roundToTwo(num) {
+        return +(Math.round(num + "e+2") + "e-2");
+    }
 }
+
 
 export { Calculator };
