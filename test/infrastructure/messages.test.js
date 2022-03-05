@@ -26,6 +26,17 @@ describe('Test of the methods', () => {
         expect(result).toBe(expected);
     });
 
+    it('pares take a string in this string we have info and keys must traduce this keys in real test', () => {
+        const leg = 'es';
+
+        const intake ='user.hello Fernando user.exits_end';
+        const expected = `Hola Fernando tu usuario ya estaba creado en este chat.`
+
+        const result = Messages.parse(leg, intake);
+
+        expect(result).toBe(expected);
+    });
+
     it('2 pares take a string in this string we have info and keys must traduce this keys in real test', () => {
         const leg = 'es';
         const intake = `message.article 28/2/2022, message.quantity: 87, "cosas"

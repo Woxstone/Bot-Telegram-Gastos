@@ -19,8 +19,8 @@ class Users {
         return result;
     }
 
-    static describe(theUser) {
-        if (Roster.exists(theUser.id)) {
+    static describe(theUser, exists = false) {
+        if (exists) {
             return `user.hello ${theUser.first_name} user.exits_end`;
         };
 

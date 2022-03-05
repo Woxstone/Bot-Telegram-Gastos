@@ -34,12 +34,15 @@ class Actions {
         };
 
         if (Users.ensure(theUser)) {
-            const keysUserMessage = Users.describe(theUser);
+            const exits = true;
+            const keysUserMessage = Users.describe(theUser, exits);
+
             userMessage = Messages.parse(user_ctx.language_code, keysUserMessage);
             answer = Messages.retrieve(user_ctx.language_code, 'user.exits');
 
         } else {
             const keysUserMessage = Users.describe(theUser);
+
             userMessage = Messages.parse(user_ctx.language_code, keysUserMessage);
             answer = Messages.retrieve(user_ctx.language_code, 'user.new_user');
 

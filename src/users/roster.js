@@ -30,6 +30,7 @@ class Roster {
 
     static find(user_id) {
         const userFind = this.collection.find(user => user.id === user_id);
+
         return userFind;
     }
 

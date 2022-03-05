@@ -20,10 +20,8 @@ describe('Testing the methods of users', () => {
     });
 
     it('if users exist', () => {
-        Roster.exists.mockReturnValueOnce(true);
-        
         const expected = `user.hello ${default_user.first_name} user.exits_end`;
-        const result = Users.describe(default_user);
+        const result = Users.describe(default_user, true);
 
         expect(result).toEqual(expected);
     });
@@ -47,14 +45,12 @@ describe('Testing the methods of users', () => {
             username: 'my surname'
         };
 
-        // Roster.collection=[default_user,default_user2];
         Roster.search.mockReturnValueOnce(default_user)
             .mockReturnValueOnce(default_user3)
             .mockReturnValueOnce(default_user2)
             .mockReturnValueOnce(default_user)
             .mockReturnValueOnce(default_user2)
-            .mockReturnValueOnce(default_user3)
-            ;
+            .mockReturnValueOnce(default_user3);
 
         const default_expenses = [{ payer: 4256, money: 35, receiver: 68781 },
         { payer: 2548, money: 2, receiver: 4256 },
@@ -79,7 +75,7 @@ hector user.debt fer 4E.`;
 
     it('If the user dont exits ensure returns false', () => {
         Roster.exists.mockReturnValueOnce(false);
-        const result = Users.ensure(default_user);
+        const result = Users.ensure({});
 
         expect(result).toBeFalsy();
     });
@@ -90,6 +86,7 @@ hector user.debt fer 4E.`;
 
         expect(result).toBeTruthy();
     });
+
     it('load must return false if somethig go wrong', () => {
         Roster.load.mockReturnValueOnce(false);
         const result = Users.load();
