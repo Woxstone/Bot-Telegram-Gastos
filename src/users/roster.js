@@ -1,30 +1,27 @@
-import * as fs from 'fs';
-import { logger } from '../../src/helpers/logger.js';
-
+import { load, save } from '../infrastructure/persistance.js';
 import 'dotenv/config';
+
 
 class Roster {
 
     static collection = [];
 
     static load() {
-        try {
-            this.collection = JSON.parse(fs.readFileSync(process.env.DATA_FILE_USERS));
-        } catch (err) {
-            logger.info('error.roster.load');
-            return false;
+        const data = load(process.env.DATA_FILE_USERS);
+
+        if(data) {
+            this.collection = data;
+            return true;
         }
-        return true;
+
+        return false;
     }
 
+
     static save() {
-        try {
-            fs.writeFileSync(process.env.DATA_FILE_USERS, JSON.stringify(this.collection));
-            return true;
-        } catch (err) {
-            logger.error('error.ledger.save');
-            return false;
-        }
+        const result = save(process.env.DATA_FILE_USERS, JSON.stringify(this.collection));
+
+        return result;
     }
 
     static add(user) {

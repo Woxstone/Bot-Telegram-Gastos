@@ -1,7 +1,7 @@
 import { Roster } from '../../src/users/roster.js';
-import fs from 'fs';
-jest.mock('../../src/helpers/logger.js');
-jest.mock('fs');
+import { load, save } from '../../src/infrastructure/persistance.js';
+jest.mock('../../src/infrastructure/persistance.js');
+
 
 beforeEach(() => {
     flushRoster();
@@ -13,12 +13,12 @@ function flushRoster() {
 
 describe('roster work like roster', () => {
     it('exits must search in the colletion for a user and return true id exits', () => {
-       
         const default_user = {
             id: 4256,
             first_name: 'Macho',
             username: 'Hijo de mano'
         };
+        
         Roster.add(default_user);
 
         const result = Roster.exists(default_user.id);
@@ -39,7 +39,7 @@ describe('roster work like roster', () => {
     });
 
     it('load of roster', () => {
-        fs.writeFileSync.mockImplementationOnce(()=>{ 
+        save.mockImplementationOnce(()=>{ 
             return true;
         });
         
@@ -48,8 +48,8 @@ describe('roster work like roster', () => {
             first_name: 'Machoa',
             username: 'Hijo de mano'
         };
-        fs.readFileSync.mockImplementationOnce(()=>{ 
-            return  Buffer.from(JSON.stringify([default_user]));
+        load.mockImplementationOnce(()=>{ 
+            return [default_user];
         });
 
         const expected = default_user;
@@ -62,8 +62,8 @@ describe('roster work like roster', () => {
     });
 
     it('load of roster return false when fs error on read ', () => {
-        fs.readFileSync.mockImplementationOnce(()=>{ 
-            throw 'error;'
+        load.mockImplementationOnce(()=>{ 
+            return false;
         });
 
         const result = Roster.load();
@@ -71,10 +71,11 @@ describe('roster work like roster', () => {
     });
   
     it('load of roster create an empty collection when fs error on read ', () => {
-        fs.readFileSync.mockImplementationOnce(()=>{ 
-            throw 'error;'
+        load.mockImplementationOnce(()=>{ 
+            return false;
         });
-        const result = Roster.load();
+
+        Roster.load();
 
         expect(Roster.collection).toEqual([]);
     });

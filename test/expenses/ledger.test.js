@@ -1,7 +1,6 @@
 import { Ledger } from '../../src/expenses/ledger.js';
-import  fs  from 'fs';
-jest.mock('fs');
-jest.mock('../../src/helpers/logger.js');
+import { load, save } from '../../src/infrastructure/persistance.js';
+jest.mock('../../src/infrastructure/persistance.js');
 
 
 beforeEach(() => {
@@ -39,7 +38,7 @@ describe('ledger works as a ledger ', () => {
     });
 
     it('persintace of ledger', () => {
-        fs.writeFileSync.mockReturnValue(true);
+        save.mockReturnValueOnce(true);
 
         let result = false;
 
@@ -49,7 +48,7 @@ describe('ledger works as a ledger ', () => {
     });
 
     it('persintace of ledger fails if no writes', () => {
-        fs.writeFileSync.mockImplementation(() => { throw new Error() });
+        save.mockReturnValueOnce(false);
 
         let result = true;
 
@@ -76,7 +75,8 @@ describe('ledger works as a ledger ', () => {
     });
 
     it('load of ledger', () => {
-        fs.readFileSync.mockReturnValue(Buffer.from(JSON.stringify({ fer_id: [{}] })));
+        load.mockReturnValueOnce({ fer_id: [{}] });
+
         const expected = { fer_id: [{}] };
 
         Ledger.load();
@@ -86,9 +86,7 @@ describe('ledger works as a ledger ', () => {
     });
 
     it('load of ledger return false when fs error on read', () => {
-        fs.readFileSync.mockImplementation(() => {
-            throw new Error();
-        });
+        load.mockReturnValueOnce(false);
 
         const result = Ledger.load();
 
