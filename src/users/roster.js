@@ -8,9 +8,10 @@ class Roster {
 
     static load() {
         const data = load(process.env.DATA_FILE_USERS);
-
+        
         if(data) {
             this.collection = data;
+
             return true;
         }
 

@@ -20,6 +20,7 @@ async function getImage(concept) {
         return new Promise((resolve, reject) => {
             const $ = cheerio.load(response.data);
             const scrapedata = $("img");
+console.log(scrapedata);
             let imageurl = (scrapedata[randomImage].attribs.src);
             resolve(imageurl);
             reject('error reject');
@@ -35,7 +36,7 @@ async function getImage(concept) {
 };
 
 async function downloadImage(imageUrl, imageName) {
-    if (!imageUrl) {
+    if (!imageUrl || imageName === '/addgasto') {
         return new Promise((resolve) => {
             resolve('./assets/oops.jpg');
         });
