@@ -3,41 +3,48 @@ import { Ledger } from './ledger';
 
 class Expenses {
 
+    static load() {
+        return Ledger.load();
+    }
+
     static add(chat_id, user_id, expense) {
-        const theExpense = new Expense(expense, user_id);
-        if (!Ledger.addAndSave(chat_id, theExpense)) {
+        expense.user_id = user_id;
+        const theExpense = new Expense(expense);
+        if (!Ledger.ensureAndSave(chat_id, theExpense)) {
             return 'expenses.error_save';
         };
         return Expenses.description([theExpense]);
     }
 
     static show(chat_id) {
-        const theExpenses = this.showExpensesArray(chat_id);
-        const result = Expenses.description(theExpenses);
+        const theExpenses = this.getExpensesByChatId(chat_id);
+        const filterExpenses = theExpenses.filter(expense => expense.money > 0);
+        const result = Expenses.description(filterExpenses);
 
         return result;
     }
-    // nuevo nombre getExpensesByChatId
-    static showExpensesArray(chat_id) {
-        const result = Ledger.getByChatId(chat_id);
-        return result;
+   
+    static getExpensesByChatId(chat_id) {
+        const expenses = Ledger.getByChatId(chat_id);
+        return expenses;
     }
+
 
     static description(expensesArray) {
         let result = '';
         let theExpense = undefined;
-        expensesArray.forEach(expense => {
-            theExpense = new Expense(expense, expense.id);
+
+        expensesArray.forEach(expense => {          
+            theExpense = new Expense(expense);           
             result += `${theExpense.description()}\n`;
         });
+        const lastLineBreack = new RegExp(/\n$/g); 
+        result = result.replace(lastLineBreack, '');
 
-        result = result.replace(/\n$/g, '');
         return result;
     }
 
-    static load() {
-        return Ledger.load();
-    }
+
 }
 
 export { Expenses };

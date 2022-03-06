@@ -18,6 +18,8 @@ DATA_FILE_USERS = "./data/roster.json"
 
 DATA_FILE_LOGGER = "./data/logger.json"
 
+LOCALE_DATE_FORMAT = 'es-ES'  # or your locale
+
 OPCIONAL
 
 - Crea una app desde aqui [https://my.telegram.org/auth](https://my.telegram.org/auth) rellena con la info que tienes estos campos en tu archivo .env

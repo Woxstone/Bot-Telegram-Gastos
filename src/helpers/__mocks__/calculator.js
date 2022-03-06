@@ -1,5 +1,5 @@
 const Calculator = jest.fn();
 
-Calculator.distributeExpenses = jest.fn();
+Calculator.calculateBill = jest.fn();
 
 export { Calculator }

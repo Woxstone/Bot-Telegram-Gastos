@@ -106,3 +106,5 @@ dist
 # ignore data 
 data/
 todo
+parser-test
+images/
