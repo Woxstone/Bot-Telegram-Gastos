@@ -5,7 +5,7 @@ jest.mock('fs');
 jest.mock('../../src/helpers/logger.js');
 
 describe('Testing load fuction', () => {
-    xit('Load should load the info of the require placeholder', () => {
+    it('Load should load the info of the require placeholder', () => {
         const path = './load';
         const expected = { examples: [] };
         fs.readFileSync.mockReturnValueOnce(Buffer.from(JSON.stringify(expected)));
@@ -15,7 +15,7 @@ describe('Testing load fuction', () => {
         expect(result).toEqual(expected);
     });
 
-    xit('Load return false if fs fail', () => {
+    it('Load return false if fs fail', () => {
         const path = './';
 
         fs.readFileSync.mockImplementationOnce(() => { throw new Error(); });
