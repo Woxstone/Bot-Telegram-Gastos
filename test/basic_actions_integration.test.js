@@ -25,6 +25,17 @@ aBot.start();
     apiId : parseInt(process.env.API_ID_userone),
     apiHash: process.env.API_HASH_userone,
     testText: 'help test',
+    intakeMessage : '/start',
+    messageExpected:  `Soy un bot de gastos compartido`,
+    especificDelay: 0
+   }));
+
+  
+  resultMessage.push(await runIntegrationTest({
+    stringSession: new StringSession(process.env.STRING_SESSION_userone),
+    apiId : parseInt(process.env.API_ID_userone),
+    apiHash: process.env.API_HASH_userone,
+    testText: 'help test',
     intakeMessage : '/help',
     messageExpected:  `Hola, estos son los comandos que puedes utilizar:
 /nuevo_usuario para crearte un usuario en este chat,
@@ -34,6 +45,8 @@ aBot.start();
 Si tienes algun problema /help para saber los formatos de nuevo`,
     especificDelay: 0
    }));
+
+
 
   showTestResults(resultMessage);
   process.exit(1);

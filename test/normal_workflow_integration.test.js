@@ -75,8 +75,9 @@ aBot.start();
       apiHash: process.env.API_HASH_userone,
       testText : 'gastos command test ',
       intakeMessage : '/gastos',
-      messageExpected: `El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 76, "peras"
-El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 8, "manzanas"`,
+      messageExpected: `El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 76, peras
+El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 8, manzanas
+El ${fechaDeHoy}, Motercode metio un gasto de cantidad: 35, manzanas`,
       especificDelay: 0
      }));
 
