@@ -5,7 +5,12 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
-    "integrationTest": "npx babel-node ./test/all_integration.test.js",
+    "basicIntegration": "npx babel-node ./test/basic_actions_integration.test.js",
+    "BAI": "npx babel-node ./test/basic_actions_integration.test.js",
+    "normalWorkflowIntegration": "npx babel-node ./test/normal_workflow_integration.test.js",
+    "NWI": "npx babel-node ./test/normal_workflow_integration.test.js",
+    "badBehaviourIntegration": "npx babel-node ./test/bad_behaviour_integration.test.js",
+    "BBI": "npx babel-node ./test/bad_behaviour_integration.test.js",  
     "start": "npx babel-node app.js"
   },
   "repository": {
