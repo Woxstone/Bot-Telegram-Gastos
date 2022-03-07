@@ -181,7 +181,7 @@ message.article 28/10/1998, 1234 message.person message.quantity: 32 "manzanas"`
 
         Ledger.getByChatId.mockReturnValueOnce([defaultGhostExpenses]);
 
-        const result = Expenses.getExpensesByChatId(default_chat_id);
+        const result = Expenses.show(default_chat_id);
 
         expect(result).toEqual(expected);
         expect(Ledger.getByChatId).toHaveBeenCalled();
@@ -193,7 +193,7 @@ message.article 28/10/1998, 1234 message.person message.quantity: 32 "manzanas"`
 
         Ledger.getByChatId.mockReturnValueOnce(undefined);
 
-        const result = Expenses.getExpensesByChatId(default_chat_id);
+        const result = Expenses.show(default_chat_id);
 
         expect(result).toEqual(expected);
         expect(Ledger.getByChatId).toHaveBeenCalled();
