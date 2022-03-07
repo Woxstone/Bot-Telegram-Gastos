@@ -27,6 +27,21 @@ class Users {
         return `user.hello ${theUser.first_name} user.create_ok`;
     }
 
+    static get(message) {
+        const id = Users.getId(message);
+        const user = Roster.search(id);
+        const result = message.replace(id, user.first_name);
+
+        return result;
+    }
+
+    static getId(message) {
+        let result = message.match(/ \d+ /gm);
+        result = parseFloat(result[0]);
+
+        return result;
+    }
+
     static describeReceipt(receipt) {
         let stringOfTransactions = '';
 
