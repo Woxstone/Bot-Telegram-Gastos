@@ -28,7 +28,6 @@ async function getImage(concept) {
         });
 
     } catch (error) {
-        // console.log('el error');
         logger.error('Error in getImage');
         return new Promise((resolve) => {
             resolve(false);

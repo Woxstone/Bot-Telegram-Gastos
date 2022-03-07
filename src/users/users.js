@@ -49,7 +49,7 @@ class Users {
             const payer = Roster.search(debt.payer).first_name;
             const receiver = Roster.search(debt.receiver).first_name;
 
-            stringOfTransactions += `${payer} user.debt ${receiver} ${debt.money}E\n`;
+            stringOfTransactions += `${payer} user.debt ${receiver} ${debt.money}€\n`;
         });
 
         const billWithKeys = stringOfTransactions.replace(/\n$/g, '.');

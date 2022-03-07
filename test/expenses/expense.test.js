@@ -47,7 +47,7 @@ describe('test about the methods', () => {
         user_id: 545
     };
     it('description methods should return the description of the expense', () => {
-        const expected = `message.article ${exp.date}, /ID:${exp.user_id} message.person message.quantity: ${exp.money}, ${exp.concept}`;
+        const expected = `message.article ${exp.date}, /ID:${exp.user_id} message.person message.quantity: ${exp.money}€, ${exp.concept}`;
         const defaultExp = new Expense(exp);
 
         expect(defaultExp.description()).toEqual(expected);
@@ -57,7 +57,7 @@ describe('test about the methods', () => {
       
 
         exp.concept ='';
-        const expected = `message.article ${exp.date}, /ID:${exp.user_id} message.person message.quantity: ${exp.money}, expense.description_noConcept`;
+        const expected = `message.article ${exp.date}, /ID:${exp.user_id} message.person message.quantity: ${exp.money}€, expense.description_noConcept`;
         const defaultExp = new Expense(exp);
 
         expect(defaultExp.description()).toEqual(expected);

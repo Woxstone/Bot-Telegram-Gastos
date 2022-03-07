@@ -58,9 +58,9 @@ describe('Testing the methods of users', () => {
 
         const result = Users.describeReceipt(default_expenses);
 
-        const expected = `Macho user.debt fer 35E
-hector user.debt Macho 2E
-hector user.debt fer 4E.`;
+        const expected = `Macho user.debt fer 35€
+hector user.debt Macho 2€
+hector user.debt fer 4€.`;
 
         expect(result).toEqual(expected);
     });
