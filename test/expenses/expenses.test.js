@@ -169,6 +169,36 @@ message.article 28/10/1998, 1234 message.person message.quantity: 32 "manzanas"`
         expect(Ledger.getByChatId).toHaveBeenCalled();
     });
 
+    it('I want showExpensesArray retrun message error if no expenses in the chat', () => {
+        const defaultGhostExpenses = {
+            money: 0,
+            concept: '',
+            date: 'today'
+        };
+
+        const default_chat_id = -954;
+        const expected = 'expenses.error_noExpensesIntheChat';
+
+        Ledger.getByChatId.mockReturnValueOnce([defaultGhostExpenses]);
+
+        const result = Expenses.getExpensesByChatId(default_chat_id);
+
+        expect(result).toEqual(expected);
+        expect(Ledger.getByChatId).toHaveBeenCalled();
+    });
+
+    it('I want showExpensesArray retrun message error if no expenses in the chat', () => {
+        const default_chat_id = -954;
+        const expected = 'expenses.error_noExpensesIntheChat';
+
+        Ledger.getByChatId.mockReturnValueOnce(undefined);
+
+        const result = Expenses.getExpensesByChatId(default_chat_id);
+
+        expect(result).toEqual(expected);
+        expect(Ledger.getByChatId).toHaveBeenCalled();
+    });
+
     it('load must return false if somethig go rong', () => {
         Ledger.load.mockReturnValueOnce(false);
 
@@ -213,7 +243,7 @@ message.article 28/10/1998, message.quantity: 32 "manzanas"`
         expect(result).toBe(expected);
     });
 
-    it.only('show return a error message when thers no expenses in the chat', () => {
+    it('show return a error message when thers no expenses in the chat', () => {
         const default_chat_id = 24;
         const defaultExp = {
             money: 0,

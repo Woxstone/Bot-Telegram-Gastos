@@ -34,6 +34,7 @@ class Expenses {
 
     static getExpensesByChatId(chat_id) {
         const expenses = Ledger.getByChatId(chat_id);
+        if(expenses == undefined || expenses.length == 1) { return 'expenses.error_noExpensesIntheChat'; }
         return expenses;
     }
 

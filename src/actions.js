@@ -83,6 +83,11 @@ class Actions {
     static showBill(chat_id, user_ctx = '', message = '') {
 
         const expensesOfChat = Expenses.getExpensesByChatId(chat_id);
+        if(typeof expensesOfChat === 'string') {
+            const errorMessage = Messages.retrieve(user_ctx.language_code, expensesOfChat);
+
+            return errorMessage;
+        }
         const receipt = Calculator.calculateBill(expensesOfChat);
         const billKeys = Users.describeReceipt(receipt);
         const bill = Messages.parse(user_ctx.language_code, billKeys);
