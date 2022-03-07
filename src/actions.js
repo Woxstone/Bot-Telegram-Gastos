@@ -36,7 +36,7 @@ class Actions {
         if (Users.ensure(theUser)) {
             const exits = true;
             const keysUserMessage = Users.describe(theUser, exits);
-
+//refactorizzar:
             userMessage = Messages.parse(user_ctx.language_code, keysUserMessage);
             answer = Messages.retrieve(user_ctx.language_code, 'user.exits');
 
@@ -71,7 +71,7 @@ class Actions {
 
         const dateExpense = new Date(theExpense.date);
         const dateToday = new Date(today);
-        if(dateExpense > dateToday) {
+        if(dateExpense >= dateToday) {
             return Messages.retrieve(user_ctx.language_code, 'error.date');
         }
 
@@ -95,11 +95,11 @@ class Actions {
     static showBill(chat_id, user_ctx = '', message = '') {
 
         const expensesOfChat = Expenses.getExpensesByChatId(chat_id);
-        if(typeof expensesOfChat === 'string') {
-            const errorMessage = Messages.retrieve(user_ctx.language_code, expensesOfChat);
+        // if(typeof expensesOfChat === 'string') {
+        //     const errorMessage = Messages.retrieve(user_ctx.language_code, expensesOfChat);
 
-            return errorMessage;
-        }
+        //     return errorMessage;
+        // }
         const receipt = Calculator.calculateBill(expensesOfChat);
         const billKeys = Users.describeReceipt(receipt);
         const bill = Messages.parse(user_ctx.language_code, billKeys);
@@ -111,6 +111,7 @@ class Actions {
     }
 
     static async sendRelateImage(chat_id, user_ctx = '', message = '') {
+//const qeu ssea solo message or meme
         const concept = (Parser.extractConcept(message) === '')? 'meme' : Parser.extractConcept(message);
         const thefile = await getImageRealteToConcept(concept);
         await delay(1000);
@@ -123,7 +124,7 @@ class Actions {
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
-
+//cambiar nombre de mierda
 function parseId(user_language_code, expensesWithKeys) {
     const messageWithId = expensesWithKeys;
     const messageWithNameAndKeys = Users.parseId(messageWithId);

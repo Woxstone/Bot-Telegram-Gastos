@@ -21,8 +21,8 @@ class Expenses {
         if (theExpenses == undefined) {
             return 'expenses.error_noExpensesIntheChat';
         }
-
-        const filterExpenses = theExpenses.filter(expense => expense.money > 0);
+//ghostExpeene = {mony: 0} igualarlo a esto
+        const filterExpenses = theExpenses.filter(expense => (expense.money > 0));
         if (filterExpenses.length == 0) {
             return 'expenses.error_noExpensesIntheChat';
         }

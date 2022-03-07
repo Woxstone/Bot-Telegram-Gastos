@@ -16,7 +16,7 @@ class Ledger {
 
         return false;
     }
-
+//async
     static save() {
         const result = save(process.env.DATA_FILE_EXPENSES, JSON.stringify(this.collection));
 

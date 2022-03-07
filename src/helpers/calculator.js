@@ -84,7 +84,7 @@ class Calculator {
         while (Calculator.stillPaymentsUnresolved(ordenateArrayFromMinToMax) && (indexOfPayer < indexOfReciver)) {
             debt = ordenateArrayFromMinToMax[indexOfPayer];
             provisionalAmount = debt + ordenateArrayFromMinToMax[indexOfReciver];
-
+// sacar cosas fuera
             if (provisionalAmount >= 0) {
                 valueOfThePayment = Calculator.roundToTwo(debt);
                 payer = indexOfIds[indexOfPayer];

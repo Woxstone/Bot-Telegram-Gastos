@@ -34,6 +34,7 @@ async function getImage(concept) {
 };
 
 async function downloadImage(imageUrl, imageName) {
+//quitar el addgasto sanitizar imageUrl
     if (!imageUrl || imageName === '/addgasto' || imageName.match(/\//gm)) {
         return new Promise((resolve) => {
             logger.info('error info');
