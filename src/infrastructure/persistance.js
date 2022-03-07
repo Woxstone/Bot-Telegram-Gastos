@@ -13,7 +13,8 @@ const load = (path) => {
 
 const save = (path, info) => {
     try {
-        fs.writeFileSync(path, JSON.stringify(info));
+        // fs.writeFileSync(path, JSON.stringify(info));
+        fs.writeFileSync(path, info);
         return true;
     } catch (err) {  
         logger.error(`error.${path}.save`);
