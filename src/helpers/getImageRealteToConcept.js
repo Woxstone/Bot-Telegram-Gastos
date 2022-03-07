@@ -17,20 +17,17 @@ async function getImage(concept) {
     try {
         const response = await axios.get(`https://www.google.com/search?q=${concept}&tbm=isch`);
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const $ = cheerio.load(response.data);
             const scrapedata = $("img");
-console.log(scrapedata);
             let imageurl = (scrapedata[randomImage].attribs.src);
             resolve(imageurl);
-            reject('error reject');
         });
 
     } catch (error) {
         console.log('el error');
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             resolve(false);
-            reject('error reject');
         });
     }
 };

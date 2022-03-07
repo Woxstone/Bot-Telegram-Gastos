@@ -1,6 +1,13 @@
 import { runIntegrationTest, showTestResults } from '../integrationTestRunner.js'
 import { StringSession } from "telegram/sessions";
 
+import { MyBot } from '../src/myBot.js';
+
+
+
+const aBot = new MyBot();
+aBot.start();
+
 
 
 (async () => {
@@ -32,16 +39,6 @@ import { StringSession } from "telegram/sessions";
     especificDelay: 0
    }));
 
-   resultMessage.push(await runIntegrationTest({
-    stringSession: new StringSession(process.env.STRING_SESSION_usertwo),
-    apiId : parseInt(process.env.API_ID_usertwo),
-    apiHash: process.env.API_HASH_usertwo,
-    testText : 'user allready exist test',
-    intakeMessage : '/nuevo_usuario',
-    messageExpected: `Usuario ya registrado: Hola Motercode tu usuario ya estaba creado en este chat.`,
-    especificDelay: 7
-   }));
-
   resultMessage.push(await runIntegrationTest({
      stringSession: new StringSession(process.env.STRING_SESSION_usertwo),
      apiId : parseInt(process.env.API_ID_usertwo),
@@ -66,7 +63,7 @@ import { StringSession } from "telegram/sessions";
       stringSession: new StringSession(process.env.STRING_SESSION_userone),
       apiId : parseInt(process.env.API_ID_userone),
       apiHash: process.env.API_HASH_userone,
-      testText : 'addgasto command test user one concept user 2',
+      testText : 'second addgasto command test user one ',
       intakeMessage : '/addgasto 8 manzanas',
       messageExpected: `Gasto registrado: El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 8, "manzanas"`,
       especificDelay: 0
@@ -78,8 +75,9 @@ import { StringSession } from "telegram/sessions";
       apiHash: process.env.API_HASH_userone,
       testText : 'gastos command test ',
       intakeMessage : '/gastos',
-      messageExpected: `El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 76, "peras"
-El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 8, "manzanas"`,
+      messageExpected: `El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 76, peras
+El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 8, manzanas
+El ${fechaDeHoy}, Motercode metio un gasto de cantidad: 35, manzanas`,
       especificDelay: 0
      }));
 
