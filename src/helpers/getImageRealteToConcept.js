@@ -1,5 +1,5 @@
 import axios from 'axios';
-import  cheerio  from 'cheerio';
+import cheerio from 'cheerio';
 
 import path from 'path';
 import fs from 'fs';
@@ -8,9 +8,8 @@ import { logger } from '../helpers/logger.js';
 export async function getImageRealteToConcept(concept) {
     const theimageurl = await getImage(concept);
     const thefile = await downloadImage(theimageurl, concept);
-    
-    return new Promise((resolve)=> resolve(thefile));
-    // return thefile;
+
+    return new Promise((resolve) => resolve(thefile));
 }
 
 async function getImage(concept) {
@@ -22,12 +21,12 @@ async function getImage(concept) {
         return new Promise((resolve) => {
             const $ = cheerio.load(response.data);
             const scrapedata = $("img");
-            let imageurl = (scrapedata[randomImage].attribs.src);;            
+            let imageurl = (scrapedata[randomImage].attribs.src);;
             resolve(imageurl);
         });
 
     } catch (error) {
-        logger.error('Error in getImage');
+        logger.error('error.getImage');
         return new Promise((resolve) => {
             resolve(false);
         });
@@ -42,12 +41,22 @@ async function downloadImage(imageUrl, imageName) {
         });
     }
     let pathImage = path.resolve('images', `${imageName}.jpg`);
-    const writer = fs.createWriteStream(pathImage)
-    const response = await axios.get(imageUrl,{ method: 'GET',
-    responseType: 'stream' });
-    response.data.pipe(writer)
+    const writer = fs.createWriteStream(pathImage);
+    try {
+        const response = await axios.get(imageUrl, {
+            method: 'GET',
+            responseType: 'stream'
+        });
+        response.data.pipe(writer)
+    } catch (err) {
+        logger.error('error.downloadImage');
+        return new Promise((resolve) => {
+            resolve('./assets/oops.jpg');
+        });
+    }
+    
     return new Promise((resolve, reject) => {
         writer.on('finish', resolve(pathImage))
-        writer.on('error', reject)
+        writer.on('error', reject('./assets/oops.jpg'))
     })
 }

@@ -2,10 +2,8 @@ import { runIntegrationTest, showTestResults } from '../integrationTestRunner.js
 import { StringSession } from "telegram/sessions";
 
 
-// clase a testear
 import { MyBot } from '../src/myBot.js';
 
-// describe: creacion de usuario, meter gastos y pedir gastos.
 
 const aBot = new MyBot();
 aBot.start();
@@ -18,7 +16,6 @@ aBot.start();
       month: 'numeric',
       day: 'numeric'
     }).format(Date.now());
-    // testing actions
   
     resultMessage.push(await runIntegrationTest({
       stringSession: new StringSession(process.env.STRING_SESSION_userone),

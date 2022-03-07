@@ -83,7 +83,6 @@ describe("i want to ask for resolveExpenses  and return an array of transactions
     it('should had a distribute method that receives an expenses array and returns a payments array', () => {
         const inputExpenses = defaultCollection;
 
-        // let expectedResult = [-94.4,17.599999999999994,30.599999999999994,-8.400000000000006,54.599999999999994];
         const expectedTransaction1 = new Transaction(88, 54.6, 32);
         const expectedTransaction2 = new Transaction(77, 30.6, 32);
         const expectedTransaction3 = new Transaction(44, 9.2, 32);

@@ -18,7 +18,6 @@ aBot.start();
     month: 'numeric',
     day: 'numeric'
   }).format(Date.now());
-  // testing actions
 
   resultMessage.push(await runIntegrationTest({
     stringSession: new StringSession(process.env.STRING_SESSION_userone),
