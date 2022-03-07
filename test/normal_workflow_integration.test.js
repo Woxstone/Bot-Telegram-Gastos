@@ -44,8 +44,9 @@ aBot.start();
      apiHash: process.env.API_HASH_usertwo,
      testText : 'addgasto command test user 2',
      intakeMessage : '/addgasto 35 manzanas',
-     messageExpected: `gasto registrado: El ${fechaDeHoy}, Motercode metio un gasto de cantidad: 35, "manzanas"`,
-     especificDelay: 6
+     messageExpected: `Gasto registrado: El ${fechaDeHoy}, Motercode metio un gasto de cantidad: 35€, manzanas`,
+     especificDelay: 6,
+     position: 1
     }));
 
     resultMessage.push(await runIntegrationTest({
@@ -54,8 +55,9 @@ aBot.start();
       apiHash: process.env.API_HASH_userone,
       testText : 'addgasto command test user one',
       intakeMessage : '/addgasto 76 peras',
-      messageExpected: `Gasto registrado: El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 76, "peras"`,
-      especificDelay: 7
+      messageExpected: `Gasto registrado: El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 76€, peras`,
+      especificDelay: 7,
+      position: 1
      }));
 
      resultMessage.push(await runIntegrationTest({
@@ -64,8 +66,9 @@ aBot.start();
       apiHash: process.env.API_HASH_userone,
       testText : 'second addgasto command test user one ',
       intakeMessage : '/addgasto 8 manzanas',
-      messageExpected: `Gasto registrado: El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 8, "manzanas"`,
-      especificDelay: 0
+      messageExpected: `Gasto registrado: El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 8€, manzanas`,
+      especificDelay: 0,
+      position: 1
      }));
 
      resultMessage.push(await runIntegrationTest({
@@ -74,9 +77,9 @@ aBot.start();
       apiHash: process.env.API_HASH_userone,
       testText : 'gastos command test ',
       intakeMessage : '/gastos',
-      messageExpected: `El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 76, peras
-El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 8, manzanas
-El ${fechaDeHoy}, Motercode metio un gasto de cantidad: 35, manzanas`,
+      messageExpected: `El ${fechaDeHoy}, Motercode metio un gasto de cantidad: 35€, manzanas
+El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 76€, peras
+El ${fechaDeHoy}, Nacho metio un gasto de cantidad: 8€, manzanas`,
       especificDelay: 0
      }));
 
@@ -86,7 +89,7 @@ El ${fechaDeHoy}, Motercode metio un gasto de cantidad: 35, manzanas`,
       apiHash: process.env.API_HASH_userone,
       testText : 'cuenta command test ',
       intakeMessage : '/cuenta',
-      messageExpected: `La cuenta: Motercode le debe a Nacho 24.5E.`,
+      messageExpected: `La cuenta: Motercode le debe a Nacho 24.5€.`,
       especificDelay: 0
      }));
 
