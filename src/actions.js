@@ -63,6 +63,18 @@ class Actions {
             date: Parser.extractDate(message)
         };
 
+        const today = new Intl.DateTimeFormat(process.env.LOCALE_DATE_FORMAT, {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+        }).format(Date.now());
+
+        const dateExpense = new Date(theExpense.date);
+        const dateToday = new Date(today);
+        if(dateExpense > dateToday) {
+            return Messages.retrieve(user_ctx.language_code, 'error.date');
+        }
+
         Users.ensure(user_ctx);
         const expenseKeys = Expenses.add(chat_id, user_ctx.id, theExpense);
         const expense = parseId(user_ctx.language_code, expenseKeys);

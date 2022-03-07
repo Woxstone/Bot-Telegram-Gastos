@@ -20,6 +20,7 @@ Si tienes algun problema /help para saber los formatos de nuevo`,
     'error.users': 'Error al cargar los usuarios del Roster.',
     'error.expenses': 'Error al cargar los gastos del Ledger.',
     'error.ledger': 'Ha habido un problema al registrar el gasto.',
+    'error.date': 'La fecha no es valida',
     'message.quantity:': 'cantidad:',
     'message.article': 'El',
     'message.person': 'metio un gasto de'
