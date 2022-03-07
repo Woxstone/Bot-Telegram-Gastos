@@ -4,6 +4,6 @@ Expenses.add = jest.fn();
 Expenses.show = jest.fn();
 Expenses.getExpensesByChatId = jest.fn();
 Expenses.description = jest.fn();
-Expenses.load = jest.fn().mockReturnValueOnce(true);
+Expenses.load = jest.fn().mockReturnValue(true);
 
 export { Expenses };

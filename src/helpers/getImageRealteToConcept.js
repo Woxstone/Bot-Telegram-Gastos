@@ -3,7 +3,7 @@ import  cheerio  from 'cheerio';
 
 import path from 'path';
 import fs from 'fs';
-// import { logger } from '../helpers/logger.js';
+import { logger } from '../helpers/logger.js';
 
 export async function getImageRealteToConcept(concept) {
     const theimageurl = await getImage(concept);
@@ -27,7 +27,7 @@ async function getImage(concept) {
         });
 
     } catch (error) {
-        // logger.error('Error in getImage');
+        logger.error('Error in getImage');
         return new Promise((resolve) => {
             resolve(false);
         });
@@ -35,9 +35,9 @@ async function getImage(concept) {
 };
 
 async function downloadImage(imageUrl, imageName) {
-    if (!imageUrl || imageName === '/addgasto') {
+    if (!imageUrl || imageName === '/addgasto' || imageName.match(/\//gm)) {
         return new Promise((resolve) => {
-            // logger.info('error info');
+            logger.info('error info');
             resolve('./assets/oops.jpg');
         });
     }
