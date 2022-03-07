@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import { cheerio } from 'cheerio';
 // const cheerio = require('cheerio');
-import  cheerio  from 'cheerio';
+import cheerio from 'cheerio';
 
 import Path from 'path';
 import fs from 'fs';
@@ -36,7 +36,7 @@ async function getImage(concept) {
 };
 
 async function downloadImage(imageUrl, imageName) {
-    if (!imageUrl || imageName === '/addgasto') {
+    if (!imageUrl || imageName === '/addgasto' || imageName.match(/\W/gm)) {
         return new Promise((resolve) => {
             logger.info('error info');
             resolve('./assets/oops.jpg');
