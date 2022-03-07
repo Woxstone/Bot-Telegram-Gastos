@@ -1,5 +1,8 @@
 import axios from 'axios';
-import { cheerio } from 'cheerio';
+// import { cheerio } from 'cheerio';
+// const cheerio = require('cheerio');
+import  cheerio  from 'cheerio';
+
 import Path from 'path';
 import fs from 'fs';
 import { logger } from '../helpers/logger.js';

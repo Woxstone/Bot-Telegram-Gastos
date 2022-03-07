@@ -1,4 +1,3 @@
-import { User } from "../user";
 
 const Users = jest.fn();
 

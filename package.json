@@ -47,7 +47,8 @@
       "<rootDir>/testdata/"
     ],
     "watchPathIgnorePatterns": [
-      "<rootDir>/testdata/"
+      "<rootDir>/testdata/",
+      "<rootDir>/images/"
     ]
   }
 }

@@ -87,7 +87,7 @@ El ${fechaDeHoy}, Motercode metio un gasto de cantidad: 35, manzanas`,
       apiHash: process.env.API_HASH_userone,
       testText : 'cuenta command test ',
       intakeMessage : '/cuenta',
-      messageExpected: `La cuenta: Motercode le debe a Nacho 42E.`,
+      messageExpected: `La cuenta: Motercode le debe a Nacho 24.5E.`,
       especificDelay: 0
      }));
 

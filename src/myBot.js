@@ -45,6 +45,10 @@ class MyBot {
         const user_ctx = ctx.message.from;
         const chat_id = ctx.chat.id;
         const message = this.clean(ctx.message.text);
+        if(message == '' && action == Actions.addExpense) {
+            this.runAction(ctx, Actions.getHelp);
+            return;
+        }
         ctx.reply(action(chat_id, user_ctx, message));
     }
 
@@ -52,6 +56,9 @@ class MyBot {
         const user_ctx = ctx.message.from;
         const chat_id = ctx.chat.id;
         const message = this.clean(ctx.message.text);
+        if(message == '' && action == Actions.sendRelateImage) {
+            return;
+        }
         action(chat_id, user_ctx, message).then((url) => {
             ctx.replyWithPhoto({ source: url })
         });
@@ -59,7 +66,7 @@ class MyBot {
 
     clean(text) {
         let cleaned = text;
-        cleaned = cleaned.replace(/^\/\S+ /, '');
+        cleaned = cleaned.replace(/^\/\S+ ?/, '');
         return cleaned;
     }
 
