@@ -1,19 +1,43 @@
-// import axios from 'axios';
-// import { cheerio } from 'cheerio';
-// import Path from 'path';
-// import fs from 'fs';
-// import { logger } from '../helpers/logger.js';
+import axios from 'axios';
+jest.mock('axios');
+import  cheerio  from 'cheerio';
+import { fsyncSync } from 'fs';
+jest.mock('cheerio');
+import  path  from 'path';
+jest.mock('path');
+import fs from 'fs';
+jest.mock('fs');
+// import { logger } from '../../src/helpers/logger.js';
+// jest.mock('logger');
 import { getImageRealteToConcept } from '../../src/helpers/getImageRealteToConcept.js';
 
-it('dummy', () => {
-    expect(true).toBe(true);
+
+
+describe('getImageRealteToConcept testing', () => {
+    it('Test normal behaviour', () => {
+        jest.spyOn(global.Math, 'floor').mockReturnValueOnce(0);
+        axios.get
+        .mockImplementationOnce(()=>{
+            return {data:'testdata'}
+                                })
+        .mockImplementationOnce(()=>{
+            return {data:{pipe:()=>jest.fn()}}
+                                });
+        cheerio.load.mockImplementationOnce(()=>{ 
+            return ()=>{ return [{attribs:{src:'theimageurl'}}]};
+        })
+        path.resolve.mockImplementationOnce(()=>{
+            return 'a good file';
+        })
+        fs.createWriteStream.mockImplementationOnce(()=>{
+            return {on: (message,callback) =>callback()}
+           
+        })
+      
+
+
+        return  getImageRealteToConcept('good concept').then(result => {
+            expect(result).toEqual('a good file');
+            });;
+    })
 })
-
-// describe('getImageRealteToConcept testing', () => {
-//     it('Test o logger in getImage whe axio request fail', async () => {
-//         const request = getImageRealteToConcept('failConcept');
-
-//         expect(logger.error).toHaveBeenCalledWith('Error in getImage');
-//     })
-// })
-
