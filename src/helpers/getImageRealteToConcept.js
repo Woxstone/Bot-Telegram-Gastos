@@ -35,7 +35,7 @@ async function getImage(concept) {
 };
 
 async function downloadImage(imageUrl, imageName) {
-    if (!imageUrl || imageName === '/addgasto' || imageName.match(/\W/gm)) {
+    if (!imageUrl || imageName === '/addgasto') {
         return new Promise((resolve) => {
             // logger.info('error info');
             resolve('./assets/oops.jpg');
