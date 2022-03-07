@@ -11,6 +11,9 @@ class Calculator {
     static calculateBill(expensesOfChat) {
         let result = [];
         const usersIdsAndTotals = Calculator.makeTotalsByUserId(expensesOfChat);
+        if(usersIdsAndTotals.length == 1) {
+            return usersIdsAndTotals;
+        }
         const arrayOfdifferences = Calculator.prepareDiff(usersIdsAndTotals);
         let transactionsArray = Calculator.resolveExpenses(arrayOfdifferences);
         transactionsArray.forEach((transaction) => {

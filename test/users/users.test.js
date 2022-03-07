@@ -65,6 +65,27 @@ hector user.debt fer 4€.`;
         expect(result).toEqual(expected);
     });
 
+    it('if all the expenses are from the same user return a especific anser', () => {
+
+        const default_user = {
+            id: 4256,
+            first_name: 'Macho',
+            username: 'Hijo de mano'
+        };
+
+        Roster.search.mockReturnValueOnce(default_user)
+            .mockReturnValueOnce(default_user)
+            .mockReturnValueOnce(default_user);
+
+        const default_expenses = [{"total": 88, "user_id": 4256}];
+
+        const result = Users.describeReceipt(default_expenses);
+
+        const expected = `Macho user.debt_only 88€.`;
+
+        expect(result).toEqual(expected);
+    });
+
     it('If the user exits must return true', () => {
         Roster.exists.mockReturnValueOnce(true);
 

@@ -99,13 +99,26 @@ describe("i want to ask for resolveExpenses  and return an array of transactions
         const result = Calculator.calculateBill(inputExpenses);
 
         expect(result).toEqual(expectedResult);
-    })
+    });
 
     it('roundtoTwo works', () => {
         const result = Calculator.roundToTwo(2.299999999999999996);
 
         expect(result).toEqual(2.3);
-    })
+    });
+
+
+    it('if only one user_id is provided must retrun the total and his id', () => {
+        const expense1 = { money: 21, concept: 'barbacoa', date: new Date(), user_id: 32 };
+        const expense2 = { money: 51, concept: 'barbacoa', date: new Date(), user_id: 32 };
+        const expense3 = { money: 16, concept: 'barbacoa', date: new Date(), user_id: 32 };
+        const default_expenses = [expense1, expense2, expense3];
+        const expected = [{"total": 88, "user_id": 32}];
+
+        const result = Calculator.calculateBill(default_expenses);
+
+        expect(result).toEqual(expected);
+    });
 
 })
 

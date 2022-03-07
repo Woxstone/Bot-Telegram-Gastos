@@ -49,6 +49,12 @@ class Users {
             const payer = Roster.search(debt.payer).first_name;
             const receiver = Roster.search(debt.receiver).first_name;
 
+            if(payer == receiver) {
+                const user = Roster.search(debt.user_id).first_name;
+                stringOfTransactions = `${user} user.debt_only ${debt.total}€.`;
+                return;
+            }
+
             stringOfTransactions += `${payer} user.debt ${receiver} ${debt.money}€\n`;
         });
 
