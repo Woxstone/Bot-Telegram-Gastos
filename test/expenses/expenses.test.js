@@ -19,7 +19,7 @@ beforeEach(() => {
 describe('Test about the methods', () => {
     it('should add expenses with chatid userid and expense to the ledger addding userid to the expense object', () => {
         Ledger.ensureAndSave.mockReturnValueOnce(true);
-        expenseDescriptionMock.mockReturnValueOnce(`message.article 25/03/2022, message.quantity: 0 "sardinas"`);
+        expenseDescriptionMock.mockReturnValueOnce(`message.article 25/03/2022, 11 message.person message.quantity: 0 "sardinas"`);
 
         const default_chat_id = 222;
         
@@ -40,7 +40,7 @@ describe('Test about the methods', () => {
                 description: expenseDescriptionMock
             }
         })
-        const expected = `message.article 25/03/2022, message.quantity: 0 "sardinas"`
+        const expected = `message.article 25/03/2022, 11 message.person message.quantity: 0 "sardinas"`
         let theExpense = defaultExp;
        
 
@@ -86,7 +86,7 @@ describe('Test about the methods', () => {
     });
 
     it('should to know how to express an expense', () => {
-        expenseDescriptionMock.mockReturnValueOnce(`message.article 25/03/2022, message.quantity: 0 "sardinas"`);
+        expenseDescriptionMock.mockReturnValueOnce(`message.article 25/03/2022, 11 message.person message.quantity: 0 "sardinas"`);
 
         const defaultExp = {
             money: 0,
@@ -96,7 +96,7 @@ describe('Test about the methods', () => {
         }
         const theExpense = defaultExp;
 
-        const expected = `message.article ${defaultExp.date}, message.quantity: ${defaultExp.money} "${defaultExp.concept}"`;
+        const expected = `message.article ${defaultExp.date}, 11 message.person message.quantity: ${defaultExp.money} "${defaultExp.concept}"`;
         const result = Expenses.description([theExpense]);
 
         expect(result).toEqual(expected);
@@ -105,8 +105,8 @@ describe('Test about the methods', () => {
 
     it('should return all Expenses of the given chat', () => {
         const ExpenesDescriptionMock = jest.fn().mockImplementationOnce(() => {
-            return `message.article 07/04/1997, message.quantity: 23 "naves"
-message.article 28/10/1998, message.quantity: 32 "manzanas"`
+            return `message.article 07/04/1997, 341_341 message.person message.quantity: 23 "naves"
+message.article 28/10/1998, 1234 message.person message.quantity: 32 "manzanas"`
         });
         Expenses.description = ExpenesDescriptionMock;
         const defaultExp = {
@@ -133,8 +133,8 @@ message.article 28/10/1998, message.quantity: 32 "manzanas"`
 
         Ledger.getByChatId.mockReturnValueOnce([defaultExp,defaultExp2]);
 
-        const expectedResult = `message.article 07/04/1997, message.quantity: 23 "naves"
-message.article 28/10/1998, message.quantity: 32 "manzanas"`;
+        const expectedResult = `message.article 07/04/1997, 341_341 message.person message.quantity: 23 "naves"
+message.article 28/10/1998, 1234 message.person message.quantity: 32 "manzanas"`;
 
         const spygetExpensesByChatId = jest.spyOn(Expenses, 'getExpensesByChatId');
         const spydescription = jest.spyOn(Expenses, 'description');

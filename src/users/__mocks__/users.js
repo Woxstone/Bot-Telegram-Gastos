@@ -1,3 +1,5 @@
+import { User } from "../user";
+
 const Users = jest.fn();
 
 Users.ensure = jest.fn();
