@@ -18,12 +18,20 @@ class Expenses {
 
     static show(chat_id) {
         const theExpenses = this.getExpensesByChatId(chat_id);
+        if (theExpenses == undefined) {
+            return 'expenses.error_noExpensesIntheChat';
+        }
+
         const filterExpenses = theExpenses.filter(expense => expense.money > 0);
+        if (filterExpenses.length == 0) {
+            return 'expenses.error_noExpensesIntheChat';
+        }
+
         const result = Expenses.description(filterExpenses);
 
         return result;
     }
-   
+
     static getExpensesByChatId(chat_id) {
         const expenses = Ledger.getByChatId(chat_id);
         return expenses;
@@ -34,11 +42,11 @@ class Expenses {
         let result = '';
         let theExpense = undefined;
 
-        expensesArray.forEach(expense => {          
-            theExpense = new Expense(expense);           
+        expensesArray.forEach(expense => {
+            theExpense = new Expense(expense);
             result += `${theExpense.description()}\n`;
         });
-        const lastLineBreack = new RegExp(/\n$/g); 
+        const lastLineBreack = new RegExp(/\n$/g);
         result = result.replace(lastLineBreack, '');
 
         return result;

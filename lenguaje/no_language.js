@@ -5,10 +5,11 @@ export const no_language = {
 /gastos te devolvere los gastos de este chat,
 /cuenta usa este comando para dividir los gastos del chat con aquellos que hayan participado.
 Si tienes algun problema /help para saber los formatos de nuevo`,
-    'intro': 'Im a bot of shared expenses',
+    'intro': 'Soy un bot de gastos compartido',
     'expense.added': 'Gasto registrado',
     'expenses.error_save': 'Error al grabar tu gasto (problemas en Ledger.addAndSave).',
     'expense.description_noConcept': 'Sin concepto',
+    'expenses.error_noExpensesIntheChat': 'Aun no tienes ningun gasto grabado /help para saber mas',
     'bill': 'La cuenta',
     'user.hello': 'Hola',
     'user.new_user': 'Usuario registrado',

@@ -213,4 +213,21 @@ message.article 28/10/1998, message.quantity: 32 "manzanas"`
         expect(result).toBe(expected);
     });
 
+    it.only('show return a error message when thers no expenses in the chat', () => {
+        const default_chat_id = 24;
+        const defaultExp = {
+            money: 0,
+            concept: '',
+            date: 'today'
+        };
+
+        const expected = `expenses.error_noExpensesIntheChat`;
+
+        Ledger.getByChatId.mockReturnValueOnce([]);
+
+        const result = Expenses.show(default_chat_id);
+
+        expect(result).toBe(expected);
+    });
+
 });
