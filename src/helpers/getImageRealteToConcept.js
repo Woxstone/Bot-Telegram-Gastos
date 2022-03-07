@@ -1,8 +1,8 @@
 import axios from 'axios';
-// import cheerio from 'cheerio';
-const cheerio = require('cheerio');
+import { cheerio } from 'cheerio';
 import Path from 'path';
 import fs from 'fs';
+import { logger } from '../helpers/logger.js';
 
 export async function getImageRealteToConcept(concept) {
     const theimageurl = await getImage(concept);
@@ -25,7 +25,8 @@ async function getImage(concept) {
         });
 
     } catch (error) {
-        console.log('el error');
+        // console.log('el error');
+        logger.error('Error in getImage');
         return new Promise((resolve) => {
             resolve(false);
         });
@@ -35,6 +36,7 @@ async function getImage(concept) {
 async function downloadImage(imageUrl, imageName) {
     if (!imageUrl || imageName === '/addgasto') {
         return new Promise((resolve) => {
+            logger.info('error info');
             resolve('./assets/oops.jpg');
         });
     }
