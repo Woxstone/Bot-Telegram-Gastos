@@ -46,7 +46,11 @@ class Actions {
             userMessage = Messages.parse(user_ctx.language_code, keysUserMessage);
             answer = Messages.retrieve(user_ctx.language_code, 'user.new_user');
 
-            const ghostExpense = '0';
+            const ghostExpense = {
+                money: 0,
+                concept: '',
+                date: ''
+            };
             Actions.addExpense(chat_id, user_ctx, ghostExpense);
         }
 
@@ -77,7 +81,7 @@ class Actions {
 
         Users.ensure(user_ctx);
         const expenseKeys = Expenses.add(chat_id, user_ctx.id, theExpense);
-        const expense = parseId(user_ctx.language_code, expenseKeys);
+        const expense = parseKeysAndId(user_ctx.language_code, expenseKeys);
 
         const answer = Messages.retrieve(user_ctx.language_code, 'expense.added');
         const result = `${answer}: ${expense}`;
@@ -87,7 +91,7 @@ class Actions {
 
     static showExpenses(chat_id, user_ctx = '', message = '') {
         const expensesWithKeys = Expenses.show(chat_id);
-        const expenses = parseId(user_ctx.language_code, expensesWithKeys);
+        const expenses = parseKeysAndId(user_ctx.language_code, expensesWithKeys);
 
         return expenses;
     }
@@ -124,8 +128,8 @@ class Actions {
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
-//cambiar nombre de mierda
-function parseId(user_language_code, expensesWithKeys) {
+
+function parseKeysAndId(user_language_code, expensesWithKeys) {
     const messageWithId = expensesWithKeys;
     const messageWithNameAndKeys = Users.parseId(messageWithId);
     const message = Messages.parse(user_language_code, messageWithNameAndKeys);

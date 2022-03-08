@@ -18,7 +18,7 @@ class Roster {
         return false;
     }
 
-
+//async
     static save() {
         const result = save(process.env.DATA_FILE_USERS, JSON.stringify(this.collection));
 
