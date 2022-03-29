@@ -82,13 +82,13 @@ describe('Test about the methods', () => {
     });
 
     it('should to know how to express an expense', () => {
-        expenseDescriptionMock.mockReturnValueOnce(`message.article 25/03/2022, 11 message.person message.quantity: 0 \"sardinas\"`);
+        expenseDescriptionMock.mockReturnValueOnce(`message.article 25/03/2022, message.quantity: 0 "sardinas"`);
 
         const defaultExp = {
             money: 0,
             concept: 'sardinas',
             date: '25/03/2022',
-            id: 11,
+            id: 11 
             description: expenseDescriptionMock
         };
            
