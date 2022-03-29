@@ -38,7 +38,7 @@ class Actions {
 
         return result;
     }
-// incluir un gatos  ficticio (0 0 ) para que la añanda en las cunetas entonces parse.extracConcepto poner sin concepto y que gasto filtre los gasto con money = 0
+
     static newUser(chat_id = '', user_ctx, message = '') {
         let result = '';
         let answer = '';

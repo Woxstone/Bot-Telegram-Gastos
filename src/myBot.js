@@ -57,6 +57,7 @@ class MyBot{
         this.load();
         this.bot.launch();
     }
+    
     stop(singal){
         this.bot.stop(singal);
     }
