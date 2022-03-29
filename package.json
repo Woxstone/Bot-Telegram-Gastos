@@ -5,7 +5,12 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
-    "integrationTest": "npx babel-node ./test/all_integration.test.js",
+    "basicIntegration": "npx babel-node ./test/basic_actions_integration.test.js",
+    "BAI": "npx babel-node ./test/basic_actions_integration.test.js",
+    "normalWorkflowIntegration": "npx babel-node ./test/normal_workflow_integration.test.js",
+    "NWI": "npx babel-node ./test/normal_workflow_integration.test.js",
+    "badBehaviourIntegration": "npx babel-node ./test/bad_behaviour_integration.test.js",
+    "BBI": "npx babel-node ./test/bad_behaviour_integration.test.js",  
     "start": "npx babel-node app.js"
   },
   "repository": {
@@ -29,17 +34,12 @@
     "vosk": "^0.3.32"
   },
   "dependencies": {
+    "axios": "^0.26.0",
+    "cheerio": "^1.0.0-rc.10",
     "dotenv": "^16.0.0",
+    "path": "^0.12.7",
     "telegraf": "^4.7.0",
     "winston": "^3.6.0"
-  },
-  "jest": {
-    "modulePathIgnorePatterns": [
-      "_integration",
-      "<rootDir>/testdata/"
-    ],
-    "watchPathIgnorePatterns": [
-      "<rootDir>/testdata/"
-    ]
   }
+ 
 }

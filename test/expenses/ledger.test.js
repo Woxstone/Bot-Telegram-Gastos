@@ -1,7 +1,6 @@
 import { Ledger } from '../../src/expenses/ledger.js';
-import  fs  from 'fs';
-jest.mock('fs');
-jest.mock('../../src/helpers/logger.js');
+import { load, save } from '../../src/infrastructure/persistance.js';
+jest.mock('../../src/infrastructure/persistance.js');
 
 
 beforeEach(() => {
@@ -19,7 +18,7 @@ describe('ledger works as a ledger ', () => {
         const expenseToAdd = {};
         const initial_collection = JSON.stringify(Ledger.collection);
 
-        Ledger.add(chat_id, expenseToAdd);
+        Ledger.ensure(chat_id, expenseToAdd);
 
         expect(JSON.stringify(Ledger.collection)).not.toStrictEqual(initial_collection);
         expect(Ledger.collection[chat_id]).toStrictEqual([expenseToAdd]);
@@ -31,15 +30,15 @@ describe('ledger works as a ledger ', () => {
         const anotherChat = 45;
         const anotherExpense = { another: 'different object' };
 
-        Ledger.add(chattoAdd, expenseToAdd);
-        Ledger.add(anotherChat, anotherExpense);
+        Ledger.ensure(chattoAdd, expenseToAdd);
+        Ledger.ensure(anotherChat, anotherExpense);
 
         expect(Ledger.collection[chattoAdd]).toStrictEqual([expenseToAdd]);
         expect(Ledger.collection[anotherChat]).not.toStrictEqual([expenseToAdd]);
     });
 
     it('persintace of ledger', () => {
-        fs.writeFileSync.mockReturnValue(true);
+        save.mockReturnValueOnce(true);
 
         let result = false;
 
@@ -49,7 +48,7 @@ describe('ledger works as a ledger ', () => {
     });
 
     it('persintace of ledger fails if no writes', () => {
-        fs.writeFileSync.mockImplementation(() => { throw new Error() });
+        save.mockReturnValueOnce(false);
 
         let result = true;
 
@@ -65,10 +64,10 @@ describe('ledger works as a ledger ', () => {
         const chattoAdd = 78;
         const expenseToAdd = {};
 
-        const saveSpy = jest.spyOn(Ledger, 'add');
+        const saveSpy = jest.spyOn(Ledger, 'ensure');
         const addSpy = jest.spyOn(Ledger, 'save');
 
-        const result = Ledger.addAndSave(chattoAdd, expenseToAdd);
+        const result = Ledger.ensureAndSave(chattoAdd, expenseToAdd);
         
         expect(saveSpy).toHaveBeenCalled();
         expect(addSpy).toHaveBeenCalled();
@@ -76,7 +75,8 @@ describe('ledger works as a ledger ', () => {
     });
 
     it('load of ledger', () => {
-        fs.readFileSync.mockReturnValue(Buffer.from(JSON.stringify({ fer_id: [{}] })));
+        load.mockReturnValueOnce({ fer_id: [{}] });
+
         const expected = { fer_id: [{}] };
 
         Ledger.load();
@@ -86,9 +86,7 @@ describe('ledger works as a ledger ', () => {
     });
 
     it('load of ledger return false when fs error on read', () => {
-        fs.readFileSync.mockImplementation(() => {
-            throw new Error();
-        });
+        load.mockReturnValueOnce(false);
 
         const result = Ledger.load();
 
@@ -112,8 +110,8 @@ describe('ledger works as a ledger ', () => {
         const default_chat_id = -954;
         const expectedResult = [exp1, exp2];
 
-        Ledger.add(default_chat_id, exp1);
-        Ledger.add(default_chat_id, exp2);
+        Ledger.ensure(default_chat_id, exp1);
+        Ledger.ensure(default_chat_id, exp2);
 
         const result = Ledger.getByChatId(default_chat_id);
         expect(result).toEqual(expectedResult);

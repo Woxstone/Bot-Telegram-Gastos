@@ -1,41 +1,32 @@
-import fs from 'fs';
-import { logger } from '../../src/helpers/logger.js'; 
+import { load, save } from '../infrastructure/persistance.js';
 import 'dotenv/config';
 
-class Ledger{
-    
-    static collection = {};
-    // cambiar a Enusre Ledger
-    static add(chat_id, expense){
-        if(!this.collection[chat_id])this.collection[chat_id]=[];
-        const bag = this.collection[chat_id];
-        bag.push(expense);     
-    }
 
-    static save() {
-        try {
-            fs.writeFileSync(process.env.DATA_FILE_EXPENSES, JSON.stringify(this.collection));
-            return true;
-        }
-        catch(err) {
-            return false;
-        }
-    }
- 
-    static addAndSave(chattoAdd, expenseToAdd){
-        Ledger.add(chattoAdd, expenseToAdd);
-        return Ledger.save();
-    }
+class Ledger {
+
+    static collection = {};
 
     static load() {
-        try {
-            this.collection = JSON.parse(fs.readFileSync(process.env.DATA_FILE_EXPENSES));
-        } catch (err) {
-            this.collection = {};
-            logger.info('error.ledger.load');
-            return false;
+        const data = load(process.env.DATA_FILE_EXPENSES);
+
+        if(data) {
+            this.collection = data;
+            return true;
         }
-        return true;
+
+        return false;
+    }
+//async
+    static save() {
+        const result = save(process.env.DATA_FILE_EXPENSES, JSON.stringify(this.collection));
+
+        return result;
+    }
+
+    static ensure(chat_id, expense) {
+        if (!this.collection[chat_id]) this.collection[chat_id] = [];
+        const bag = this.collection[chat_id];
+        bag.push(expense);
     }
 
     static getByChatId(chat_id) {
@@ -43,6 +34,11 @@ class Ledger{
 
         return result;
     }
+
+    static ensureAndSave(chattoAdd, expenseToAdd) {
+        Ledger.ensure(chattoAdd, expenseToAdd);
+        return Ledger.save();
+    }
 }
 
-export {Ledger};
+export { Ledger };
