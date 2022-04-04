@@ -1,4 +1,3 @@
-
 class Transaction {
     constructor(payer, money, receiver) {
         this.payer = payer;
@@ -6,97 +5,116 @@ class Transaction {
         this.receiver = receiver;
     }
 }
+
 class Calculator {
-    static distributeExpenses(expensesOfChat) {
-        let TheCalculation = new Calculator();
-        let result = TheCalculation.makeTotalsByUserId(expensesOfChat);
-        const userKeys = result;
-        result = TheCalculation.prepareDiff(result);
-        result = TheCalculation.resolveExpenses(result);
-        result.forEach((transaction) => {
-            transaction.payer = userKeys[transaction.payer].id;
-            transaction.receiver = userKeys[transaction.receiver].id;
-        })
+
+    static calculateBill(expensesOfChat) {
+        let result = [];
+        const usersIdsAndTotals = Calculator.makeTotalsByUserId(expensesOfChat);
+        if(usersIdsAndTotals.length == 1) {
+            return usersIdsAndTotals;
+        }
+        const arrayOfdifferences = Calculator.prepareDiff(usersIdsAndTotals);
+        let transactionsArray = Calculator.resolveExpenses(arrayOfdifferences);
+        transactionsArray.forEach((transaction) => {
+            transaction.payer = usersIdsAndTotals[transaction.payer].user_id;
+            transaction.receiver = usersIdsAndTotals[transaction.receiver].user_id;
+        });
+
+        result = transactionsArray;
+
         return result;
     }
 
-    resolveExpenses(inputArray) {
-        const arrayOrdenadoDeMenorAMayor = inputArray.slice().sort(function (a, b) { return a - b; });
-        const arraykeys = arrayOrdenadoDeMenorAMayor.map(function (element) { return inputArray.indexOf(element) });
-        let i = 0;
-        let j = arrayOrdenadoDeMenorAMayor.length - 1;
-        let loQueDebe = 0;
-        let saldoIntermedio = 0;
-        const pago = [];
-        let valorDelPago = 0;
-        let pagador = undefined;
-        let receptor = undefined;
-        while (Calculator.aunDebeAlguienDinero(arrayOrdenadoDeMenorAMayor) && (i < j)) {
-            loQueDebe = arrayOrdenadoDeMenorAMayor[i];
-            saldoIntermedio = loQueDebe + arrayOrdenadoDeMenorAMayor[j];
-            if (saldoIntermedio >= 0) {
-                valorDelPago = loQueDebe; // se paga todo lo que ya debia y ya no debe mas
-                pagador = arraykeys[i];  // el id del pagador en el array inicial
-                receptor = arraykeys[j];
-                pago.push(new Transaction(pagador, Math.abs(valorDelPago), receptor));
-                arrayOrdenadoDeMenorAMayor[i] = 0;
-                arrayOrdenadoDeMenorAMayor[j] = valorDelPago + arrayOrdenadoDeMenorAMayor[j];
-                i++;
-            }
-            else {
-                valorDelPago = arrayOrdenadoDeMenorAMayor[j]; // se paga todo lo que ya debia y ya no debe mas
-                pagador = arraykeys[i];  // el id del pagador en el array inicial
-                receptor = arraykeys[j];
-                pago.push(new Transaction(pagador, Math.abs(valorDelPago), receptor));
-                arrayOrdenadoDeMenorAMayor[i] = arrayOrdenadoDeMenorAMayor[i] + valorDelPago;
-                arrayOrdenadoDeMenorAMayor[j] = 0;
-                j--;
-            }
-        }
-        return pago;
-    }
+    static makeTotalsByUserId(expensesOfChat) {
+        let expensesArray = [];
+        let usersIdsAndTotals = [];
 
-    static aunDebeAlguienDinero(arrayOrdenadoDeMenorAMayor) {
-        return arrayOrdenadoDeMenorAMayor.some(value => value < 0);
-    }
-
-    makeTotalsByUserId(theCollection) {
-        let resultArray = [];
-
-        theCollection.forEach((expense) => {
-            if (!resultArray[`_${expense.id}`]) {
-                resultArray[`_${expense.id}`] = 0 + Number.parseFloat(expense.money);
+        expensesOfChat.forEach((expense) => {
+            if (!expensesArray[`_${expense.user_id}`]) {
+                expensesArray[`_${expense.user_id}`] = Number.parseFloat(expense.money);
             } else {
-
-                resultArray[`_${expense.id}`] += Number.parseFloat(expense.money);
+                expensesArray[`_${expense.user_id}`] += Number.parseFloat(expense.money);
             }
         });
-        let result = [];
-        Object.entries(resultArray).forEach((totalUser) => { result.push({ id: Number.parseInt(totalUser[0].replace('_', '')), total: Number.parseFloat(totalUser[1]) }) });
 
-        return result;
+        const usersTotals = Object.entries(expensesArray);
+        usersTotals.forEach((totalOfUser) => {
+            usersIdsAndTotals.push({
+                user_id: Number.parseInt(totalOfUser[0].replace('_', '')),
+                total: Number.parseFloat(totalOfUser[1])
+            })
+        });
+
+        return usersIdsAndTotals;
     }
 
-    prepareDiff(theUserTotalsObject) {
-        let resultArray = [];
+    static prepareDiff(usersIdsAndTotals) {
+        let arrayOfdifferences = [];
         let total = 0;
 
-        theUserTotalsObject.forEach((totalUser) => {
-            total += totalUser.total;
+        usersIdsAndTotals.forEach((totalExpenseOftheUser) => {
+            total += totalExpenseOftheUser.total;
         });
 
-        theUserTotalsObject.forEach((totalUser) => {
-            resultArray.push(totalUser.total - total / theUserTotalsObject.length);
+        const numberOfUsers = usersIdsAndTotals.length;
+        let totalExpeneOfUser = 0;
+        usersIdsAndTotals.forEach((totalExpenseOftheUser) => {
+            totalExpeneOfUser = totalExpenseOftheUser.total;
+            const totalExpeneOfUserRounding = Calculator.roundToTwo(totalExpeneOfUser - total / numberOfUsers)
+            arrayOfdifferences.push(totalExpeneOfUserRounding);
         });
 
-        return resultArray;;
+        return arrayOfdifferences;
     }
 
+    static resolveExpenses(arrayOfdifferences) {
+        const ordenateArrayFromMinToMax = arrayOfdifferences.slice().sort(function (a, b) { return a - b; });
+        const indexOfIds = ordenateArrayFromMinToMax.map(function (differences) { return arrayOfdifferences.indexOf(differences) });
 
+        let indexOfPayer = 0;
+        let indexOfReciver = ordenateArrayFromMinToMax.length - 1;
+        let debt = 0;
+        let provisionalAmount = 0;
+        const payment = [];
+        let valueOfThePayment = 0;
+        let payer = undefined;
+        let reciver = undefined;
 
+        while (Calculator.stillPaymentsUnresolved(ordenateArrayFromMinToMax) && (indexOfPayer < indexOfReciver)) {
+            debt = ordenateArrayFromMinToMax[indexOfPayer];
+            provisionalAmount = debt + ordenateArrayFromMinToMax[indexOfReciver];
+// sacar cosas fuera
+            if (provisionalAmount >= 0) {
+                valueOfThePayment = Calculator.roundToTwo(debt);
+                payer = indexOfIds[indexOfPayer];
+                reciver = indexOfIds[indexOfReciver];
+                payment.push(new Transaction(payer, Math.abs(valueOfThePayment), reciver));
+                ordenateArrayFromMinToMax[indexOfPayer] = 0;
+                ordenateArrayFromMinToMax[indexOfReciver] = valueOfThePayment + ordenateArrayFromMinToMax[indexOfReciver];
+                indexOfPayer++;
+            }
+            else {
+                valueOfThePayment = Calculator.roundToTwo(ordenateArrayFromMinToMax[indexOfReciver]);
+                payer = indexOfIds[indexOfPayer];
+                reciver = indexOfIds[indexOfReciver];
+                payment.push(new Transaction(payer, Math.abs(valueOfThePayment), reciver));
+                ordenateArrayFromMinToMax[indexOfPayer] = ordenateArrayFromMinToMax[indexOfPayer] + valueOfThePayment;
+                ordenateArrayFromMinToMax[indexOfReciver] = 0;
+                indexOfReciver--;
+            }
+        }
+        return payment;
+    }
 
+    static stillPaymentsUnresolved(ordenateArrayFromMinToMax) {
+        return ordenateArrayFromMinToMax.some(value => value < 0);
+    }
 
-
+    static roundToTwo(num) {
+        return +(Math.round(num + "e+2") + "e-2");
+    }
 }
+
 
 export { Calculator };

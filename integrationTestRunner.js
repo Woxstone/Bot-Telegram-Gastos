@@ -4,7 +4,9 @@ import input from "input";
 import 'dotenv/config'
 
 
-
+process.env.DATA_FILE_EXPENSES = "./data/ledgerIntegration.json"
+process.env.DATA_FILE_USERS = "./data/rosterIntegration.json"
+process.env.DATA_FILE_LOGGER = "./data/loggerIntegration.json" 
 
 
 
@@ -14,6 +16,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms!=0?ms*1000
 
 
 async function runIntegrationTest(params){
+    if(!params.position) { params.position = 0 };
     let resultMessage=[];
     let answerMessages = [];
     let newMessages = false;
@@ -45,12 +48,12 @@ async function runIntegrationTest(params){
     if(!newMessages)
     {
       resultMessage.push(`\x1b[33mel bot no ha respondido en el tiempo especificado ${params.especificDelay?params.especificDelay:timeoutsecs} segundos\x1b[37m`);
-    }else if( answerMessages[0].message==params.messageExpected)
+    }else if( answerMessages[params.position].message==params.messageExpected)
     {
        resultMessage.push(`\x1b[32m${params.testText} : el test ha sido correcto\x1b[37m`);
     }
     else{
-      resultMessage.push(`el bot ha respondido <\x1b[31m${answerMessages[0].message}\x1b[37m> y se esperaba <\x1b[32m${params.messageExpected}\x1b[37m> `);
+      resultMessage.push(`el bot ha respondido <\x1b[31m${answerMessages[params.position].message}\x1b[37m> y se esperaba <\x1b[32m${params.messageExpected}\x1b[37m> `);
     }
   
   

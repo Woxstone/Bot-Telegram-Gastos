@@ -1,28 +1,46 @@
-class Parser{
+class Parser {
 
-    static extractMoney(message){
-        const result = parseFloat(message.split(' ')[0]); 
-        return result;
-    
+    static extractMoney(message) {
+        const money = parseFloat(message.split(' ').find(function (word) {
+            if (!isNaN(parseInt(word))) {
+                return word;
+            }
+        }));
+        return money;
     }
-    
-    static extractConcept(message){
-        let result = message.split(' ').slice(1).join(' '); 
-        result = result.replace(/ \d+\/\d+\/\d+/gm,'');
-        return result;
+
+    static extractConcept(message) {
+        const conceptInArray = message.split(' ').filter(function (word) {
+            if (isNaN(parseInt(word))) {
+                return word;
+            }
+        });
+
+        const concept = conceptInArray.join(' ');
+        return concept;
     }
 
     static extractDate(message) {
-        const result = message.match(/ \d+\/\d+\/\d+/gm);
-        
-        return (result)?result[0].trim():undefined;
+        const possibleMatch = message.match(/ \d+\/\d+\/\d+/gm);
+        const date = (possibleMatch) ? possibleMatch[0].trim() : undefined;
+
+        return date;
     }
 
-    static extractId(from) { return from.id; }
+    static extractId(user_ctx) {
+        const id = user_ctx.id;
+        return id;
+    }
 
-    static extractFirstName(from) { return from.first_name; }
+    static extractFirstName(user_ctx) {
+        const firstName = user_ctx.first_name
+        return firstName;
+    }
 
-    static extractName(from) { return from.username; }
+    static extractName(user_ctx) {
+        const name = user_ctx.username
+        return name;
+    }
 }
 
-export {Parser};
+export { Parser };

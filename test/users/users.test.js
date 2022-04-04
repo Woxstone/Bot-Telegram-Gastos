@@ -1,5 +1,5 @@
 import { Users } from '../../src/users/users.js';
-import { User , theUserConstructor} from '../../src/users/user.js';
+import { User, theUserConstructor } from '../../src/users/user.js';
 import { Roster } from '../../src/users/roster.js';
 
 jest.mock('../../src/users/user.js');
@@ -19,7 +19,7 @@ describe('Testing the methods of users', () => {
         expect(result).toEqual(expected);
     });
 
-    it('if exits is true (exits in roster)', () => {
+    it('if users exist', () => {
         const expected = `user.hello ${default_user.first_name} user.exits_end`;
         const result = Users.describe(default_user, true);
 
@@ -27,13 +27,13 @@ describe('Testing the methods of users', () => {
     });
 
     it('describe Receipt must know how to describe a receipt', () => {
-      
+
         const default_user = {
             id: 4256,
             first_name: 'Macho',
             username: 'Hijo de mano'
         };
-      
+
         const default_user2 = {
             id: 2548,
             first_name: 'hector',
@@ -44,15 +44,13 @@ describe('Testing the methods of users', () => {
             first_name: 'fer',
             username: 'my surname'
         };
-        
-        // Roster.collection=[default_user,default_user2];
+
         Roster.search.mockReturnValueOnce(default_user)
-        .mockReturnValueOnce(default_user3)
-        .mockReturnValueOnce(default_user2)
-        .mockReturnValueOnce(default_user)
-        .mockReturnValueOnce(default_user2)
-        .mockReturnValueOnce(default_user3)
-        ;
+            .mockReturnValueOnce(default_user3)
+            .mockReturnValueOnce(default_user2)
+            .mockReturnValueOnce(default_user)
+            .mockReturnValueOnce(default_user2)
+            .mockReturnValueOnce(default_user3);
 
         const default_expenses = [{ payer: 4256, money: 35, receiver: 68781 },
         { payer: 2548, money: 2, receiver: 4256 },
@@ -60,16 +58,37 @@ describe('Testing the methods of users', () => {
 
         const result = Users.describeReceipt(default_expenses);
 
-        const expected = `Macho user.debt fer 35E
-hector user.debt Macho 2E
-hector user.debt fer 4E.`;
+        const expected = `Macho user.debt fer 35€
+hector user.debt Macho 2€
+hector user.debt fer 4€.`;
+
+        expect(result).toEqual(expected);
+    });
+
+    it('if all the expenses are from the same user return a especific anser', () => {
+
+        const default_user = {
+            id: 4256,
+            first_name: 'Macho',
+            username: 'Hijo de mano'
+        };
+
+        Roster.search.mockReturnValueOnce(default_user)
+            .mockReturnValueOnce(default_user)
+            .mockReturnValueOnce(default_user);
+
+        const default_expenses = [{"total": 88, "user_id": 4256}];
+
+        const result = Users.describeReceipt(default_expenses);
+
+        const expected = `Macho user.debt_only 88€.`;
 
         expect(result).toEqual(expected);
     });
 
     it('If the user exits must return true', () => {
         Roster.exists.mockReturnValueOnce(true);
-      
+
         const result = Users.ensure(default_user);
 
         expect(result).toBeTruthy();
@@ -77,7 +96,7 @@ hector user.debt fer 4E.`;
 
     it('If the user dont exits ensure returns false', () => {
         Roster.exists.mockReturnValueOnce(false);
-        const result = Users.ensure(default_user);
+        const result = Users.ensure({});
 
         expect(result).toBeFalsy();
     });
@@ -88,10 +107,25 @@ hector user.debt fer 4E.`;
 
         expect(result).toBeTruthy();
     });
+
     it('load must return false if somethig go wrong', () => {
         Roster.load.mockReturnValueOnce(false);
         const result = Users.load();
 
         expect(result).toBeFalsy();
+    });
+
+    it('has a method for parse ID that receives a string and substitute each user_id to his user first name', () => {
+        const userone = { id: 2332, first_name: 'hector' };
+        const usertwo = { id: 252, first_name: 'Nacho' };
+
+        Roster.search.mockClear();
+        Roster.search.mockReturnValueOnce(userone).mockReturnValueOnce(usertwo);
+
+        const intakeString = `the user /ID:${userone.id}/ and the second user /ID:${usertwo.id}/ sometext /sdsa/afe/IDdaffme 4323`;
+
+        expect(Users.parseId(intakeString)).toBe(`the user ${userone.first_name} and the second user ${usertwo.first_name} sometext /sdsa/afe/IDdaffme 4323`)
+        expect(Roster.search).toHaveBeenNthCalledWith(1, userone.id);
+        expect(Roster.search).toHaveBeenNthCalledWith(2, usertwo.id);
     });
 });

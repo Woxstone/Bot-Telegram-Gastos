@@ -1,57 +1,62 @@
-import * as fs from 'fs';
-import { logger } from '../../src/helpers/logger.js'; 
-
+import { load, save } from '../infrastructure/persistance.js';
 import 'dotenv/config';
+
 
 class Roster {
 
     static collection = [];
 
-    static exists(user_id) {
-        let result = false;
+    static load() {
+        const data = load(process.env.DATA_FILE_USERS);
+        
+        if(data) {
+            this.collection = data;
 
-        if (this.collection.find(user => user.id === user_id)) { result = true; };
+            return true;
+        }
+
+        return false;
+    }
+
+//async
+    static save() {
+        const result = save(process.env.DATA_FILE_USERS, JSON.stringify(this.collection));
 
         return result;
     }
 
-    static create(user) {
+    static add(user) {
         this.collection.push(user);
     }
 
-    static load() {
+    static find(user_id) {
+        const userFind = this.collection.find(user => user.id === user_id);
 
-        try {
-            this.collection = JSON.parse(fs.readFileSync(process.env.DATA_FILE_USERS));
-        } catch (err) {
-            this.collection = [];
-            logger.info('error.roster.load');
-            return false;
-        }
+        return userFind;
+    }
 
-        return true;
+    static exists(user_id) {
+        let result = false;
+
+        if (Roster.find(user_id)) { result = true; };
+
+        return result;
     }
 
     static search(user_id) {
+        let user = {};
+        
         if (Roster.exists(user_id)) {
-            return this.collection.find(user => user.id === user_id);
+            user = Roster.find(user_id);
+        } else {
+            user = { first_name: undefined };
         }
-        const undefined_user = { first_name: undefined };
 
-        return undefined_user;
-    }
-    
-    static save() {
-        try {
-            fs.writeFileSync(process.env.DATA_FILE_USERS, JSON.stringify(this.collection));
-            return true;
-        } catch (err) {
-            return false;
-        }
+        return user;
     }
 
-    static createAndSave(user) {
-        Roster.create(user);
+    static addAndSave(user) {
+        Roster.add(user);
         return Roster.save();
     }
 }

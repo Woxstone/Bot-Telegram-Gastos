@@ -1,24 +1,57 @@
-clone
-npm install
-npm run test 
+INSTALACION DEL BOT
+
+Este bot de telegram programado con Js (Es6) usa distintas librerias para instalarlas correctamente sigue los siguientes pasos:
+
+- Clone del repositorio usando el HTTPS: https://github.com/Woxstone/Bot-Telegram-Gastos.git
+
+- npm install 
+
+- Crear archivo .env en la carpeta raiz.
+
+El bot token te lo da TheBotFather cuando creas tu bot.
+
+BOT_TOKEN = ""
+
+DATA_FILE_EXPENSES = "./data/ledger.json"
+
+DATA_FILE_USERS = "./data/roster.json"
+
+DATA_FILE_LOGGER = "./data/logger.json"
+
+LOCALE_DATE_FORMAT = 'es-ES'  # or your locale
+
+OPCIONAL
+
+- Crea una app desde aqui [https://my.telegram.org/auth](https://my.telegram.org/auth) rellena con la info que tienes estos campos en tu archivo .env
+
+Tu eres en userone necesitas otra cuenta de telegram para poder hacer el test con dos usuarios hablando en el mismo chat.
+
+- Poner estas nuevas variables en el .env
+
+API_ID_userone = ""
+
+API_HASH_userone = ""
+
+Descomenta la linea 32 y 33 para conseguir el STRING_SESSION_userone y vuelve lo a comentar si no quieres que te salga todo el rato.
+
+STRING_SESSION_userone = ""
+
+API_ID_usertwo = ""
+
+API_HASH_usertwo = ""
+
+STRING_SESSION_usertwo = ""
+
+Es el nombre del chat donde quieres que se manden los mensajes, si esto no funciona puedes poner el id del chat que lo pudes sacar de dos formas o por la URL (https://community.jamaicans.dev/t/get-the-telegram-channel-id/427) o en el ctx.
+
+NAME_OF_BOT_CHANNEL = ""
+
+Para correr los test de integraccion escribe en la terminal:  npm run integrationTest
+
+-Scripts:
+
 npm run start
 
-recuerda necesitas un archivo .env con  los siguientes datos
+npm run test
 
-API_ID = ""
-API_HASH = ""
-STRING_SESSION = ""
-BOT_TOKEN = ""
-NAME_OF_BOT_CHANNEL = ""
-DATA_FILE_EXPENSES = "./data/ledger.json"
-DATA_FILE_USERS = "./data/roster.json"
-DATA_FILE_LOGGER = "./data/logger.json"
-ENVIRONTMENT = "development"
-
-
-para saber como conseguirlos https://github.com/motercode/boiler_Jest_Babel_Telegraf
-acuerdate de descomentar los consoles para obtener el string_session !!!!
-
-
-\n
-Sugerencia creo que en ledger user_id y expense_id no corresponde a lo que estas metiendo ya que en realiadad cuando es llamada expense_id le metemos un objeto
+npm run integrationTest
