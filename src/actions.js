@@ -46,11 +46,7 @@ class Actions {
             userMessage = Messages.parse(user_ctx.language_code, keysUserMessage);
             answer = Messages.retrieve(user_ctx.language_code, 'user.new_user');
 
-            const ghostExpense = {
-                money: 0,
-                concept: '',
-                date: ''
-            };
+            const ghostExpense = '0';
             Actions.addExpense(chat_id, user_ctx, ghostExpense);
         }
 
